@@ -1,0 +1,18 @@
+<div class="activities-wrapper row">
+  <div class="activity">
+    <div class="activity-head">
+      <div class="name">
+        Ben Walker
+      </div>
+    </div>
+    <div class="image center-block">
+      <%= image_tag @activity.image.url(:medium) %>
+    </div>
+    <p class="caption">
+      <%= @activity.content %>
+    </p>
+    <div class="text-center">
+      <%= link_to "Cancel", activities_path %>
+    </div>
+  </div>
+</div>

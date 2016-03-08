@@ -1,0 +1,13 @@
+<h1 class="header-text"> Edit Todo Task </h1>
+
+<div class="text-center">
+  <%= image_tag @activity.image.url(:medium) %>
+</div>
+<%= render 'form'  %>
+
+
+<div class="text-center edit-links">
+  <%= link_to "Delete Activity", activity_path(@activity), method: :delete, data: { confirm: "Are you sure you want to delete this Activity?" } %>
+  |
+  <%= link_to "cancel", activities_path %>
+</div>

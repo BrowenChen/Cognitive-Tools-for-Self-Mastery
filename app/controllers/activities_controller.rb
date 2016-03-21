@@ -1,4 +1,5 @@
 class ActivitiesController < ApplicationController
+	before_action :authenticate_user!
 	before_action :set_activity, only: [:show, :edit, :update, :destroy]  
 
 	def index
@@ -6,17 +7,28 @@ class ActivitiesController < ApplicationController
 	end
 
 	def new
-	  @activity = Activity.new
+	  #@activity = Activity.new
+	  @activity = current_user.activities.build
 	end
 	
 	def create
-	  if @activity = Activity.create(activity_params)
-	  	flash[:success] = "Your activity has been created!"
-	  	redirect_to activities_path
-	  else 
-      	flash.now[:alert] = "Your new activity couldn't be created!  Please check the form."
-      	render :new	 
-      end 	
+	  @activity = current_user.activities.build(activity_params)
+
+	  if @activity.save
+		flash[:success] = "Your activity has been created!"
+		redirect_to activities_path
+	  else
+		flash[:alert]  = "Your new activity couldn't be created!"
+		render :new
+	  end
+
+	  #if @activity = Activity.create(activity_params)
+	  #	flash[:success] = "Your activity has been created!"
+	  #	redirect_to activities_path
+	  #else 
+      	#flash.now[:alert] = "Your new activity couldn't be created!  Please check the form."
+      	#render :new	 
+      #end 	
 	end
 
 	def show

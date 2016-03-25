@@ -1,0 +1,14 @@
+<!-- only displaying my activities -->
+
+<h2 style="text-align:center;"> Displaying my activities</h2>
+<div style="text-align:center;"> <%= current_user.user_name %> </div>
+
+<div class="activities-wrapper row">
+  <% @activities.each do |activity| %>
+    <!-- Insert Activity partial only if activity id matches with current logged in user -->
+    <% if current_user.id == activity.user_id %>
+    	<%= render 'activity', activity: activity %>
+    <% end %>
+    
+  <% end %>
+</div>

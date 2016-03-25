@@ -166,3 +166,47 @@ body {
 }
 
 
+/*Registration and Login Flow*/
+html {  
+  height: 100%;
+}
+
+.registration-bg {
+  padding-top: 4em;
+  height: 100%;
+  overflow: hidden;
+}
+
+.log-in{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+  border: none;
+  overflow: hidden;
+  height: 450px;
+}
+
+/*Overriding bootstrap */
+.form-control {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.panel {
+  border-radius: 8px;
+}
+
+.panel-heading{
+  h1 {
+    text-align: center;
+  }
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.alert {
+  margin-bottom: 0px;
+}

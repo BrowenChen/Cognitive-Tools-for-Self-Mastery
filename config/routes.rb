@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :posts
   resources :activities do
     resources :comments
+    
+    member do 
+      get 'my_activities'
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

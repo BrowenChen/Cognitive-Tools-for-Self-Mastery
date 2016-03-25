@@ -49,6 +49,11 @@ class ActivitiesController < ApplicationController
 	  redirect_to activities_path	  
 	end
 
+  # to display all of my activities
+  def my_activities
+    @activities = Activity.all
+  end
+
 	private 
 
 	def activity_params

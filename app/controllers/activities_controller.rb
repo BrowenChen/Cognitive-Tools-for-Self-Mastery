@@ -54,6 +54,11 @@ class ActivitiesController < ApplicationController
     @activities = Activity.all
   end
 
+  #user details page
+  def user_details
+    @activities = Activity.all
+  end
+
 	private 
 
 	def activity_params

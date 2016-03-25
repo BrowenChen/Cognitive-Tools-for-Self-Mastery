@@ -3,18 +3,13 @@
 
 <div class="activities-wrapper row">
   <% @activities.each do |activity| %>
-    <div class="activity">
-      <div class="activity-head">
-        <div class="name">
-	  <%= activity.user.user_name %>
-        </div>
-      </div>
-      <div class="image center-block">
-        <%= link_to (image_tag activity.image.url(:medium), class:'img-responsive'), activity_path(activity) %>
-      </div>
-      <p class="caption">
-        <%= activity.content %>
-      </p>
-    </div>
+
+    <!-- Insert activity partial here -->
+    <%= render 'activity', activity: activity %>
   <% end %>
 </div>
+
+
+
+
+

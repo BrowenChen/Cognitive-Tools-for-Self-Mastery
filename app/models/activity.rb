@@ -1,6 +1,7 @@
 class Activity < ActiveRecord::Base
   belongs_to :user
   validates :user_id, presence: true
+  has_many :comments, dependent: :destroy
   #validates :image, presence: true
 
   has_attached_file :image

@@ -14,11 +14,28 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "navbar.scss";
+@import "font-awesome";
 
 body {  
   /*background-color: #fafafa;*/
   background-color: #eef3f5;
-  font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: proxima-nova, 'Helvetica Neue', Arial, herelvetica, sans-serif;
+}
+
+.nav-left-container {
+  position: fixed;
+  height: 100%;
+  width: 20%;
+  left: 0;
+  overflow: hidden;
+}
+
+.app-container {
+  position: absolute;
+  height: 100%;
+  width: 80%;
+  left: 20%;
+  overflow: auto;
 }
 
 
@@ -194,4 +211,16 @@ html {
 
 .alert {
   margin-bottom: 0px;
+}
+
+
+/*footer */
+.footer-main {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #FFF;
+  padding: 7px 13px;
+  border-top: 1px solid #eee;
+  text-align: center;
 }

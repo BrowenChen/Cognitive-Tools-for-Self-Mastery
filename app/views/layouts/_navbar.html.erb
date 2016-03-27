@@ -13,13 +13,20 @@
     </div>
 
     <div class="nav-body">
-
     	<div class="user-section">
-    		<div class="avatar">
+    		<div class="user-panel">
+    			<img src="" id="avatar"\>
+    			<div id="user-description">
+
+    				<% if user_signed_in? %>
+	    				<h4 id="user_name"> <%= current_user.user_name %> </h4>
+	    				<p id="user_level"> Level: <%= current_user.level %>  </p>
+	    			<% end %>
+    			</div>
     		</div>
     	</div>
 
-	    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
+	    <div>
 			<ul class="nav nav-custom-list">
 			  <% if user_signed_in? %>
 			    <li class="active">

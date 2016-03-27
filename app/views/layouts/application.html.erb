@@ -8,11 +8,40 @@
 </head>
 <body>
 
-<%= render 'layouts/navbar' %> 
-<%= yield %>
+<style>
+	.nav-left-container {
+		position: fixed;
+		border: 1px solid green;
+		height: 100%;
+		width: 20%;
+		left: 0;
+		overflow: hidden;
+	}
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+	.app-container {
+		position: absolute;
+		height: 100%;
+		width: 80%;
+		left: 20%;
+		border: 1px solid blue;
+
+	}
+
+</style>
+
+<div class="nav-left-container">
+	<%= render 'layouts/navbar' %> 
+</div>
+
+<div class="app-container">
+	<%= yield %>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
+</div>
+
+
+
+
 
 </body>
 </html>

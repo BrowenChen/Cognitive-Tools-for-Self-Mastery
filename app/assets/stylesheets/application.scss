@@ -13,31 +13,15 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "navbar.scss";
 
 body {  
-  background-color: #fafafa;
+  /*background-color: #fafafa;*/
+  background-color: #eef3f5;
   font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.navbar-brand {
-  a {
-    color: #125688;
-  }
-}
 
-.navbar-default {
-  background-color: #fff;
-  height: 54px;
-  
-  .navbar-nav li a {
-    color: #125688;
-  }
-}
-
-.navbar-container {
-  width: 640px;
-  margin: 0 auto;
-}
 
 .header-text {
 	text-align: center;
@@ -48,6 +32,7 @@ body {
   margin: 0 auto;
   max-width: 642px;
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .activity {

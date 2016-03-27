@@ -1,0 +1,5 @@
+
+// AJAX for comments
+
+$('#comments_<%= @activity.id %>').append("<%=j render 'comments/comment', activity: @activity, comment: @comment %>");
+$('#comment_content_<%= @activity.id %>').val('')

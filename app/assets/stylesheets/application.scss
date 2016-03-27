@@ -13,30 +13,32 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "navbar.scss";
+@import "font-awesome";
 
 body {  
-  background-color: #fafafa;
-  font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  /*background-color: #fafafa;*/
+  background-color: #eef3f5;
+  font-family: proxima-nova, 'Helvetica Neue', Arial, herelvetica, sans-serif;
 }
 
-.navbar-brand {
-  a {
-    color: #125688;
-  }
+.nav-left-container {
+  position: fixed;
+  height: 100%;
+  width: 20%;
+  left: 0;
+  overflow: hidden;
 }
 
-.navbar-default {
-  background-color: #fff;
-  height: 54px;
-  .navbar-nav li a {
-    color: #125688;
-  }
+.app-container {
+  position: absolute;
+  height: 100%;
+  width: 80%;
+  left: 20%;
+  overflow: auto;
 }
 
-.navbar-container {
-  width: 640px;
-  margin: 0 auto;
-}
+
 
 .header-text {
 	text-align: center;
@@ -47,39 +49,101 @@ body {
   margin: 0 auto;
   max-width: 642px;
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .activity {
+
   background-color: #fff;
   border-color: #edeeee;
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   margin-bottom: 60px;
-}
 
-.activity-head {
-  height: 64px;
-  padding: 14px 20px;
-  color: #125688;
-  font-size: 15px;
-  line-height: 18px;
-  .thumbnail {}
-  .name {
-    display: block;
+  .activity-head {
+    flex-direction: row;
+    height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+    color: #125688;
+    font-size: 15px;
+    line-height: 18px;
+
+    .user-name, .time-ago {
+      display: inline;
+    }
+
+    .user-name {
+      font-weight: 500;
+    }
+
+    .time-ago {
+      color: #A5A7AA;
+      float: right;
+    }
   }
+
+  .image {
+    border-bottom: 1px solid #eeefef;
+    border-top: 1px solid #eeefef;
+  }
+
+
 }
 
-.image {
-  border-bottom: 1px solid #eeefef;
-  border-top: 1px solid #eeefef;
-}
+
 
 .caption {
   padding: 24px 24px;
   font-size: 15px;
   line-height: 18px;
+}
 
+/*Comments SCSS*/
+
+.activity-bottom {
+  .user-name, .comment-content {
+    display: inline;
+  }
+
+  .caption {
+    margin-bottom: 7px;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    margin-right: 0.3em;
+    color: #125688;
+    font-size: 15px;
+  }
+  
+  .user-name, .caption-content {
+    display: inline;
+  }
+  
+  #comment {
+    margin-top: 7px;
+  
+    .user-name {
+      font-weight: 500;
+      margin-right: 0.3em;
+    }
+
+    .delete-comment {
+      float: right;
+      color: #515151;
+    }
+  }
+
+  margin-bottom: 7px;
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  line-height: 18px;
 }
 
 .form-wrapper {
@@ -94,4 +158,69 @@ body {
 .edit-links {
   margin-top: 20px;
   margin-bottom: 40px;
+}
+
+/*buttons*/
+.complete_activity_button {
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+}
+
+
+/*Registration and Login Flow*/
+html {  
+  height: 100%;
+}
+
+.registration-bg {
+  padding-top: 4em;
+  height: 100%;
+  overflow: hidden;
+}
+
+.log-in{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  text-align:center;
+  border: none;
+  overflow: hidden;
+  height: 450px;
+}
+
+/*Overriding bootstrap */
+.form-control {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.panel {
+  border-radius: 8px;
+}
+
+.panel-heading{
+  h1 {
+    text-align: center;
+  }
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.alert {
+  margin-bottom: 0px;
+}
+
+
+/*footer */
+.footer-main {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #FFF;
+  padding: 7px 13px;
+  border-top: 1px solid #eee;
+  text-align: center;
 }

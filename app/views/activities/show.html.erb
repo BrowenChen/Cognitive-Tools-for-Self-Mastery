@@ -1,5 +1,5 @@
 
-<div class="activities-wrapper row">
+<!-- <div class="activities-wrapper row">
   <div class="activity">
     <div class="activity-head">
       <div class="name">
@@ -12,14 +12,26 @@
     <p class="caption">
       <%= @activity.content %>
     </p>
-    <div class="text-center">
-      <%= link_to "Cancel", activities_path %>
-    </div>
   </div>
 </div>
+ -->
+
+ <!-- Passing in the partials @activity variable -->
+ 
+<%= render 'activity', activity: @activity %>
 
 <div class="text-center edit-links">
-  <%= link_to "Cancel", activities_path %>
-  |
-  <%= link_to "Edit Post", edit_activity_path(@activity) %>
+  <!-- Checking if current user id is the same as activity of the id -->
+  <% if @activity.user.id == current_user.id %>
+    <div class="text-center edit-links">
+      <%= link_to "Cancel", activities_path %>
+      |
+      <%= link_to "Edit Post", edit_activity_path(@activity) %>
+    </div>
+    <% else %>
+      <div class="text-center edit-links">
+        <%= link_to "Cancel", activities_path %>
+      </div>
+    <% end %>
+
 </div>

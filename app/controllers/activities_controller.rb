@@ -1,22 +1,28 @@
 class ActivitiesController < ApplicationController
+	before_action :authenticate_user!
 	before_action :set_activity, only: [:show, :edit, :update, :destroy]  
+  #ensure only you have access to modify your posts
+  before_action :owned_activity, only: [:edit, :update, :destroy] 
 
 	def index
 	  @activities = Activity.all
 	end
 
 	def new
-	  @activity = Activity.new
+	  #@activity = Activity.new
+	  @activity = current_user.activities.build
 	end
 	
 	def create
-	  if @activity = Activity.create(activity_params)
-	  	flash[:success] = "Your activity has been created!"
-	  	redirect_to activities_path
-	  else 
-      	flash.now[:alert] = "Your new activity couldn't be created!  Please check the form."
-      	render :new	 
-      end 	
+	  @activity = current_user.activities.build(activity_params)
+
+	  if @activity.save
+		flash[:success] = "Your activity has been created!"
+		redirect_to activities_path
+	  else
+		flash[:alert]  = "Your new activity couldn't be created!"
+		render :new
+	  end
 	end
 
 	def show
@@ -43,15 +49,32 @@ class ActivitiesController < ApplicationController
 	  redirect_to activities_path	  
 	end
 
+  # to display all of my activities
+  def my_activities
+    @activities = Activity.all
+  end
+
+  #user details page
+  def user_details
+    @activities = Activity.all
+  end
+
 	private 
 
 	def activity_params
 	  params.require(:activity).permit(:image, :content)
 	end
 
-    def set_activity
-      @activity = Activity.find(params[:id])
-    end	
+  def set_activity
+    @activity = Activity.find(params[:id])
+  end	
+
+  def owned_activity 
+    unless current_user == @activity.user
+      flash[:alert] = "That post doesn't belong to you!"
+      redirect_to root_path  
+    end    
+  end
 
   # before_action :set_post, only: [:show, :edit, :update, :destroy]
 

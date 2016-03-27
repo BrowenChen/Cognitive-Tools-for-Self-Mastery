@@ -1,3 +1,63 @@
+
+
+<nav class="navbar nav-left">
+    <div class="navbar-header">
+<!--       <button class="navbar-toggle collapsed" data-target="#bs-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button> -->
+      <div class="navbar-brand">
+        <%= link_to "Cognitive Mastery", root_path %>
+      </div>
+    </div>
+
+    <div class="nav-body">
+    	<div class="user-section">
+    		<div class="user-panel">
+    			<img src="" id="avatar"\>
+    			<div id="user-description">
+
+    				<% if user_signed_in? %>
+	    				<h4 id="user_name"> <%= current_user.user_name %> </h4>
+	    				<p id="user_level"> Level: <%= current_user.level %>  </p>
+	    			<% end %>
+    			</div>
+    		</div>
+    	</div>
+
+	    <div>
+			<ul class="nav nav-custom-list">
+			  <% if user_signed_in? %>
+			    <li class="active">
+			      <%= link_to "New Activity", new_activity_path %>
+			    </li>
+			    <!-- Path to user's personal activities -->
+			    <li>
+			      <%= link_to "My Tasks", my_activities_activity_path(current_user) %>
+			    </li>
+
+			    <li>
+			      <%= link_to "User Details", user_details_activity_path(current_user) %>
+			    </li>
+			    <li>
+			      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+			    </li>
+			  <% else %>
+			    <li class="active">
+			      <%= link_to "Login", new_user_session_path %>
+			    </li>
+			    <li>
+			      <%= link_to "Register", new_user_registration_path %>
+			    </li>
+			  <% end %>
+			</ul>
+	    </div>	
+	</div>
+
+</nav>
+
+<!-- 
 <nav class="navbar navbar-default">
   <div class="container-fluid navbar-container">
     <div class="navbar-header">
@@ -10,34 +70,7 @@
         <%= link_to "Cognitive Mastery", root_path %>
       </div>
     </div>
-    <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
-
-
-		<ul class="nav navbar-nav navbar-right">
-		  <% if user_signed_in? %>
-		    <li>
-		      <%= link_to "New Activity", new_activity_path %>
-		    </li>
-		    <!-- Path to user's personal activities -->
-		    <li>
-		      <%= link_to "My Tasks", my_activities_activity_path(current_user) %>
-		    </li>
-
-		    <li>
-		      <%= link_to "User Details", user_details_activity_path(current_user) %>
-		    </li>
-		    <li>
-		      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-		    </li>
-		  <% else %>
-		    <li>
-		      <%= link_to "Login", new_user_session_path %>
-		    </li>
-		    <li>
-		      <%= link_to "Register", new_user_registration_path %>
-		    </li>
-		  <% end %>
-		</ul>
-    </div>
+    
   </div>
 </nav>
+ -->

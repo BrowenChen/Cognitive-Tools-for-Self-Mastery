@@ -1,0 +1,130 @@
+/*SCSS file for navbar*/
+$active: #425164;
+$fontTextColor: #f6f6f6;
+
+.navbar {
+  position: relative;
+  border: 1px solid green;
+  height: 100%;
+}
+
+
+/*Bootstrap overrides*/
+.navbar-collapse {
+  padding: 0;
+}
+
+/*main container for the navbar*/
+.nav-left {
+  color: $fontTextColor;
+
+  a {
+    color: #f6f6f6
+  }
+
+  .navbar-header {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    border: 1px solid green;
+    background-color: #283744;
+    color: #f9f9f9;
+
+    .navbar-brand {
+      position: relative;
+      font-family: 'Kaushan Script', cursive;
+      text-align: center;
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+
+      a {
+        position: absolute;
+        top: 50%;
+        margin-top: -12px;
+        width: 100%;
+        left: 0;
+      }
+    }
+
+  }
+
+  .nav-body {
+    position: relative;
+    top: 50px;
+    width: 100%;
+    height: 100%;
+    background-color: #39435C;
+
+    .user-section {
+      position: relative;
+      border: 1px solid blue;
+      height: 125px;
+      padding: 10px;
+      top: 0;
+
+      .user-panel {
+        position: relative;
+        width: 100%;
+        height: 67px;
+        border: 1px solid red;
+
+        #avatar {
+          position: relative;
+          border: 2px solid grey;
+          height: 45px;
+          width: 45px;
+          /*bug here hardcoded*/
+          top: -27px;
+          float: left;
+          border-radius: 25px;
+        }
+
+        #user-description {
+          position: relative;
+          float: right;
+          padding-left: 10px;
+          padding-right: 10px;
+          height: 100%;
+          width: 66%;
+          border: 1px solid green;
+          /*bug here why?*/
+          top: -38px;
+        }
+      }
+    }
+
+    .nav-custom-list {    
+
+      .navbar-nav li a {
+        color: #125688;
+        width: 100%;
+      }
+
+      li {
+        display:block;
+        float:left;
+        width: 100%;
+        height: 45px;
+        padding: 5px;
+        border: 1px solid green;
+      }
+
+      li:hover, a:hover {
+        background-color: $active;
+      }
+
+      .active {
+        background-color: $active;
+      }
+    }
+  }
+}
+
+@media (max-width: 755px) {
+  .user-panel #avatar {
+
+    background-color: yellow;
+  }
+}
+

@@ -1,51 +1,44 @@
 <!-- Activity partial -->
-
 <div class="activities-wrapper">
-  <div class="activity">
-    <div class="activity-head">
-      <div class="thumb-img"></div>
-      <div class="user-name">
-        <%= activity.user.user_name %>
+   <div class="activity">
+      <div class="activity-head">
+         <div class="thumb-img"></div>
+         <div class="user-name">
+            <%= activity.user.user_name %>
+         </div>
+         <div class="time-ago">
+            <%= time_ago_in_words activity.created_at %>
+         </div>
       </div>
-      <div class="time-ago">
-      	<%= time_ago_in_words activity.created_at %>
+      <div class="image center-block">
+         <%= link_to (image_tag activity.image.url(:medium), class:'img-responsive'), activity_path(activity) %>
+         <button class="complete_activity_button btn btn-success"> Finish Task </button>
       </div>
-    </div>
-    <div class="image center-block">
-    	<%= link_to (image_tag activity.image.url(:medium), class:'img-responsive'), activity_path(activity) %>
-      
-      <button class="complete_activity_button btn btn-success"> Finish Task </button>
-
-    </div>
-
-    <div class="activity-bottom">
-      <div class="caption">
-        <div class="user-name">
-          <%= activity.user.user_name %>
-        </div>
-        <%= activity.content %>
+      <div class="activity-bottom">
+         <div class="caption">
+            <div class="user-name">
+               <%= activity.user.user_name %>
+            </div>
+            <%= activity.content %>
+         </div>
+         <!-- Comments partial here -->
+         <div class="comments" id="comments_<%= activity.id %>">
+            <% if activity.comments %>
+               <!-- Rails shorthand for rendering comments partials under comment directory -->
+               <%= render activity.comments, activity: activity %>
+            <% end %>
+         </div>
       </div>
-
-      <!-- Comments partial here -->
-        <div class="comments" id="comments_<%= activity.id %>">
-		  <% if activity.comments %>
-		  	<!-- Rails shorthand for rendering comments partials under comment directory -->
-            <%= render activity.comments, activity: activity %>
-          <% end %>
-        </div>
-
-    </div>
-    <div class="comment-like-form row">
-      <div class="like-button col-sm-1">
-        <span class="glyphicon glyphicon-heart-empty"></span>
+      <div class="comment-like-form row">
+         <div class="like-button col-sm-1">
+            <span class="glyphicon glyphicon-heart-empty"></span>
+         </div>
+         <div class="comment-form col-sm-11">
+            <!-- Ajax call here -->
+            <%= form_for([activity, activity.comments.build], remote: true) do |f| %>
+            <%= f.text_field :content, placeholder: 'Add a comment...' %>
+            <% end %>
+         </div>
       </div>
-      <div class="comment-form col-sm-11">
-
-      	<!-- Ajax call here -->
-      	 <%= form_for([activity, activity.comments.build], remote: true) do |f| %>
-          <%= f.text_field :content, placeholder: 'Add a comment...' %>
-        <% end %>
-      </div>
-    </div>
-  </div>
+   </div>
 </div>

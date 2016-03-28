@@ -1,7 +1,43 @@
 <!-- only displaying my activities -->
 
-<h2 style="text-align:center;"> Displaying my activities</h2>
-<div style="text-align:center;"> <%= current_user.user_name %> </div>
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <!--breadcrumbs start -->
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                <li class="active"><a href="#">My Activities</a></li>
+                <li class="active"> <%= current_user.user_name %> </li>
+            </ul>
+            <!--breadcrumbs end -->
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+        	<div class="description-heading my-tasks-heading">
+        		<h4>Listing all activities for <%= current_user.user_name %> </h4>
+        		<p>Here are all of your personal activities for the procrastination experiment</p>
+        	</div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="stat">
+                <div class="stat-icon" style="color:#45cf95;">
+                    <i class="fa fa-check-square-o fa-3x stat-elem"></i>
+                </div>
+                <h5 class="stat-info">1000 Tasks</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <h2 style="text-align:center;"> Displaying my activities</h2> -->
+<!-- <div style="text-align:center;"> <%= current_user.user_name %> </div> -->
 
 <div class="activities-wrapper row">
   <% @activities.each do |activity| %>

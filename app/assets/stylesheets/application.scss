@@ -16,6 +16,12 @@
 @import "navbar.scss";
 @import "font-awesome";
 
+$green-text: #3c763d;
+$lightgreen-background: #cffabd;
+
+$blue-text: #31708f;
+$lightblue-background: #d9edf7;
+
 body {  
   /*background-color: #fafafa;*/
   background-color: #eef3f5;
@@ -36,9 +42,36 @@ body {
   width: 80%;
   left: 20%;
   overflow: auto;
+
+  .content {
+    padding: 20px ;
+    border: 1px solid #eee;
+  }
 }
 
 
+.description-heading {
+  background-color: $lightblue-background;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  box-shadow: 2px 2px 2px #eee;
+  margin-bottom: 15px;
+
+  h4, p {
+    color: $blue-text;
+  }
+}
+
+.my-tasks-heading { 
+  background-color: $lightgreen-background;
+
+  h4, p {
+    color: $green-text;
+  }
+
+
+}
 
 .header-text {
 	text-align: center;
@@ -53,7 +86,6 @@ body {
 }
 
 .activity {
-
   background-color: #fff;
   border-color: #edeeee;
   border-style: solid;
@@ -89,10 +121,7 @@ body {
     border-bottom: 1px solid #eeefef;
     border-top: 1px solid #eeefef;
   }
-
-
 }
-
 
 
 .caption {
@@ -213,6 +242,43 @@ html {
   margin-bottom: 0px;
 }
 
+/*stat info*/
+
+.stat-elem {
+    background-color: #fff;
+    padding: 18px;
+    border-radius: 40px;
+
+}
+
+.stat-info {
+  text-align: center;
+  background-color:#fff;
+  border-radius: 5px;
+  margin-top: -5px;
+  padding: 8px;
+  -webkit-box-shadow: 0 1px 0px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 0px rgba(0,0,0,0.05);
+  font-style: italic;
+}
+
+.stat-icon {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.st-red {
+  background-color: #F05050;
+}
+.st-green {
+  background-color: #27C24C;
+}
+.st-violet {
+  background-color: #7266ba;
+}
+.st-blue {
+  background-color: #23b7e5;
+}
 
 /*footer */
 .footer-main {
@@ -223,4 +289,12 @@ html {
   padding: 7px 13px;
   border-top: 1px solid #eee;
   text-align: center;
+}
+
+/*Breadcrumbs*/
+.breadcrumb {
+  background-color: #fff;
+}
+.breadcrumb a {
+  color: #000;
 }

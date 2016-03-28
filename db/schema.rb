@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20160308053635) do
-
+ActiveRecord::Schema.define(version: 20160328050706) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -26,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160308053635) do
     t.datetime "image_updated_at"
     t.integer  "user_id"
     t.boolean  "is_completed",       default: false
+    t.decimal  "points"
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"
@@ -71,6 +70,8 @@ ActiveRecord::Schema.define(version: 20160308053635) do
     t.integer  "score",                  default: 0
     t.integer  "level",                  default: 1
     t.text     "experimental_condition", default: "Initial condition"
+    t.decimal  "points"
+    t.string   "experiment_state"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

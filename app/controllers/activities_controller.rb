@@ -16,7 +16,7 @@ class ActivitiesController < ApplicationController
 	def create
 	  @activity = current_user.activities.build(activity_params)
 
-	  if @activity.save
+    if @activity.save
 		flash[:success] = "Your activity has been created!"
 		redirect_to activities_path
 	  else
@@ -51,12 +51,18 @@ class ActivitiesController < ApplicationController
 
   # to display all of my activities
   def my_activities
-    @activities = Activity.all
+    @activities = Activity.where(:user_id => params[:id])
   end
+
+  # to display all of my completed activities
+  def my_completed_activities
+    @activities = Activity.where(["user_id = ? and is_completed = ?", params[:id], true])
+  end
+
 
   #user details page
   def user_details
-    @activities = Activity.all
+    @details = [User.find(current_user.id).score, User.find(current_user.id).level]
   end
 
 	private 

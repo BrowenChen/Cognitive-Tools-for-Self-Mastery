@@ -1,7 +1,7 @@
 <!-- Activity partial -->
 <div class="activities-wrapper">
-   <div class="activity">
-      <div class="activity-head">
+   <div class="activity panel">
+      <header class="activity-head panel-heading">
          <div class="thumb-img"></div>
          <div class="user-name">
             <%= activity.user.user_name %>
@@ -9,18 +9,20 @@
          <div class="time-ago">
             <%= time_ago_in_words activity.created_at %>
          </div>
-      </div>
-      <div class="image center-block">
+      </header>
+<!--       <div class="image center-block">
          <%= link_to (image_tag activity.image.url(:medium), class:'img-responsive'), activity_path(activity) %>
-         <button class="complete_activity_button btn btn-success"> Finish Task </button>
-      </div>
-      <div class="activity-bottom">
+      </div> -->
+    
+      <div class="activity-bottom panel-body">
          <div class="caption">
             <div class="user-name">
                <%= activity.user.user_name %>
             </div>
             <%= activity.content %>
          </div>
+
+         <button class="complete_activity_button btn btn-success"> Finish Task </button>           
          <!-- Comments partial here -->
          <div class="comments" id="comments_<%= activity.id %>">
             <% if activity.comments %>

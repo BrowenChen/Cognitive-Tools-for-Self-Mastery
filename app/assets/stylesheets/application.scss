@@ -131,8 +131,14 @@ body {
 }
 
 /*Comments SCSS*/
+.comment-like-form {
+  padding: 15px;
+}
 
 .activity-bottom {
+
+  padding: 15px;
+
   .user-name, .comment-content {
     display: inline;
   }
@@ -229,6 +235,8 @@ html {
 }
 
 .panel-heading{
+  border-bottom: 1px solid #eee;
+  background-color: #FAFAFA;
   h1 {
     text-align: center;
   }

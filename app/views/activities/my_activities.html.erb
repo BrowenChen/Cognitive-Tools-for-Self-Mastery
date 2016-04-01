@@ -75,10 +75,36 @@
 <!-- <div style="text-align:center;"> <%= current_user.user_name %> </div> -->
 
 <style>
+
+    .entire-activity-display {
+        position: relative;
+        height: 500px;
+    }
     .activity-display {
         position: relative;
         border: 1px solid #eee;
         height: 80%;
+        width: 95%;
+        padding-bottom: 5px;
+    }
+
+    .panel-body {
+
+    }
+
+    .clear:before,
+    .clear:after {
+      content:" ";
+      display:table;
+    }
+    .clear:after {
+      clear:both;
+    }
+
+    #activity-progress-input {
+        width: 70%;
+        margin-right: 15px;
+        padding: 0;
     }
 
 </style>
@@ -87,11 +113,11 @@
 <div class="row" style="margin: 10px;">
     <div class="col-md-8">
        <!--Activity Main Screen-->
-       <section class="panel">
+       <section class="panel entire-activity-display">
           <header class="panel-heading">
             Activity Display
           </header>
-          <div class="panel-body">
+          <div class="panel-body clear">
              <div class="container" style="width: 600px; height: 330px;">
                  <section class="panel general activity-display">
                             <header class="panel-heading tab-bg-dark-navy-blue">
@@ -113,7 +139,7 @@
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div id="home" class="tab-pane active">
-                                        First panel activity
+                                        <%= render 'activityPanelContent' %>
                                     </div>
                                     <div id="about" class="tab-pane">
                                         Second panel activity
@@ -122,21 +148,32 @@
                                         Third panel activity
                                     </div>
                                     <div id="contact" class="tab-pane">
-                                        Fourth panel activity
+                                        <%= render 'activityPanelContent' %>
                                     </div>
                                 </div>
                             </div>
                 </section>
                 <div class="row" style="padding: 15px;">
+                  <form class="form-inline" role="form">
+                      <div class="form-group">
+                          <input type="email" class="form-control" id="activity-progress-input" placeholder="Activity Progress">
+                      </div>
+                      <button type="submit" class="btn btn-success">Update Activity</button>
+                  </form>
+
+
+
+
                     <button class="btn btn-danger"> Finish Activity </button>
                     <button class="btn btn-info"> Export </button>
                     <button class="btn btn-warning"> Log </button>
+
+
                 </div>
 
              </div>
           </div>
-          <footer class="panel-footer">
-          </footer>          
+
        </section>
        <!--earning graph end-->
     </div>

@@ -27,23 +27,6 @@
 
     <div class="row" style="padding: 15px;">
 
-                <div class="col-md-2">
-                    <div class="stat">
-                        <div class="stat-icon" style="color:#45cf95;">
-                            <i class="fa fa-check-square-o fa-3x stat-elem"></i>
-                        </div>
-                        <h5 class="stat-info">928 Tasks</h5>
-                    </div>
-                </div>    
-
-                  <div class="progress progress-striped">
-                    <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                      <span class="sr-only">40% Complete (success)</span>
-                    </div>
-                  </div>
-
-
-
 
 <!--         <section class="panel">
             <header class="panel-heading">
@@ -107,6 +90,13 @@
         padding: 0;
     }
 
+    /*Container for buttons in the activity container*/
+    .activity-functions {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+    }    
+
 </style>
 
 
@@ -119,23 +109,13 @@
           </header>
           <div class="panel-body clear">
              <div class="container" style="width: 600px; height: 330px;">
+                <div class="container activity-functions">
+                    <button class="btn btn-danger"> Pause</button>
+                    <button class="btn btn-info"> Abort </button>
+                    <button class="btn btn-warning"> Play Tetris </button>
+                </div>
+
                  <section class="panel general activity-display">
-                            <header class="panel-heading tab-bg-dark-navy-blue">
-                                <ul class="nav nav-tabs">
-                                    <li class="active">
-                                        <a data-toggle="tab" href="#home">First </a>
-                                    </li>
-                                    <li class="">
-                                        <a data-toggle="tab" href="#about">Second </a>
-                                    </li>
-                                    <li class="">
-                                        <a data-toggle="tab" href="#profile">Third</a>
-                                    </li>
-                                    <li class="">
-                                        <a data-toggle="tab" href="#contact">Fourth</a>
-                                    </li>
-                                </ul>
-                            </header>
                             <div class="panel-body">
                                 <div class="tab-content">
                                     <div id="home" class="tab-pane active">
@@ -160,15 +140,6 @@
                       </div>
                       <button type="submit" class="btn btn-success">Update Activity</button>
                   </form>
-
-
-
-
-                    <button class="btn btn-danger"> Finish Activity </button>
-                    <button class="btn btn-info"> Export </button>
-                    <button class="btn btn-warning"> Log </button>
-
-
                 </div>
 
              </div>
@@ -195,13 +166,21 @@
                 <% end %>
               <% end %>
             </div>
-             <div class="alert alert-warning">
-                <button data-dismiss="alert" class="close close-sm" type="button">
-                <i class="fa fa-times"></i>
-                </button>
-                <strong>Warning!</strong> Best check yo self, you're not looking too good.
-             </div>
           </div>
+
+            <header class="panel-heading tab-bg-dark-navy-blue">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a data-toggle="tab" href="#home">First </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#about">Second </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="#profile">Third</a>
+                    </li>
+                </ul>
+            </header>
        </section>
     </div>
 <!-- End row -->

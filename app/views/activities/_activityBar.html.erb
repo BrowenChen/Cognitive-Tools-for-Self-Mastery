@@ -1,7 +1,16 @@
+<!-- Partial for the activity tasks -->
 
- <div class="alert alert-block alert-danger">
-    <button data-dismiss="alert" class="close close-sm" type="button">
-    <i class="fa fa-times"></i>
+<style>
+
+
+</style>
+
+<div class="alert alert-block alert-danger">
+    <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
+    <!-- <i class="fa fa-times"></i> -->
     </button>
-    <strong><%= activity.user.user_name %></strong> <%= activity.content %>
+    <span><%= activity.id %></span>
+    <span><strong><%= activity.content %></strong> (32 minutes) </span>
+    <span style="float: right;">20 <i class="fa fa-star-o"></i> </span>
+    
  </div>

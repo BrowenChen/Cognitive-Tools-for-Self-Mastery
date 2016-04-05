@@ -2,15 +2,36 @@
 
 <style>
 
+	.activity-bar {
+		margin: 5px;
+		position: relative;
+		padding-left: 0;
+		height: 100%;
+	}
 
+	.activity-bar-id {
+		height: 100%;
+		position: relative;
+		margin: 15px;
+		margin-left: 10px;
+	}	
+
+	.activity-bar-content {
+		padding: 15px;
+		width: 70%;
+		overflow: hid;
+
+	}
 </style>
 
-<div class="alert alert-block alert-danger">
+<div class="activity-bar alert alert-block alert-danger">
     <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
     <!-- <i class="fa fa-times"></i> -->
-    </button>
-    <span><%= activity.id %></span>
-    <span><strong><%= activity.content %></strong> (32 minutes) </span>
-    <span style="float: right;">20 <i class="fa fa-star-o"></i> </span>
+    <!-- </button> -->
+    <span class="activity-bar-id"><%= activity.id %></span>
+    <span class="activity-bar-content"><strong><%= activity.content %></strong> (32 min) 
+    	<span style="float: right;">20 <i class="fa fa-star-o"></i> </span>
+    </span>
+    
     
  </div>

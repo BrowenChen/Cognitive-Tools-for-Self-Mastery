@@ -1,5 +1,69 @@
-<h2 style="text-align:center;"> User Settings </h2>
-<div style="text-align:center;"> <%= current_user.user_name %> </div>
-<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
-<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
-<div style="text-align:center;"> <b> Experimental Condition: </b><%= current_user.experimental_condition %> </div>
+
+<style>
+	.user-container {
+		width: 60%;
+		margin-top: 50px;
+		background: #ffffff;
+		padding: 15px;
+		border-radius: 5px;
+	}
+
+	.user-jumbo {
+		height: 100%;
+		margin-bottom:0;
+	}
+
+	.export-buttons {
+		margin-top: 15px;
+		margin-bottom: 10px;
+		margin-left: 5px;
+
+	}
+</style>
+
+<div class="user-container container">
+	<div class="jumbotron user-jumbo">
+	  <h1 style="text-align:center;"> Account & Help </h1>
+	  <p>
+			<div style="text-align:center;"> <strong> Username: </strong> <%= current_user.user_name %></div>
+			<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
+			<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
+			<div style="text-align:center;"> <b> Experimental Condition: </b><%= current_user.experimental_condition %> </div>
+
+	  </p>
+	  <p style="text-align: center;"><a class="btn btn-primary btn-lg" href="#" role="button">Contact</a></p>
+	</div>
+
+	<div class="row export-buttons">
+		<a class="btn btn-info btn-md" href="#" role="button"> Quit Experiment</a>
+		<a class="btn btn-warning btn-md" href="#" role="button"> Export Experiment Code</a>
+		<a class="btn btn-success" data-toggle="modal" href="#myModal">
+	        About this Experiment
+	    </a>
+
+	    <!-- Modal -->
+	    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                    <h4 class="modal-title">Modal Tittle</h4>
+	                </div>
+	                <div class="modal-body">
+
+	                    Body goes here...
+
+	                </div>
+	                <div class="modal-footer">
+	                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+	                    <button class="btn btn-success" type="button">Save changes</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>		
+	</div>
+
+
+
+
+</div>

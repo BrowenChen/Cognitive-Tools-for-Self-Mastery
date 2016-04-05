@@ -127,10 +127,11 @@
                                 <li class="divider"></li>
 
                                     <li>
-                                        <a href="#">
-                                        <i class="fa fa-user fa-fw pull-right"></i>
-                                            Profile
-                                        </a>
+
+                                        <%= link_to user_details_activity_path(current_user) do %>
+                                        <i class="fa fa-user fa-fw pull-right"></i> <span> Profile </span>
+                                        <% end %>
+
                                         <a data-toggle="modal" href="#modal-user-settings">
                                         <i class="fa fa-cog fa-fw pull-right"></i>
                                             Settings
@@ -140,7 +141,6 @@
                                         <li class="divider"></li>
 
                                         <li>
-
                                             <%= link_to destroy_user_session_path, method: :delete do %>
                                                 <i class="fa fa-ban fa-fw pull-right"></i><span> Logout </span>
                                             <% end %>
@@ -151,7 +151,6 @@
                             </ul>
                         </div>        
     </nav>
-
 	<%= yield %>
 	<p class="notice"><%= notice %></p>
 	<p class="alert"><%= alert %></p>

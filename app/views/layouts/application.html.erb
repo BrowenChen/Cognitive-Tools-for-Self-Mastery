@@ -140,7 +140,11 @@
                                         <li class="divider"></li>
 
                                         <li>
-                                            <a href="#"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
+
+                                            <%= link_to destroy_user_session_path, method: :delete do %>
+                                                <i class="fa fa-ban fa-fw pull-right"></i><span> Logout </span>
+                                            <% end %>
+                                            <!-- <a href="#"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a> -->
                                         </li>
                                     </ul>
                                 </li>

@@ -126,8 +126,8 @@
 
                                 <li class="divider"></li>
 
+                                    <% if user_signed_in? %>
                                     <li>
-
                                         <%= link_to user_details_activity_path(current_user) do %>
                                         <i class="fa fa-user fa-fw pull-right"></i> <span> Profile </span>
                                         <% end %>
@@ -146,6 +146,14 @@
                                             <% end %>
                                             <!-- <a href="#"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a> -->
                                         </li>
+                                    <% else %>
+                                        <li>
+                                            <a data-toggle="modal" href="#modal-user-settings">
+                                                <i class="fa fa-cog fa-fw pull-right"></i>
+                                                    Please Log In
+                                            </a>
+                                        </li>
+                                    <% end %>                                       
                                     </ul>
                                 </li>
                             </ul>

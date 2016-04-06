@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406034302) do
+ActiveRecord::Schema.define(version: 20160406063819) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20160406034302) do
     t.datetime "updated_at",                       null: false
     t.integer  "user_id"
     t.boolean  "is_completed",     default: false
-    t.decimal  "points"
-    t.decimal  "percent_complete"
+    t.integer  "points",           default: 0
+    t.integer  "percent_complete", default: 0
+    t.float    "duration",         default: 0.0
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"

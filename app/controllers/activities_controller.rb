@@ -16,7 +16,8 @@ class ActivitiesController < ApplicationController
 	def create
 	  @activity = current_user.activities.build(activity_params)
 
-    if @activity.save
+	  if @activity.save
+		puts "CREATED ACTIVITY" 
 		flash[:success] = "Your activity has been created!"
 		redirect_to activities_path
 	  else
@@ -68,7 +69,7 @@ class ActivitiesController < ApplicationController
 	private 
 
 	def activity_params
-	  params.require(:activity).permit(:image, :content)
+	  params.require(:activity).permit(:image, :content, :points, :duration)
 	end
 
   def set_activity

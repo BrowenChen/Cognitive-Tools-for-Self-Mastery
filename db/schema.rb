@@ -11,20 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160328050706) do
+ActiveRecord::Schema.define(version: 20160406034302) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
     t.string   "content"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "user_id"
-    t.boolean  "is_completed",       default: false
+    t.boolean  "is_completed",     default: false
     t.decimal  "points"
+    t.decimal  "percent_complete"
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"

@@ -1,4 +1,26 @@
+<style>
+	.form-wrapper {
+		border: 1px solid #bce8f1;
+		padding: 0;
+	}	
+	.new-activity-heading {
+		background-color: #d9edf7;
+		color: #31708f;
+	}
+	
+	.panel-body {
+		padding: 10px;
+	}
+
+	.form-horizontal {
+		margin: 20px;
+	}
+</style>
 <div class="form-wrapper">
+  <header class="panel-heading new-activity-heading">
+	<h4> New Activity</h4>
+  </header>
+  <section class="panel-body">
   <%= simple_form_for @activity, html: { class: 'form-horizontal', multipart: true } do |f| %>
     <div class="form-group text-center">
       <%= f.input :content, input_html: { class: 'form-control' } %>
@@ -7,7 +29,12 @@
       <%= f.input :points, input_html: { class: 'form-control' } %>
     </div>
     <div class="form-group text-center">
-      <%= f.button :submit, class: 'btn btn-success' %>
+      <%= f.input :duration, input_html: { class: 'form-control' } %>
+    </div>
+    <div class="form-group text-center">
+      <%= f.button :submit, class: 'btn btn-info' %>
     </div>
   <% end %>
+
+  </section>
 </div>

@@ -1,4 +1,41 @@
+<style>
+    /*Container for buttons in the activity container*/
+    .activity-content-wrap {
+    	height: 300px;
+    }
+    .activity-functions {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+        padding-left: 0;
+    }   
+
+
+    .experiment-game-container {
+    	position: relative;
+    	height: 60%;
+    	border: 1px solid #eee;
+    	padding: 5px;
+    }
+
+</style>
 <div class="activity-content-wrap">
-	<h1> Activity Content </h1>
-	<p> Content here </p>
+    <div class="container activity-functions">
+        <button class="btn btn-danger"> Pause</button>
+        <button class="btn btn-info"> Abort </button>
+        <button class="btn btn-warning"> Play Tetris </button>
+    </div>
+	<h2> Activity Content </h2>
+	<div class="experiment-game-container">
+		<p>  Content here </p>
+	</div>
+
+    <div class="row" style="padding: 15px;">
+      <form class="form-inline" role="form">
+          <div class="form-group">
+              <input type="email" class="form-control" id="activity-progress-input" placeholder="Activity Progress" style="padding: 5px;">
+          </div>
+          <button type="submit" class="btn btn-success">Update Activity</button>
+      </form>
+    </div>	
 </div>

@@ -110,13 +110,13 @@
                  <section class="panel general activity-display">
                             <div class="panel-body">
                                 <div class="tab-content">
-                                    <div id="home" class="tab-pane active">
+                                    <div id="1" class="tab-pane active">
                                         <%= render 'activityPanelContent' %>
                                     </div>
-                                    <div id="about" class="tab-pane">
+                                    <div id="2" class="tab-pane">
                                         Second panel activity
                                     </div>
-                                    <div id="profile" class="tab-pane">
+                                    <div id="3" class="tab-pane">
                                         Third panel activity
                                     </div>
                                     <div id="contact" class="tab-pane">
@@ -134,6 +134,10 @@
        <!--earning graph end-->
     </div>
 
+    <style>
+
+
+    </style>
     
     <div class="col-lg-4">
        <!--chat start-->
@@ -147,25 +151,11 @@
               <% @activities.each do |activity| %>
                 <!-- Insert Activity partial only if activity id matches with current logged in user -->
                 <% if current_user.id == activity.user_id %>
-                    <%= render 'activityBar', activity: activity %>
+                    <span data-item-id="<%= activity.id%>" id="activity_<%= activity.id%>"><a id="activity_select" data-toggle="tab" href="#<%= activity.id%>"> <%= render 'activityBar', activity: activity %> </a></span>
                 <% end %>
               <% end %>
             </div>
           </div>
-
-            <header class="panel-heading tab-bg-dark-navy-blue">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a data-toggle="tab" href="#home">First </a>
-                    </li>
-                    <li class="">
-                        <a data-toggle="tab" href="#about">Second </a>
-                    </li>
-                    <li class="">
-                        <a data-toggle="tab" href="#profile">Third</a>
-                    </li>
-                </ul>
-            </header>
        </section>
     </div>
 <!-- End row -->
@@ -177,6 +167,5 @@
     <% if current_user.id == activity.user_id %>
     	<%= render 'activity', activity: activity %>
     <% end %>
-    
   <% end %>
 </div>

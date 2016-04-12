@@ -1,11 +1,12 @@
 class ActivitiesController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_activity, only: [:show, :edit, :update, :destroy]  
-  #ensure only you have access to modify your posts
-  before_action :owned_activity, only: [:edit, :update, :destroy] 
+  	#ensure only you have access to modify your posts
+	before_action :owned_activity, only: [:edit, :update, :destroy] 
 
 	def index
 	  @activities = Activity.all
+	  @users = User.all
 	end
 
 	def new
@@ -74,6 +75,8 @@ class ActivitiesController < ApplicationController
 
   def set_activity
     @activity = Activity.find(params[:id])
+    puts @activity
+    puts "The activties of this user"
   end	
 
   def owned_activity 

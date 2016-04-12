@@ -1,143 +1,72 @@
-
 <section class="content">
-    <div class="row">
-        <div class="col-md-12">
-            <!--breadcrumbs start -->
-            <ul class="breadcrumb">
-                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                <li class="active"><a href="#">LeaderBoard</a></li>
-                <li class="active">All Tasks</li>
-            </ul>
-            <!--breadcrumbs end -->
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-        	<div class="description-heading">
-        		<h4>Cognitive Tools for Self Mastery</h4>
-        		<p>Leaderboard section displaying where you currently stand in comparision to all other participants. </p>
-        	</div>
-        </div>
-    </div>
-
+   <div class="row">
+      <div class="col-md-12">
+         <!--breadcrumbs start -->
+         <ul class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active"><a href="#">LeaderBoard</a></li>
+            <li class="active">All Tasks</li>
+         </ul>
+         <!--breadcrumbs end -->
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-12">
+         <div class="description-heading">
+            <h4>Cognitive Tools for Self Mastery</h4>
+            <p>Leaderboard section displaying where you currently stand in comparision to all other participants. </p>
+         </div>
+      </div>
+   </div>
    <style>
-   .leaderboard {
-	width: 100%;
-   } 
+      .leaderboard {
+      width: 100%;
+      } 
    </style>
    <div class="row">
-        <div class="col-md-8 leaderboard"> 
-            <section class="panel">
-              <header class="panel-heading">
-                  Leader Board
+      <div class="col-md-8 leaderboard">
+         <section class="panel">
+            <header class="panel-heading">
+               Leader Board
             </header>
             <div class="panel-body table-responsive">
-                <table class="table table-hover">
+               <table class="table table-hover">
                   <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Subject Alias</th>
-                      <th>Total Points</th>
-                      <!-- <th>Client</th> -->
-                      <th>Level</th>
-                      <!-- <th>Price</th> -->
-                      <th>Status</th>
-                      <th>Progress</th>
-                  </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Facebook</td>
-                  <td>Mark</td>
-                  <!-- <td>Steve</td> -->
-                  <td>10/10/2014</td>
-                  <!-- <td>$1500</td> -->
-                  <td><span class="label label-danger">in progress</span></td>
-                  <td><span class="badge badge-info">50%</span></td>
-              </tr>
-              <tr>
-                  <td>2</td>
-                  <td>Twitter</td>
-                  <td>Evan</td>
-                  <!-- <td>Darren</td> -->
-                  <td>10/8/2014</td>
-                  <!-- <td>$1500</td> -->
-                  <td><span class="label label-success">completed</span></td>
-                  <td><span class="badge badge-success">100%</span></td>
-              </tr>
-              <tr>
-                  <td>3</td>
-                  <td>Google</td>
-                  <td>Larry</td>
-                  <!-- <td>Nick</td> -->
-                  <td>10/12/2014</td>
-                  <!-- <td>$2000</td> -->
-                  <td><span class="label label-warning">in progress</span></td>
-                  <td><span class="badge badge-warning">75%</span></td>
-              </tr>
-              <tr>
-                  <td>4</td>
-                  <td>LinkedIn</td>
-                  <td>Allen</td>
-                  <!-- <td>Rock</td> -->
-                  <td>10/01/2015</td>
-                  <!-- <td>$2000</td> -->
-                  <td><span class="label label-info">in progress</span></td>
-                  <td><span class="badge badge-info">65%</span></td>
-              </tr>
-              <tr>
-                  <td>5</td>
-                  <td>Tumblr</td>
-                  <td>David</td>
-                  <!-- <td>HHH</td> -->
-                  <td>01/11/2014</td>
-                  <!-- <td>$2000</td> -->
-                  <td><span class="label label-warning">in progress</span></td>
-                  <td><span class="badge badge-danger">95%</span></td>
-              </tr>
-              <tr>
-                  <td>6</td>
-                  <td>Tesla</td>
-                  <td>Musk</td>
-                  <!-- <td>HHH</td> -->
-                  <td>01/11/2014</td>
-                  <!-- <td>$2000</td> -->
-                  <td><span class="label label-info">in progress</span></td>
-                  <td><span class="badge badge-success">95%</span></td>
-              </tr>
-              <tr>
-                  <td>7</td>
-                  <td>Ghost</td>
-                  <td>XXX</td>
-                  <!-- <td>HHH</td> -->
-                  <td>01/11/2014</td>
-                  <!-- <td>$2000</td> -->
-                  <td><span class="label label-info">in progress</span></td>
-                  <td><span class="badge badge-success">95%</span></td>
-              </tr>
-          </tbody>
-      </table>
-  </div>
-</div>
-
+                     <tr>
+                        <th>#</th>
+                        <th>Subject Alias</th>
+                        <th>Total Points</th>
+                        <!-- <th>Client</th> -->
+                        <th>Level</th>
+                        <!-- <th>Price</th> -->
+                        <th>Status</th>
+                        <th>Progress</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <%  @users.each do |user| %>
+                     <tr>
+                        <td> <%= user.id %></td>
+                        <td> <%= user.user_name %></td>
+                        <td> <%= user.score %></td>
+                        <td> <%= user.level %></td>
+                        <td><span class="label label-danger"><%= user.experimental_condition %></span></td>
+                        <td><span class="badge badge-info">50%</span></td>
+                     </tr>
+                     <% end %> 
+                  </tbody>
+               </table>
+            </div>
+         </section>
+      </div>
+   </div>
 </section>
-
 <!--  -->
 <!-- <h1 class="header-text"> Cognitive Tools for Self Mastery</h1> -->
 <!-- <h3 style="text-align: center"> All tasks </h3> -->
-
-
 <div class="activities-wrapper row">
-  <% @activities.each do |activity| %>
-    <!-- Insert activity partial here -->
-    <%= render 'activity', activity: activity %>
-  <% end %>
+   <% @activities.each do |activity| %>
+   <!-- Insert activity partial here -->
+   <%= render 'activity', activity: activity %>
+   <% end %>
 </div>
-
-	
-
-
-
-

@@ -23,19 +23,32 @@
     <div class="container activity-functions">
         <button class="btn btn-danger"> Pause</button>
         <button class="btn btn-info"> Abort </button>
-        <button class="btn btn-warning"> Play Tetris </button>
+        <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
     </div>
 	<h2> Activity Content </h2>
 	<div class="experiment-game-container">
-		<p>  Content here </p>
+		<div class="game-content">  Content here </div>  
 	</div>
 
     <div class="row" style="padding: 15px;">
       <form class="form-inline" role="form">
-          <div class="form-group">
+<!--           <div class="form-group">
               <input type="email" class="form-control" id="activity-progress-input" placeholder="Activity Progress" style="padding: 5px;">
-          </div>
+          </div> -->
           <button type="submit" class="btn btn-success">Update Activity</button>
       </form>
     </div>	
 </div>
+
+
+<script>
+
+  function displayTetris() {
+    var tetrisGame = '<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html"/>';
+    // $(".game-content").html('<object type="text/html" id="tetris-game" data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html">
+    // </object>');
+    $(".game-content").html(tetrisGame);
+
+
+  }
+</script>

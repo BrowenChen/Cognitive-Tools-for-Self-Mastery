@@ -93,6 +93,29 @@
       height: 95%;
     }
  
+    #game-panel {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+
+    .tab-content {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+
+    .tab-pane {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+
+    #external-game {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
 </style>
 
@@ -108,16 +131,22 @@
              <div class="container experiment-partial">
 
                  <section class="panel general activity-display">
-                            <div class="panel-body">
+                            <div class="panel-body" id="game-panel">
                                 <div class="tab-content">
                                     <div id="1" class="tab-pane active">
                                         <%= render 'activityPanelContent' %>
                                     </div>
                                     <div id="2" class="tab-pane">
                                         Second panel activity
+                                        <object type="text/html" id="external-game" data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html">
+    </object>
+                                        <!-- Activity -->
+                                        <!-- http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html -->
                                     </div>
                                     <div id="3" class="tab-pane">
                                         Third panel activity
+                                        <!-- Tetris -->
+                                        <!-- http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html -->
                                     </div>
                                     <div id="contact" class="tab-pane">
                                         <%= render 'activityPanelContent' %>
@@ -169,3 +198,11 @@
     <% end %>
   <% end %>
 </div>
+
+
+<script>
+
+  
+  $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
+
+</script>

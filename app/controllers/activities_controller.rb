@@ -69,6 +69,16 @@ class ActivitiesController < ApplicationController
 
   #testing show message
   def finish_activity
+    @activity_id = params[:activity_id]
+    puts @activity_id
+    @activity = Activity.find(@activity_id)
+    puts @activity.points
+    @user = User.find(params[:user_id])
+    puts @user.user_name
+    @new_score = @user.score + @activity.points 
+    puts @new_score
+    @user.update(score: @new_score)
+
     respond_to do |format|
       format.js { render js: "alert('testing finish_activity function');" }  
     end

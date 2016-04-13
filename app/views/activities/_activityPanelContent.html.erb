@@ -36,7 +36,7 @@
               <input type="email" class="form-control" id="activity-progress-input" placeholder="Activity Progress" style="padding: 5px;">
           </div> -->
           <!-- <button type="submit" class="btn btn-success">Update Activity</button> --> 
-	  <%= link_to "Finish Activity", finish_activity_path, :remote => true, :type => "submit", :class => "btn btn-success"  %> 
+	  <%= link_to "Finish Activity", finish_activity_path(activity_id: "1", user_id: "1"), :remote => true, :type => "submit", :class => "btn btn-success"  %> 
       </form>
     </div>	
 </div>

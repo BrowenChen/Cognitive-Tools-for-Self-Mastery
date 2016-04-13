@@ -67,6 +67,13 @@ class ActivitiesController < ApplicationController
     @details = [User.find(current_user.id).score, User.find(current_user.id).level]
   end
 
+  #testing show message
+  def finish_activity
+    respond_to do |format|
+      format.js { render js: "alert('testing finish_activity function');" }  
+    end
+  end
+
 	private 
 
 	def activity_params

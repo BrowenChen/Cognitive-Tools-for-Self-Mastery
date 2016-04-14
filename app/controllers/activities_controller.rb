@@ -80,9 +80,15 @@ class ActivitiesController < ApplicationController
     @user.update(score: @new_score)
 
     respond_to do |format|
-      format.js { render js: "alert('testing finish_activity function');" }  
+      format.js { render js: "alert('Testing activity Function');" }  
     end
   end
+
+
+  # def set_activity_id
+  #   puts "activity_id"
+  #   puts params[:activity_id]
+  # end  
 
 	private 
 

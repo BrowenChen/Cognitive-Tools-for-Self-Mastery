@@ -57,7 +57,7 @@
 
     .entire-activity-display {
         position: relative;
-        height: 500px;
+        height: 550px;
     }
     .activity-display {
         position: relative;
@@ -69,7 +69,7 @@
 
     .panel-body {
       position: relative;
-      height: 90%;
+      height: 99%;
     }
 
     .clear:before,
@@ -134,7 +134,26 @@
                             <div class="panel-body" id="game-panel">
                                 <div class="tab-content">
                                     <div id="1" class="tab-pane active">
-                                        <%= render 'activityPanelContent' %>
+
+                                        <!-- Fix to create local client side variable of which activity id and to pass it into rails -->
+
+                                        <script>
+                                          $(document).ready(function(){
+                                            var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+                                            console.log(currentId);
+                                          });
+
+                                          var getActId = function() {
+                                            var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+                                            console.log(currentId);
+                                            return String(currentId);
+                                          }
+                                        </script>
+                                        <% @actId = capture do %>
+                                          <%= javascript_tag "document.write(getActId());" %>
+                                        <% end %> 
+
+                                        <%= render 'activityPanelContent', :activity_id => "1" %>
                                     </div>
                                     <div id="2" class="tab-pane">
                                         Second panel activity
@@ -147,9 +166,6 @@
                                         Third panel activity
                                         <!-- Tetris -->
                                         <!-- http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html -->
-                                    </div>
-                                    <div id="contact" class="tab-pane">
-                                        <%= render 'activityPanelContent' %>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +196,9 @@
               <% @activities.each do |activity| %>
                 <!-- Insert Activity partial only if activity id matches with current logged in user -->
                 <% if current_user.id == activity.user_id %>
-                    <span data-item-id="<%= activity.id%>" id="activity_<%= activity.id%>"><a id="activity_select" data-toggle="tab" href="#<%= activity.id%>"> <%= render 'activityBar', activity: activity %> </a></span>
+                    <span data-item-id="<%= activity.id%>" id="activity_<%= activity.id%>">
+                      <a id="activity_select" data-toggle="tab" href="#<%= activity.id%>"> <%= render 'activityBar', activity: activity %> </a>
+                    </span>
                 <% end %>
               <% end %>
             </div>
@@ -201,8 +219,5 @@
 
 
 <script>
-
-  
   $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
-
 </script>

@@ -21,7 +21,7 @@
 </style>
 <div class="activity-content-wrap">
     <div class="container activity-functions">
-        <button class="btn btn-danger"> Pause</button>
+        <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
     </div>
@@ -38,7 +38,6 @@
           </div>
           <!-- <button type="submit" class="btn btn-success">Update Activity</button> --> 
 	         <%= link_to "Finish Activity", finish_activity_path(activity_id: activity_id, :user_id => current_user.id ), :remote => true, :type => "submit", :class => "btn btn-success"  %> 
-
       </form>
     </div>	
 </div>
@@ -49,7 +48,11 @@
   function displayTetris() {
     var tetrisGame = '<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
     $(".game-content").html(tetrisGame);
-
-
   }
+
+  function displayExperiment() {
+    var experiment = '<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
+      $(".game-content").html(experiment);
+  }
+
 </script>

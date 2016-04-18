@@ -34,15 +34,32 @@
       <form class="form-inline" role="form">
           <!-- Validation code input -->
           <div class="form-group">
-              <input type="email" class="form-control" id="activity-progress-input" placeholder="Enter Code Here" style="padding: 5px; width: 90%;">
+              <input type="password" class="form-control" id="activity-progress-input" placeholder="Enter Code Here" style="padding: 5px; width: 90%;" onkeyup="check_code(this.value)">
           </div>
           <!-- <button type="submit" class="btn btn-success">Update Activity</button> --> 
-	         <%= link_to "Finish Activity", finish_activity_path(activity_id: activity_id, :user_id => current_user.id ), :remote => true, :type => "submit", :class => "btn btn-success"  %> 
+
+	         <%= link_to "Finish Activity", finish_activity_path(activity_id: activity_id, :user_id => current_user.id ), :remote => true, :type => "submit", :class => "btn btn-success", :id => "update_score_btn", :disabled => true  %> 
       </form>
     </div>	
 </div>
 <script>
 
+
+  //Check activity code
+  function check_code(val) {
+      var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+
+      // Javascript GET call
+      $.get('/activity_detail/' + String(currentId), function(data){     
+        var activity_object = data[0];
+        if (val == activity_object.code){
+          console.log("success");
+          $('#update_score_btn').removeAttr("disabled");
+        };
+      });
+  }
+
+  // FrontEnd Controller for activity view
   function displayTetris() {
     var tetrisGame = '<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
     $(".game-content").html(tetrisGame);

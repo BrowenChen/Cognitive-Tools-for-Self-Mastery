@@ -71,7 +71,7 @@ class ActivitiesController < ApplicationController
   def finish_activity
     @activity_id = params[:activity_id]
     puts @activity_id
-    @activity = Activity.find(@activity_id)
+    @activity = Activity.where("a_id = ?", params[:activity_id]).first;
     puts @activity.points
     @user = User.find(params[:user_id])
     puts @user.user_name
@@ -80,7 +80,7 @@ class ActivitiesController < ApplicationController
     @user.update(score: @new_score)
 
     respond_to do |format|
-      format.js { render js: "alert('Testing activity Function');" }  
+      format.js { render js: "window.location.reload();" }  
     end
   end
 

@@ -33,7 +33,7 @@
 	    <div>
 			<ul class="nav nav-custom-list">
 			  <% if user_signed_in? %>
-			    <li class="active">
+			    <li>
 			       <%= link_to new_activity_path do %>
 			       	 <i class="fa fa-dashboard"></i> <span> New Activity </span>
 			       <% end %>
@@ -72,6 +72,16 @@
 	</div>
 
 </nav>
+
+<script>
+	//Fix the active nav element bug
+	$("ul.nav li").click(function(){
+		$("ul.nav li").removeClass("active");		
+		$(this).addClass("active");
+	});
+
+</script>
+
 
 <!-- 
 <nav class="navbar navbar-default">

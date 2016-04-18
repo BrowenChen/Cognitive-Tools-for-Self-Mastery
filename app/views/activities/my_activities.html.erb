@@ -63,8 +63,9 @@
         position: relative;
         border: 1px solid #eee;
         height: 95%;
-        width: 95%;
+        width: 100%;
         padding-bottom: 5px;
+        padding-right: 0;
     }
 
     .panel-body {
@@ -89,8 +90,9 @@
 
     .experiment-partial {
       position: relative;
-      width: 95%;
+      width: 100%;
       height: 95%;
+      padding: 0;
     }
  
     #game-panel {
@@ -156,11 +158,7 @@
                                         <%= render 'activityPanelContent', :activity_id => "1" %>
                                     </div>
                                     <div id="2" class="tab-pane">
-                                        Second panel activity
-                                        <object type="text/html" id="external-game" data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html">
-    </object>
-                                        <!-- Activity -->
-                                        <!-- http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html -->
+                                        <%= render 'activityPanelContent', :activity_id => "2" %>
                                     </div>
                                     <div id="3" class="tab-pane">
                                         Third panel activity
@@ -218,6 +216,13 @@
 </div>
 
 
+<div class="experiment-display">
+
+</div>
+
+
 <script>
+  //Script delete this later 
+
   $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
 </script>

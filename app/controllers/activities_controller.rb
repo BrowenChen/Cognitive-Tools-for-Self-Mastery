@@ -93,7 +93,7 @@ class ActivitiesController < ApplicationController
 	private 
 
 	def activity_params
-	  params.require(:activity).permit(:image, :content, :points, :duration)
+	  params.require(:activity).permit(:image, :content, :points, :duration, :code)
 	end
 
   def set_activity

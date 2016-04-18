@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160418004810) do
     t.integer  "points",           default: 0
     t.integer  "percent_complete", default: 0
     t.float    "duration",         default: 0.0
+    t.text     "code",             default: "xyz"
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"

@@ -15,3 +15,13 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+// click handling for left nav
+
+$(function(){ 
+     var navMain = $(".nav-custom-list");
+     navMain.on("click", "a", null, function () {
+     	//Alert
+     });
+ });

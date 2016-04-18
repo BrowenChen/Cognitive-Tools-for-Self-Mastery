@@ -78,6 +78,9 @@ class ActivitiesController < ApplicationController
     @new_score = @user.score + @activity.points 
     puts @new_score
     @user.update(score: @new_score)
+    
+    puts Time.now
+    @activity.update(activity_time_completed: Time.now);
 
     respond_to do |format|
       format.js { render js: "window.location.reload();" }  

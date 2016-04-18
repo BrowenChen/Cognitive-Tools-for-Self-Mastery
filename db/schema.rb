@@ -11,20 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418040723) do
+ActiveRecord::Schema.define(version: 20160418220849) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
     t.string   "content"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.integer  "user_id"
-    t.boolean  "is_completed",     default: false
-    t.integer  "points",           default: 0
-    t.integer  "percent_complete", default: 0
-    t.float    "duration",         default: 0.0
-    t.text     "code",             default: "xyz"
-    t.integer  "a_id",             default: 1
+    t.boolean  "is_completed",            default: false
+    t.integer  "points",                  default: 0
+    t.integer  "percent_complete",        default: 0
+    t.float    "duration",                default: 0.0
+    t.text     "code",                    default: "xyz"
+    t.integer  "a_id",                    default: 1
+    t.datetime "activity_time_completed"
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"

@@ -23,14 +23,17 @@
   <section class="panel-body">
   <%= simple_form_for @activity, html: { class: 'form-horizontal', multipart: true } do |f| %>
     <div class="form-group text-center">
-      <%= f.input :content, input_html: { class: 'form-control' } %>
+      <%= f.input :content, placeholder: 'Activity Title', input_html: { class: 'form-control' } %>
     </div>
     <div class="form-group text-center">
-      <%= f.input :points, input_html: { class: 'form-control' } %>
+      <%= f.input :points, placeholder: 'Enter point value', input_html: { class: 'form-control' }, value: " " %>
     </div>
     <div class="form-group text-center">
-      <%= f.input :duration, input_html: { class: 'form-control' } %>
+      <%= f.input :duration, placeholder: '0.0 Minutes', input_html: { class: 'form-control', value: "" } %>
     </div>
+    <div class="form-group text-center">
+      <%= f.input :code,  placeholder: 'Activity Completion Code', label:false, input_html: { class: 'form-control', value: "" } %>
+    </div>    
     <div class="form-group text-center">
       <%= f.button :submit, class: 'btn btn-info' %>
     </div>

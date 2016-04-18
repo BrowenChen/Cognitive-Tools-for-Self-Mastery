@@ -41,8 +41,6 @@
       </form>
     </div>	
 </div>
-
-
 <script>
 
   function displayTetris() {
@@ -51,8 +49,10 @@
   }
 
   function displayExperiment() {
-    var experiment = '<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
+    var experiment = '<object id="vigilance" data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
       $(".game-content").html(experiment);
+
+      // document.getElementById('vigilance').style.width = '350px';
   }
 
 </script>

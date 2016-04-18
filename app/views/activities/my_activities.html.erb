@@ -192,8 +192,7 @@
              My Activity List
           </header>
           <div class="panel-body" id="noti-box">
-
-            <div class="activities-wrapper row">
+            <div class="activities-wrapper row" style="padding-top: 10px;">
               <% @activities.each do |activity| %>
                 <!-- Insert Activity partial only if activity id matches with current logged in user -->
                 <% if current_user.id == activity.user_id %>

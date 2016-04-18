@@ -1,0 +1,15 @@
+                                        <script>
+                                          $(document).ready(function(){
+                                            var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+                                            console.log(currentId);
+                                          });
+
+                                          var getActId = function() {
+                                            var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+                                            console.log(currentId);
+                                            return String(currentId);
+                                          }
+                                        </script>
+                                        <% @actId = capture do %>
+                                          <%= javascript_tag "document.write(getActId());" %>
+                                        <% end %> 

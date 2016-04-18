@@ -25,7 +25,7 @@
         <button class="btn btn-info"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
     </div>
-	<h2> Activity Content </h2>
+	<h2> Activity Content <%= activity_id %></h2>
 	<div class="experiment-game-container" style="overflow: hidden;">
 		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  Content here </div>  
 	</div>
@@ -49,9 +49,24 @@
   }
 
   function displayExperiment() {
-    var experiment = '<object id="vigilance" data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
-      $(".game-content").html(experiment);
 
+      // GET request to backend with activity id, to get the activity's completion code and duration from the backend. 
+      //Get the current active activity Id.
+      var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+      
+      // Javascript GET call
+      $.get('/activity_detail/' + String(currentId), function(data){ 
+        console.log(data[0]);
+        var activity_object = data[0];
+        var act_duration = activity_object.duration;
+        var act_code = activity_object.code;
+        console.log(act_code + act_duration);
+        
+        // Experiment URL
+        var experiment = '<object id="vigilance" data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
+      
+        $(".game-content").html(experiment);
+      });      
       // document.getElementById('vigilance').style.width = '350px';
   }
 

@@ -84,6 +84,13 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def get_activity_detail
+    @activity = Activity.where("a_id = ?", params[:id]);
+    puts "Getting activity detail"
+    @act_duration = @activity.first.duration
+    @act_code = @activity.first.code
+    render json: @activity
+  end
 
   # def set_activity_id
   #   puts "activity_id"
@@ -93,12 +100,12 @@ class ActivitiesController < ApplicationController
 	private 
 
 	def activity_params
-	  params.require(:activity).permit(:image, :content, :points, :duration, :code)
+	  params.require(:activity).permit(:image, :content, :points, :duration, :code, :a_id)
 	end
 
   def set_activity
     @activity = Activity.find(params[:id])
-    puts @activity
+    puts @activity[:duration]
     puts "The activties of this user"
   end	
 

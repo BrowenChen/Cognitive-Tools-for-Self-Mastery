@@ -139,32 +139,35 @@
 
                                         <!-- Fix to create local client side variable of which activity id and to pass it into rails -->
 
-                                        <script>
-                                          $(document).ready(function(){
-                                            var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-                                            console.log(currentId);
-                                          });
-
-                                          var getActId = function() {
-                                            var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-                                            console.log(currentId);
-                                            return String(currentId);
-                                          }
-                                        </script>
-                                        <% @actId = capture do %>
-                                          <%= javascript_tag "document.write(getActId());" %>
-                                        <% end %> 
-
                                         <%= render 'activityPanelContent', :activity_id => "1" %>
                                     </div>
                                     <div id="2" class="tab-pane">
                                         <%= render 'activityPanelContent', :activity_id => "2" %>
                                     </div>
                                     <div id="3" class="tab-pane">
-                                        Third panel activity
-                                        <!-- Tetris -->
-                                        <!-- http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html -->
+                                        <%= render 'activityPanelContent', :activity_id => "3" %>
                                     </div>
+                                    <div id="4" class="tab-pane">
+                                        <%= render 'activityPanelContent', :activity_id => "4" %>
+                                    </div> 
+                                    <div id="5" class="tab-pane">
+                                        <%= render 'activityPanelContent', :activity_id => "5" %>
+                                    </div>   
+                                    <div id="6" class="tab-pane">
+                                        <%= render 'activityPanelContent', :activity_id => "6" %>
+                                    </div>   
+                                    <div id="7" class="tab-pane">
+                                        <%= render 'activityPanelContent', :activity_id => "7" %>
+                                    </div>   
+                                    <div id="8" class="tab-pane">
+                                        <%= render 'activityPanelContent', :activity_id => "8" %>
+                                    </div>       
+                                    <div id="9" class="tab-pane">
+                                        <%= render 'activityPanelContent', :activity_id => "9" %>
+                                    </div>
+                                    <div id="10" class="tab-pane">
+                                        Tenth panel activity
+                                    </div>                                                                                                                  
                                 </div>
                             </div>
                 </section>
@@ -194,8 +197,10 @@
               <% @activities.each do |activity| %>
                 <!-- Insert Activity partial only if activity id matches with current logged in user -->
                 <% if current_user.id == activity.user_id %>
-                    <span data-item-id="<%= activity.id%>" id="activity_<%= activity.id%>">
-                      <a id="activity_select" data-toggle="tab" href="#<%= activity.id%>"> <%= render 'activityBar', activity: activity %> </a>
+                    <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
+                      <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>"> 
+                        <%= render 'activityBar', activity: activity %> 
+                      </a>
                     </span>
                 <% end %>
               <% end %>
@@ -224,5 +229,5 @@
 <script>
   //Script delete this later 
 
-  $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
+  // $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
 </script>

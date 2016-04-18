@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418004810) do
+ActiveRecord::Schema.define(version: 20160418040723) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160418004810) do
     t.integer  "percent_complete", default: 0
     t.float    "duration",         default: 0.0
     t.text     "code",             default: "xyz"
+    t.integer  "a_id",             default: 1
   end
 
   add_index "activities", ["user_id"], name: "index_activities_on_user_id"

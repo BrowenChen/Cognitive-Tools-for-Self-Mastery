@@ -15,6 +15,7 @@
 	.form-horizontal {
 		margin: 20px;
 	}
+  
 </style>
 <div class="form-wrapper">
   <header class="panel-heading new-activity-heading">
@@ -34,6 +35,9 @@
     <div class="form-group text-center">
       <%= f.input :code,  placeholder: 'Activity Completion Code', label:false, input_html: { class: 'form-control', value: "" } %>
     </div>    
+    <div class="form-group text-center">
+      <%= f.input :a_id,  placeholder: 'Unique Activity Id', label:false, input_html: { class: 'form-control', value: "" } %>
+    </div>      
     <div class="form-group text-center">
       <%= f.button :submit, class: 'btn btn-info' %>
     </div>

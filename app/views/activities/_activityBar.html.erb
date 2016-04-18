@@ -14,6 +14,7 @@
 		position: relative;
 		margin: 15px;
 		margin-left: 10px;
+		font-size: 90%;
 	}	
 
 	.activity-bar-content {
@@ -32,9 +33,9 @@
     <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
     <!-- <i class="fa fa-times"></i> -->
     <!-- </button> -->
-    <span class="activity-bar-id"><%= activity.id %></span>
-    <span class="activity-bar-content"><strong><%= activity.content %></strong> (<%= activity.duration %> min) 
-    	<span style="float: right;"><%= activity.points %> <i class="fa fa-star-o"></i> </span>
+    <span class="activity-bar-id"><%= activity.a_id %></span>
+    <span class="activity-bar-content"><strong><%= activity.content %></strong> <span style="font-size: 80%;">(<%= activity.duration %> min)</span>
+    	<span style="float: right; font-size: 80%;"><%= activity.points %> <i class="fa fa-star-o"></i> </span>
     </span>
     
     

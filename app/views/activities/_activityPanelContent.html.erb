@@ -66,6 +66,12 @@
   function displayTetris() {
     var tetrisGame = '<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
     $(".game-content").html(tetrisGame);
+
+    //Log Tetris Time
+    $.get('/start_tetris/', function(data) {
+	console.log(data));
+    });
+
   }
 
   function displayExperiment() {

@@ -17,5 +17,12 @@ class RewardsController < ApplicationController
 		#Check if Quitter record with current_user.id exists
 		# If so, take that, update tetris_time to current time
 		# if not, create a new Quitter record with tetris_time as current time
+		Time.zone = "America/Los_Angeles"
+		if Quitter.exists(:id current_user.id)
+			quitter = Quitter.find_by(user_id: current_user.id)
+			quitter.update(tetris_time: Time.new.to_s)
+		else
+			Quitter.create(user_id: current_user.id, tetris_time: Time.new.to_s)
+		end
 	end
 end

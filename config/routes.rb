@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   # get '/finish_activity' => 'activities#set_activity_id', as: :set_activity_id
   get '/activity_detail/:id' => 'activities#get_activity_detail', as: :get_activity_detail
 
+  get '/abort_activity/:id' => 'activities#abort_activity', as: :abort_activity
+
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

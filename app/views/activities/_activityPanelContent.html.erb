@@ -69,7 +69,7 @@
 
     //Log Tetris Time
     $.get('/start_tetris/', function(data) {
-	console.log(data));
+	     console.log(data);
     });
 
   }
@@ -79,7 +79,7 @@
       // GET request to backend with activity id, to get the activity's completion code and duration from the backend. 
       //Get the current active activity Id.
       var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-      
+      console.log("displaying ex");
       // Javascript GET call
       $.get('/activity_detail/' + String(currentId), function(data){ 
         console.log(data[0]);
@@ -100,6 +100,9 @@
 
   function removeExperiment() {
     $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Experiment Aborted </h4>");
+    $.get('/abort_activity/' + String(currentId), function(data){ 
+      console.log(data);
+    }
   }
 
 </script>

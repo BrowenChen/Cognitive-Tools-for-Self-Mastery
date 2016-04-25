@@ -31,6 +31,9 @@ Rails.application.routes.draw do
 
   get '/abort_activity/:id' => 'activities#abort_activity', as: :abort_activity
 
+  # secret admin code to set user as an admin
+  get '/enable_admin/:code' => 'activities#enable_admin' 
+
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

@@ -106,6 +106,24 @@ class ActivitiesController < ApplicationController
     render :text => "abort activity"
   end
 
+  def enable_admin
+    puts "enabling admin for current user"
+    puts params[:code].to_s	
+    @adminCode = '9128'
+    puts @adminCode.eql?(params[:code])
+    if params[:code].eql?(@adminCode)
+	if User.exists?(user_name: "Admin")
+		puts "Admin Account exists, setting admin privleges"
+		@adminUser = User.find_by(user_name: "Admin")
+		@adminUser.update(is_admin: true)
+	else
+		puts "No admin account"
+	end
+	render :text => "admin enabled"
+    else
+    	render :text => "Wrong Code" 
+    end
+  end
   # def set_activity_id
   #   puts "activity_id"
   #   puts params[:activity_id]

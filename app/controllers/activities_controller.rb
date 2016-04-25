@@ -81,6 +81,7 @@ class ActivitiesController < ApplicationController
     
     puts Time.now
     @activity.update(activity_time_completed: Time.now);
+    @activity.update(is_completed: true);
 
     respond_to do |format|
       format.js { render js: "window.location.reload();" }  
@@ -93,6 +94,16 @@ class ActivitiesController < ApplicationController
     @act_duration = @activity.first.duration
     @act_code = @activity.first.code
     render json: @activity
+  end
+
+  def abort_activity
+    Time.zone = "America/Los_Angeles"
+    puts Time.zone.now.to_s
+    @activity_id = params[:id]
+    @activity = Activity.where("a_id = ?", params[:id]).first;
+    @activity.update(abort_time: Time.now.to_s);
+    # puts @activity
+    render :text => "abort activity"
   end
 
   # def set_activity_id

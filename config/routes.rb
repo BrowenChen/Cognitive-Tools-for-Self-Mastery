@@ -34,6 +34,10 @@ Rails.application.routes.draw do
   # secret admin code to set user as an admin
   get '/enable_admin/:code' => 'activities#enable_admin' 
 
+  # set all default activities with admin's current activities
+  get '/set_default_activities' => 'activities#set_default_activities', as: :set_default_activities
+
+  get '/export_data' => 'activities#export_data', as: :export_data
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

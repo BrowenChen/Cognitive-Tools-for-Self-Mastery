@@ -111,10 +111,11 @@
 	<div class="admin-container container">
 		<h3> Admin controls. </h3>
 		<p> 
-			This is only visible to users with "Admin status." Options to set the default experimental activities and to export all user and activity data.
+			This is only visible to users with "Admin status." Options to set the default experimental activities and to export all user and activity data. 
 		</p>
 		<br>
-		<a class="btn btn-danger btn-md" href="/" role="button"> Set Default Activities</a>
-		<a class="btn btn-warning btn-md" href="/" role="button"> Export Data</a>
+		<!-- <a class="btn btn-danger btn-md" href="/set_default_activities" role="button"> Set Default Activities</a> -->
+		 <%= link_to "Set Default Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-danger btn-md", :id => "set_default_act_btn" %> 
+		 <%= link_to "Export Data", export_data_path(), :class => "btn btn-warning btn-md", :id => "export_data_btn" %> 
 	</div>
 <% end %>

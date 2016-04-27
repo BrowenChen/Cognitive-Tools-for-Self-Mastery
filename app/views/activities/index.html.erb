@@ -23,43 +23,48 @@
       width: 100%;
       } 
    </style>
-   <div class="row">
-      <div class="col-md-8 leaderboard">
-         <section class="panel">
-            <header class="panel-heading">
-               Leader Board
-            </header>
-            <div class="panel-body table-responsive">
-               <table class="table table-hover">
-                  <thead>
-                     <tr>
-                        <th>#</th>
-                        <th>Subject Alias</th>
-                        <th>Total Points</th>
-                        <!-- <th>Client</th> -->
-                        <th>Level</th>
-                        <!-- <th>Price</th> -->
-                        <th>Status</th>
-                        <th>Progress</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <%  @users.each do |user| %>
-                     <tr>
-                        <td> <%= user.id %></td>
-                        <td> <%= user.user_name %></td>
-                        <td> <%= user.score %></td>
-                        <td> <%= user.level %></td>
-                        <td><span class="label label-danger"><%= user.experimental_condition %></span></td>
-                        <td><span class="badge badge-info">50%</span></td>
-                     </tr>
-                     <% end %> 
-                  </tbody>
-               </table>
-            </div>
-         </section>
+
+
+   <% if current_user.is_admin? %>
+      <div class="row">
+         <div class="col-md-8 leaderboard">
+            <section class="panel">
+               <header class="panel-heading">
+                  Leader Board. <strong> Visible only to Admins </strong>
+               </header>
+               <div class="panel-body table-responsive">
+                  <table class="table table-hover">
+                     <thead>
+                        <tr>
+                           <th>#</th>
+                           <th>Subject Alias</th>
+                           <th>Total Points</th>
+                           <!-- <th>Client</th> -->
+                           <th>Level</th>
+                           <!-- <th>Price</th> -->
+                           <th>Status</th>
+                           <th>Progress</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <%  @users.each do |user| %>
+                        <tr>
+                           <td> <%= user.id %></td>
+                           <td> <%= user.user_name %></td>
+                           <td> <%= user.score %></td>
+                           <td> <%= user.level %></td>
+                           <td><span class="label label-danger"><%= user.experimental_condition %></span></td>
+                           <td><span class="badge badge-info">50%</span></td>
+                        </tr>
+                        <% end %> 
+                     </tbody>
+                  </table>
+               </div>
+            </section>
+         </div>
       </div>
-   </div>
+
+   <% end %>
 </section>
 <!--  -->
 <!-- <h1 class="header-text"> Cognitive Tools for Self Mastery</h1> -->

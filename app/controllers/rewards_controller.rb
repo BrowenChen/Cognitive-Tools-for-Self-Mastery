@@ -6,7 +6,6 @@ class RewardsController < ApplicationController
 		user.save
 		puts "quitting experiment"
 		puts current_user.id
-
 		Time.zone = "America/Los_Angeles"
 		#Check if Quitter with current user id already exists in db
 		if Quitter.exists?(user_id: current_user.id)
@@ -20,13 +19,11 @@ class RewardsController < ApplicationController
 		sign_out current_user
 		redirect_to root_path
 	end
-
-
+	
 	#Starting tetris
 	def start_tetris
 		#Check if Quitter record with current_user.id exists
 		# If so, take that, update tetris_time to current time
-		# if not, create a new Quitter record with tetris_time as current time
 		puts "starting tetris"
 		Time.zone = "America/Los_Angeles"
 		if Quitter.exists?(user_id: current_user.id)
@@ -41,6 +38,8 @@ class RewardsController < ApplicationController
 
 	#Abort activity
 	def abort_activity
+		puts "aborting activity"
+		Time.zone = "America/Los_Angeles"
 		render :text => "Aborting activity"
 	end
 end

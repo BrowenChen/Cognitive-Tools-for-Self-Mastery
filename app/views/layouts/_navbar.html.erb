@@ -33,11 +33,15 @@
 	    <div>
 			<ul class="nav nav-custom-list">
 			  <% if user_signed_in? %>
-			    <li>
-			       <%= link_to new_activity_path do %>
-			       	 <i class="fa fa-dashboard"></i> <span> New Activity </span>
-			       <% end %>
-			    </li>
+
+			  	<!-- Displays only if this user is the admin user -->
+			  	<% if current_user.is_admin? %>
+				    <li>
+				       <%= link_to new_activity_path do %>
+				       	 <i class="fa fa-dashboard"></i> <span> New Activity </span>
+				       <% end %>
+				    </li>
+			    <% end %>
 			    <!-- Path to user's personal activities -->
 			    <li>
 			      <%= link_to my_activities_activity_path(current_user) do %>

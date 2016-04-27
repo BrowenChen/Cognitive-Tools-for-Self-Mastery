@@ -17,8 +17,16 @@
 		margin-top: 15px;
 		margin-bottom: 10px;
 		margin-left: 5px;
-
 	}
+
+	.admin-container {
+		width: 60%;
+		margin-top: 50px;
+		background: #ffffff;
+		height: 250px;
+		padding: 15px;
+		border-radius: 5px;
+	}	
 </style>
 
 <div class="user-container container">
@@ -94,8 +102,19 @@
 	                </div>
 	            </div>
 	        </div>
-
 	    </div>
-
 	</div>
 </div>
+
+
+<% if current_user.is_admin? %>
+	<div class="admin-container container">
+		<h3> Admin controls. </h3>
+		<p> 
+			This is only visible to users with "Admin status." Options to set the default experimental activities and to export all user and activity data.
+		</p>
+		<br>
+		<a class="btn btn-danger btn-md" href="/" role="button"> Set Default Activities</a>
+		<a class="btn btn-warning btn-md" href="/" role="button"> Export Data</a>
+	</div>
+<% end %>

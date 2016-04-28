@@ -133,30 +133,24 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     puts "setting default activites"
     puts params[:current_user]
-    @activities = Activity.where(:user_id => params[:current_user])
+
+    @admin_id = User.where(:user_name => "Admin")
+    @activities = Activity.where(:user_id => @admin_id)
     puts @activities.count
 
-    # Function to take current admin's activities and set all users with these activities
-    # TODO
+    # Activity.destroy_all(:user_id => params[:current_user])
+    @activities.each do |record|
+      puts record
+      Activity.new(content: record.content, user_id: params[:current_user], points: record.points, duration: record.duration, code: record.code, a_id: record.a_id).save
+      puts "created new record"
+    end    
 
-
-    #
-    #
-    #
-    #
-    #
-
-
-    render :text => "Setting default activities"
-    # redirect_to root_path
+    redirect_to root_path
   end
 
   def export_data
     # Function to render all data from activities and users for the experimenter
     # TODO
-
-
-
     #
     #
     #    

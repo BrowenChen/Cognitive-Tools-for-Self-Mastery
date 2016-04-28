@@ -26,13 +26,13 @@ class RewardsController < ApplicationController
 		# If so, take that, update tetris_time to current time
 		puts "starting tetris"
 		Time.zone = "America/Los_Angeles"
-		if Quitter.exists?(user_id: current_user.id)
-			puts "User exists"
-			quitter = Quitter.find_by(user_id: current_user.id)
-			quitter.update(tetris_time: Time.new.to_s)
-		else
-			Quitter.create(user_id: current_user.id, tetris_time: Time.new.to_s)
-		end		
+		# if Quitter.exists?(user_id: current_user.id)
+		# 	puts "User exists"
+		# 	quitter = Quitter.find_by(user_id: current_user.id)
+		# 	quitter.update(tetris_time: Time.new.to_s)
+		# else
+		Quitter.create(user_id: current_user.id, tetris_time: Time.new.to_s)
+		# end		
 		render :text => "Starting Tetris"
 	end
 
@@ -40,6 +40,10 @@ class RewardsController < ApplicationController
 	def abort_activity
 		puts "aborting activity"
 		Time.zone = "America/Los_Angeles"
+		puts params[:id]
+		# activityAbortedTime = Time.new.to_s + ""
+		# Quitter.create(user_id: current_user.id, activityAbortTime: Time.new.to_s)
+
 		render :text => "Aborting activity"
 	end
 end

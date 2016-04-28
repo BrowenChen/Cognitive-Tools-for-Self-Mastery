@@ -71,14 +71,13 @@ class ActivitiesController < ApplicationController
   def finish_activity
     @activity_id = params[:activity_id]
     puts @activity_id
-    @activity = Activity.where("a_id = ?", params[:activity_id]).first;
+    @activity = Activity.where("a_id = ? AND user_id = ?", params[:activity_id], params[:user_id]).first;
     puts @activity.points
     @user = User.find(params[:user_id])
     puts @user.user_name
     @new_score = @user.score + @activity.points 
     puts @new_score
     @user.update(score: @new_score)
-    
     puts Time.now
     @activity.update(activity_time_completed: Time.now);
     @activity.update(is_completed: true);

@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   # get '/finish_activity' => 'activities#set_activity_id', as: :set_activity_id
   get '/activity_detail/:id' => 'activities#get_activity_detail', as: :get_activity_detail
 
+  get '/start_activity/:id' => 'activities#start_activity', as: :start_activity
+
   get '/abort_activity/:id' => 'activities#abort_activity', as: :abort_activity
 
   # secret admin code to set user as an admin

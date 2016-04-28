@@ -95,6 +95,11 @@
       
         $(".game-content").html(experiment);
       });      
+
+      // Starting Activity and logging in db
+      $.get('/start_activity/' + String(currentId), function(data){ 
+        console.log(data[0]);
+      });
       // document.getElementById('vigilance').style.width = '350px';
   }
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425213227) do
+ActiveRecord::Schema.define(version: 20160428202156) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -51,11 +51,15 @@ ActiveRecord::Schema.define(version: 20160425213227) do
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"
 
   create_table "quitters", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.integer  "user_id"
     t.string   "time_quit"
     t.string   "tetris_time"
+    t.string   "activityAbortTime"
+    t.string   "activity_id"
+    t.string   "activity_start_time"
+    t.string   "activity_finish_time"
   end
 
   create_table "todos", force: :cascade do |t|

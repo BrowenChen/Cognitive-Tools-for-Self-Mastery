@@ -23,7 +23,7 @@
 		width: 60%;
 		margin-top: 50px;
 		background: #ffffff;
-		height: 250px;
+		height: 400px;
 		padding: 15px;
 		border-radius: 5px;
 	}	
@@ -42,12 +42,27 @@
 	  <p style="text-align: center;"><a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal3">Contact</a></p>
 	</div>
 
+	<style>
+		#set_default_act_btn {
+			font-size: 80%;
+		}
+
+	</style>
 	<div class="row export-buttons">
-		<a class="btn btn-info btn-md" href="/quit_experiment" role="button"> Quit Experiment</a>
-		<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2"> Export Experiment Code</a>
-		<a class="btn btn-success" data-toggle="modal" href="#myModal">
-	        About this Experiment
-	    </a>
+		<!-- <a class="btn btn-info btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Set Activities</a> -->
+
+		<% if current_user.is_admin? %>
+			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
+			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
+			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
+
+		<% else %>
+			<%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 		
+			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
+			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
+			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
+
+		<% end %>
 	    <!-- Modal -->
 	    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	        <div class="modal-dialog">
@@ -74,7 +89,7 @@
 	                    <h4 class="modal-title">Contact Information</h4>
 	                </div>
 	                <div class="modal-body">
-				Here are the contact information for this experiment, should you have further questions.
+						Here are the contact information for this experiment, should you have further questions.
 	                </div>
 	                <div class="modal-footer">
 	                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
@@ -113,9 +128,17 @@
 		<p> 
 			This is only visible to users with "Admin status." Options to set the default experimental activities and to export all user and activity data. 
 		</p>
+		<h5>
+			Instructions for facilitating activities for an admin:
+		</h5>
+		<ul>
+			<li> Add activities with "New Activity" page, viewable only through admin access. This can be only granted if username is "Admin", and entering "/enable_admin/9128". </li>
+
+			<li> Add up to max 10 activities, with correct content title, duration, score, completion code, and activity number </li>
+
+			<li> Instruct experimentee's to create an account, click their account, and set their activities to get all the activities that an admin as set. </li>
+		</ul>
 		<br>
-		<!-- <a class="btn btn-danger btn-md" href="/set_default_activities" role="button"> Set Default Activities</a> -->
-		 <%= link_to "Set Default Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-danger btn-md", :id => "set_default_act_btn" %> 
 		 <%= link_to "Export Data", export_data_path(), :class => "btn btn-warning btn-md", :id => "export_data_btn" %> 
 	</div>
 <% end %>

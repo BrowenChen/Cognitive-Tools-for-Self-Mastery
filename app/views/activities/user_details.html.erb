@@ -55,13 +55,11 @@
 			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
-
 		<% else %>
 			<%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 		
 			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
-
 		<% end %>
 	    <!-- Modal -->
 	    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

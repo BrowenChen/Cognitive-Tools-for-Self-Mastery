@@ -144,7 +144,6 @@ class ActivitiesController < ApplicationController
       Activity.new(content: record.content, user_id: params[:current_user], points: record.points, duration: record.duration, code: record.code, a_id: record.a_id).save
       puts "created new record"
     end    
-
     redirect_to root_path
   end
 

@@ -29,6 +29,8 @@
 	}	
 </style>
 
+
+
 <div class="user-container container">
 	<div class="jumbotron user-jumbo">
 	  <h1 style="text-align:center;"> Account & Help </h1>
@@ -52,12 +54,12 @@
 		<!-- <a class="btn btn-info btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Set Activities</a> -->
 
 		<% if current_user.is_admin? %>
-			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
+			<a class="btn btn-warning btn-md" data-toggle="modal" href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
 		<% else %>
 			<%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 		
-			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
+			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
 		<% end %>
@@ -107,11 +109,15 @@
 	                <div class="modal-body">
 	                    Your export code is:
 	                    <br>
-	                    <strong> 231i2u3io1u </strong>
+	                    <strong id="export_code"> </strong>
+
+	                    <br>
+
+	                    <p> Use this code to redeem your rewards from the facilitator of this experiment.</p>
 	                </div>
 	                <div class="modal-footer">
-	                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-	                    <button class="btn btn-success" type="button">Save changes</button>
+	                    <button data-dismiss="modal" class="btn btn-success" type="button">Close</button>
+
 	                </div>
 	            </div>
 	        </div>
@@ -141,3 +147,18 @@
 		 <%= link_to "Export User Data", export_user_data_path(), :class => "btn btn-success btn-md", :id => "export_user_data_btn" %> 
 	</div>
 <% end %>
+
+
+
+<script>
+	// Code Generation function
+	var generate_code = function(){
+		console.log("Generating code");
+
+	  	$.get('/generate_code', function(data){    
+	  		console.log("get request");
+	  		console.log(data); 
+	  		$("#export_code").html(data);
+	  	});
+	}
+</script>

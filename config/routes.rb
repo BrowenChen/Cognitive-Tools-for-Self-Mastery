@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   get '/export_data' => 'activities#export_data', as: :export_data
   get '/export_user_data' => 'activities#export_user_data', as: :export_user_data
 
+  get '/generate_code/' => 'activities#generate_code', as: :generate_code
+
+
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

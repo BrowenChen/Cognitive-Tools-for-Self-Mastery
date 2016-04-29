@@ -143,7 +143,6 @@ class ActivitiesController < ApplicationController
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activityAbortTime: Time.now.to_s)
     end 
     
-
     # puts @activity
     render :text => "abort activity"
   end
@@ -189,13 +188,9 @@ class ActivitiesController < ApplicationController
     redirect_to root_path
   end
 
-  respond_to :json, :xml
+
   def export_data
-    # Function to render all data from activities and users for the experimenter
-    # TODO
-    #
-    #
-    #    
+    # Function to render all data from activities and users for the experimenter 
     @quitters = Quitter.all
 
     render json: @quitters
@@ -207,6 +202,59 @@ class ActivitiesController < ApplicationController
     render json: @users
   end
 
+  # Code generation for when users claim their payment
+  # FORMAT: [activities completed] 9 [User Id] 9 [User quit] 9 [user Experimental condition]
+  def generate_code
+    @user_id = current_user.id
+    @activities = Activity.where(:user_id => @user_id)
+    @user_experimental_condition = current_user.experimental_condition
+    @user_score = current_user.score
+    @user_quit = current_user.is_active
+
+    puts "Is user acitive"
+    puts @user_quit
+    puts @user_id
+    puts @user_experimental_condition
+    puts @user_score
+
+    @score = "b"
+
+    #Setting the activites Score
+    @activities.each do |record|
+      puts record
+      if record.is_completed
+        @score = @score + "1"
+      else 
+        @score = @score + "0"
+      end
+      puts @score
+    end      
+    @score = @score + "i"
+
+    # User ID
+    @score += @user_id.to_s
+    @score = @score + "d"
+
+    #user quit
+    if @user_quit
+      @score += "1"
+    else
+      @score += "0"
+    end
+    @score = @score + "q"
+
+    #User experimental Condition
+    if @user_experimental_condition == "Initial condition"
+      @score += "1"
+    else
+      @score += "0"
+    end
+    @score += "e"
+    puts @score
+    
+    render json: @score.to_json
+  end
+
 	private 
 
 	def activity_params
@@ -216,7 +264,7 @@ class ActivitiesController < ApplicationController
   def set_activity
     @activity = Activity.find(params[:id])
     puts @activity[:duration]
-    puts "The activties of this user"
+    puts "The activities of this user"
   end	
 
   def owned_activity 

@@ -56,9 +56,9 @@
           console.log("success");
           $('#update_score_btn').removeAttr("disabled");
         }
-	else {
-		 $('#update_score_btn').attr('disabled', true); 
-	}
+      	else {
+      		 $('#update_score_btn').attr('disabled', true); 
+      	}
       });
   }
 
@@ -70,7 +70,7 @@
     //Log Tetris Time
     $.get('/start_tetris/', function(data) {
 	     console.log(data);
-    });
+    });    
 
   }
 
@@ -80,6 +80,9 @@
       //Get the current active activity Id.
       var currentId = document.getElementsByClassName('tab-pane active')[0].id;
       console.log("displaying ex");
+
+
+
       // Javascript GET call
       $.get('/activity_detail/' + String(currentId), function(data){ 
         console.log(data[0]);
@@ -92,7 +95,7 @@
 
         // Experiment URL
         var experiment = '<object id="vigilance" data="' + String(http_link) + '" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
-      
+    
         $(".game-content").html(experiment);
       });      
 

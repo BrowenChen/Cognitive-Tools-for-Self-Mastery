@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   get '/set_default_activities' => 'activities#set_default_activities', as: :set_default_activities
 
   get '/export_data' => 'activities#export_data', as: :export_data
+  get '/export_user_data' => 'activities#export_user_data', as: :export_user_data
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

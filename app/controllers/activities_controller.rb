@@ -189,16 +189,23 @@ class ActivitiesController < ApplicationController
     redirect_to root_path
   end
 
+  respond_to :json, :xml
   def export_data
     # Function to render all data from activities and users for the experimenter
     # TODO
     #
     #
     #    
-    render :text => "Rendering all data from database for export "
+    @quitters = Quitter.all
+
+    render json: @quitters
+    # render :text => "Rendering all data from database for export "
   end
 
-
+  def export_user_data
+    @users = User.all
+    render json: @users
+  end
 
 	private 
 

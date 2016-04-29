@@ -20,9 +20,19 @@
 	    			<div class="pull-left info" id="user-description">
 	    				<% if user_signed_in? %>
 		    				<h4 id="user_name"> <%= current_user.user_name %> </h4>
-							<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
-							<br>	
-							<a href="#"><i class="fa fa-circle-o"></i> Score: <%= current_user.score %> </a>									    			
+
+		    				<!-- Psuedo Rewards with levels or points, or none displayed -->
+		    				<% if current_user.experimental_condition == "Initial condition" %>
+								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
+								<br>	
+								<a href="#"><i class="fa fa-circle-o"></i> Score: <%= current_user.score %> </a>		
+
+							<% else %>
+								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
+								<br>	
+								<a href="#"><i class="fa fa-circle-o"></i> </a>		
+							<% end %>	
+													    			
 		    			<% else %>
 		    				<h5> Please log in </h5>
 		    			<% end %>	

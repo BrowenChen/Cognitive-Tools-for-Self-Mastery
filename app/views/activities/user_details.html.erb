@@ -61,7 +61,7 @@
 			<%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 		
 			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
-			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
+			<a class="btn btn-danger btn-md" data-toggle="modal" href="#myModal4" onclick="quit_generate_code()" style="font-size: 80%;"> Quit Experiment</a>
 		<% end %>
 	    <!-- Modal -->
 	    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -97,6 +97,31 @@
 	            </div>
 	        </div>
 	    </div>	
+	    <!-- Quit experiment Modal -->
+	    <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	        <div class="modal-dialog">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                    <h4 class="modal-title">Quitting Experiment</h4>
+	                </div>
+	                <div class="modal-body">
+	                    You will be quitting this experiment by clicking confirm.
+          				<br>
+          				<br>
+          				Your export code is:
+	                    <br>
+	                    <strong id="quit_code"> </strong>
+	                    <br>
+
+	                    <p> Use this code to redeem your rewards from the facilitator of this experiment. </p>	                    
+	                </div>
+	                <div class="modal-footer">
+	                    <button data-dismiss="modal" class="btn btn-success" href="/quit_experiment" type="button">Confirm</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>		    
 
 	    <!-- Export Code modal	 -->
     	<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -160,5 +185,15 @@
 	  		console.log(data); 
 	  		$("#export_code").html(data);
 	  	});
+	}
+
+	var quit_generate_code = function() {
+		console.log("Generating code for quitting");
+
+	  	$.get('/generate_code', function(data){    
+	  		console.log("get request");
+	  		console.log(data); 
+	  		$("#quit_code").html(data);
+	  	});		
 	}
 </script>

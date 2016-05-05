@@ -122,6 +122,13 @@ class ActivitiesController < ApplicationController
     render :text => "Starting activity"
   end
 
+  def delete_activity
+    @activity_id = params[:id]
+    @current_user_id = current_user.id
+    Activity.where("a_id = ? AND user_id = ?", @activity_id, @current_user_id).destroy_all
+    render :text => "delete activity"
+  end
+
   def abort_activity
     Time.zone = "America/Los_Angeles"
     puts Time.zone.now.to_s
@@ -174,6 +181,9 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     puts "setting default activites"
     puts params[:current_user]
+ 
+    puts "Also randomizing experimental condition"
+
 
     @admin_id = User.where(:user_name => "Admin")
     @activities = Activity.where(:user_id => @admin_id)

@@ -34,12 +34,14 @@
 	}
 </style>
 
-
 <% if activity.is_completed? %>
 	<div class="activity-bar alert alert-block alert-success">
-	    <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
-	    <!-- <i class="fa fa-times"></i> -->
-	    <!-- </button> -->
+
+	<% if current_user.is_admin? %>
+	    <button data-dismiss="alert"  class="close close-sm" type="button" onclick='removeActivity(<%= activity.a_id %>)'> 
+		    <i class="fa fa-times"></i> 
+	    </button>
+	<% end %>
 	    <span class="activity-bar-id"><%= activity.a_id %></span>
 	    <span class="activity-bar-content"><strong style="font-size: 90%;"><strike> <%= activity.content %></strong> <span style="font-size: 80%;">(<%= activity.duration %> min)</span> </strike>
 	    	<span style="float: right; font-size: 80%;"> <i class="fa fa-check"></i> </span>
@@ -51,9 +53,14 @@
 	    <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
 	    <!-- <i class="fa fa-times"></i> -->
 	    <!-- </button> -->
+
+	<% if current_user.is_admin? %>
+	    <button data-dismiss="alert" class="close close-sm" type="button" onclick='removeActivity(<%= activity.a_id %>)'> 
+	    <i class="fa fa-times"></i> 
+	    </button>
+	<% end %>
 	    <span class="activity-bar-id"><%= activity.a_id %></span>
 	    <span class="activity-bar-content"><strong style="font-size: 90%;"><%= activity.content %></strong> <span style="font-size: 80%;">(<%= activity.duration %> min)</span>
-
 	    	<!-- Psuedo Rewards with points condition -->
 	    	<% if current_user.experimental_condition == "Initial condition" %>
 	    		<span style="float: right; font-size: 80%;"><%= activity.points %> <i class="fa fa-star-o"></i> </span>
@@ -65,4 +72,13 @@
 <% end %>
 
 
-
+<script>
+	var removeActivity = function(activity_id){
+		console.log("Deleting activity");
+		console.log(activity_id);
+     		$.get('/delete_activity/' + String(activity_id), function(data){ 
+        		console.log("deleting activity");
+      		});
+	}
+	
+</script>

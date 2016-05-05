@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   #   get 'products/:id' => 'catalog#view'
   get 'activities/:id' => 'activities#activity'
 
+  # delete activity with activity ID
+  get 'delete_activity/:id' => 'activities#delete_activity', as: :delete_activity
+
   get '/finish_activity' => 'activities#finish_activity', as: :finish_activity
 
   get '/quit_experiment' => 'rewards#quit_experiment'

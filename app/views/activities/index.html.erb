@@ -43,7 +43,7 @@
                            <th>Level</th>
                            <!-- <th>Price</th> -->
                            <th>Status</th>
-                           <th>Progress</th>
+                           <th>Is active</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -54,7 +54,7 @@
                            <td> <%= user.score %></td>
                            <td> <%= user.level %></td>
                            <td><span class="label label-danger"><%= user.experimental_condition %></span></td>
-                           <td><span class="badge badge-info">50%</span></td>
+                           <td><span class="badge badge-info"><%= user.is_active %></span></td>
                         </tr>
                         <% end %> 
                      </tbody>

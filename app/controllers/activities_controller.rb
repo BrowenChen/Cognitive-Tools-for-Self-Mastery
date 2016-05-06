@@ -181,7 +181,14 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     puts "setting default activites"
     puts params[:current_user]
- 
+
+    puts "Delete user's activities"
+
+    if Activity.where(:user_id => params[:current_user]).exists?
+      Activity.where(:user_id => params[:current_user]).destroy_all
+      puts "destroying all previous activities"
+    end
+
     puts "Also randomizing experimental condition"
 
 

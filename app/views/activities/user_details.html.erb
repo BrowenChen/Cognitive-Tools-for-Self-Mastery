@@ -50,7 +50,7 @@
 			<div style="text-align:center;"> <strong> Username: </strong> <%= current_user.user_name %></div>
 			<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
 			<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
-			<div style="text-align:center;"> <b> Experimental Condition: </b><%= current_user.experimental_condition %> </div>
+
 
 	  </p>
 	  <p style="text-align: center;"><a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal3">Contact</a></p>
@@ -68,10 +68,9 @@
 		<% if current_user.is_admin? %>
 			<a class="btn btn-warning btn-md" data-toggle="modal" href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
-			<a class="btn btn-danger btn-md" href="/quit_experiment" role="button" style="font-size: 80%;"> Quit Experiment</a>
 		<% else %>
 			<%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 		
-			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Export Experiment Code</a>
+			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 			<a class="btn btn-danger btn-md" data-toggle="modal" href="#myModal4" onclick="quit_generate_code()" style="font-size: 80%;"> Quit Experiment</a>
 		<% end %>
@@ -84,7 +83,15 @@
 	                    <h4 class="modal-title">About this Experiment</h4>
 	                </div>
 	                <div class="modal-body">
-	                    Text description for this experiment
+	                	<p> 
+							This HIT is a psychology experiment being conducted by Falk Lieder, a graduate student in Professor Tom Griffiths’s Computational Cognitive Science Lab at the University of California, Berkeley. This web application was built by Owen Chen, a research assistant under Falk Lieder.
+						</p>
+						<p>
+							This study is designed to investigate the effects of different types of digital to-do list tools on productivity and motivation. 
+						</p>
+						<p>
+							Your participation in this research is voluntary. You may refrain from answering any questions that make you uncomfortable and may quit the study at any time without penalty. 
+	                	</p>
 	                </div>
 	                <div class="modal-footer">
 	                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
@@ -101,7 +108,9 @@
 	                    <h4 class="modal-title">Contact Information</h4>
 	                </div>
 	                <div class="modal-body">
-						Here are the contact information for this experiment, should you have further questions.
+	                	<p>
+	                	If you have any questions about the study, feel free to contact Falk Lieder. He can be reached at falk.lieder@berkeley.edu. <br><br> If you have concerns about your rights as a participant in this experiment, please contact UC Berkeley's Committee for Protection of Human Subjects at (510) 642-7461 or subjects@berkeley.edu.” <br><br> For issues, bugs, or comments regarding this application and website, you may contact Owen Chen. He can be reached at owenchen@berkeley.edu
+	                	</p>
 	                </div>
 	                <div class="modal-footer">
 	                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
@@ -118,17 +127,17 @@
 	                    <h4 class="modal-title">Quitting Experiment</h4>
 	                </div>
 	                <div class="modal-body">
-	                    You will be quitting this experiment by clicking confirm.
-          				<br>
-          				<br>
+						<p> “Are you sure you want to quit the experiment for good? If you quit now, there will be no return. You will not be able to resume the experiment and you will not be able to earn the $20 bonus for completing the experiment. Instead, you will receive a much smaller bonus of $3 per hour that you worked on the tasks. If you choose to quit, please make sure to copy and paste or write down the following bonus code: </p>         
           				Your export code is:
 	                    <br>
 	                    <strong id="quit_code"> </strong>
 	                    <br>
-
-	                    <p> Use this code to redeem your rewards from the facilitator of this experiment. </p>	                    
+	                    <br>
+		
+	                    <p> To collect your bonus, please log in to Amazon Mechanical Turk, find the HIT called “Reimbursement for Todo List Experiment” by the requester “CoCoSci Lab at UC Berkeley” and paste this code.” </p>	                    
 	                </div>
 	                <div class="modal-footer">
+	                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
 	                    <a class="btn btn-info btn-md" href="/quit_experiment" role="button">Confirm</a>
 	                </div>
 	            </div>

@@ -26,11 +26,18 @@
 								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
 								<br>	
 								<a href="#"><i class="fa fa-circle-o"></i> Score: <%= current_user.score %> </a>		
-
+							<% elsif current_user.experimental_condition == "points condition" %>
+								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
+								<br>	
+								<a href="#"><i class="fa fa-circle-o"></i> Score: <%= current_user.score%> </a>
+							<% elsif current_user.experimental_condition == "monetary condition" %>
+								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
+								<br>	
+								<a href="#"><i class="fa fa-circle-o"></i> Money: $ <%= current_user.score.to_f / 10.0 %> </a>										
 							<% else %>
 								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle-o"></i> </a>		
+								<a href="#"><i class="fa fa-circle-o"></i>  </a>		
 							<% end %>	
 													    			
 		    			<% else %>
@@ -43,7 +50,6 @@
 	    <div>
 			<ul class="nav nav-custom-list">
 			  <% if user_signed_in? %>
-
 			  	<!-- Displays only if this user is the admin user -->
 			  	<% if current_user.is_admin? %>
 				    <li>

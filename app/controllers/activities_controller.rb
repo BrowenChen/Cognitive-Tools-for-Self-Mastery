@@ -67,6 +67,39 @@ class ActivitiesController < ApplicationController
     @details = [User.find(current_user.id).score, User.find(current_user.id).level]
   end
 
+  # Finish activity version that is a get request and takes in :act_id
+  def finish_cur_activity
+    puts "finish cur activity"
+    @activity_id = params[:act_id]
+    puts @activity_id
+    puts current_user.id
+    @activity = Activity.where("a_id = ? AND user_id = ?", @activity_id, current_user.id).first;
+    puts @activity.points
+    @user = User.find(current_user.id)
+    puts @user.user_name
+    @new_score = @user.score + @activity.points 
+    puts @new_score
+    @user.update(score: @new_score)
+    puts Time.now
+    @activity.update(activity_time_completed: Time.now);
+    @activity.update(is_completed: true);
+
+    # Update the Quitter class to record the time this activity finished
+    # If activity has been started, hasn't been finished or aborted yet.
+    if Quitter.exists?(activity_id:  @activity_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil)
+      puts "Activity exists with the user AND THE ACTIVITY IS FINISHED."
+      quitter = Quitter.find_by! activity_id: @activity_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil
+      quitter.update(activity_finish_time: Time.new.to_s)
+    else
+      puts "This is called in the case that an activity is finished before it is started"
+      Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
+    end 
+
+    respond_to do |format|
+      format.js { render js: "window.location.reload();" }  
+    end
+  end    
+
   #testing show message
   def finish_activity
     @activity_id = params[:activity_id]
@@ -100,7 +133,10 @@ class ActivitiesController < ApplicationController
 
 
   def get_activity_detail
-    @activity = Activity.where("a_id = ?", params[:id]);
+    # @activity = Activity.where("a_id = ?", params[:id]);
+    puts current_user.id
+    # puts Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id).first
+    @activity = Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id);
     puts "Getting activity detail"
     @act_duration = @activity.first.duration
     @act_code = @activity.first.code
@@ -191,6 +227,18 @@ class ActivitiesController < ApplicationController
 
     puts "Also randomizing experimental condition"
 
+    @control_condition = "control condition"
+    @monetary_condition = "monetary condition"
+    @points_condition = "points condition"
+
+    experimental_condition = [@control_condition, @points_condition, @monetary_condition]
+
+    @random_condition = experimental_condition.shuffle.sample
+
+    puts "picking random condition"
+    puts @random_condition
+    User.find(current_user.id).update(:experimental_condition => @random_condition)
+    puts "saving user's random condition"
 
     @admin_id = User.where(:user_name => "Admin")
     @activities = Activity.where(:user_id => @admin_id)

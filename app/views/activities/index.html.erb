@@ -15,10 +15,18 @@
          <div class="description-heading">
             <h4>Welcome. </h4>
             <p>Welcome to the todo list experiment! Clicking on "My Tasks" in the menu will bring up your todo list. When you work on these tasks is completely up to you. You can log in any time, take a break, or log out whenever you feel like it. 
+            <br>
 <br>
-<br>
-If you complete all of these tasks by <strong> Sunday (Month), (Day), 2016 </strong>, you will receive a bonus of $20. If you don't, you will receive a much smaller bonus of about $3 per hour that you worked on the tasks we assigned to you. 
-<br> <br> To get started, please go to "Account", and click on "Set Activities" to bring up your todo list, and then click "My Tasks" to get started. The tasks will be loaded on the panel to your left, and just click "Start" when you are ready to go </p>
+If you complete all of these tasks by <strong> Sunday (Month), (Day), 2016 </strong>, you will receive a bonus of $20. If you don't, you will receive a much smaller bonus of about $3 per hour that you worked on the tasks we assigned to you.
+
+<%  if current_user.experimental_condition == "monetary condition" %>
+   <p> “For each task you can earn a certain number of points. By making smart decisions about which tasks to do and when to do them you can earn a large number of points and level up quickly. Your current score and level are shown below your username on the right.  Every time you complete a task your score increases by the number of points assigned to the task. The points reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus.” </p>
+
+<%  elsif current_user.experimental_condition == "points condition" %>
+   <p> For each task you can earn a certain number of points. By making smart decisions about which tasks to do and when to do them you can earn a large number of points and level up quickly. Your current score and level are shown below your username on the right.  Every time you complete a task your score increases by the number of points assigned to the task. The points reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus. </p>
+<% end %>
+
+<br>  <p> To get started, please go to "Account", and click on "Set Activities" to bring up your todo list, and then click "My Tasks" to get started. The tasks will be loaded on the panel to your left, and just click "Start" when you are ready to go </p>
          </div>
       </div>
    </div>

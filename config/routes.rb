@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   get '/finish_activity' => 'activities#finish_activity', as: :finish_activity
 
+  get '/finish_cur_activity/:act_id' => 'activities#finish_cur_activity'
+
   get '/quit_experiment' => 'rewards#quit_experiment'
 
   get '/start_tetris' => 'rewards#start_tetris'

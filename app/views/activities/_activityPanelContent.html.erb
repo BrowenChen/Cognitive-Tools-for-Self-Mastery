@@ -34,11 +34,12 @@
       <form class="form-inline" role="form">
           <!-- Validation code input -->
           <div class="form-group">
-              <input type="password" class="form-control" id="activity-progress-input" placeholder="Enter Code Here" style="padding: 5px; width: 90%;" onkeyup="check_code(this.value)">
+              <input type="password" class="form-control" id="activity-progress-input" placeholder="Enter Code Here" style="padding: 5px; width: 90%;" onkeyup="check_code(this.value, <%= activity_id %>)">
           </div>
           <!-- <button type="submit" class="btn btn-success">Update Activity</button> --> 
 
-	         <%= link_to "Finish Activity", finish_activity_path(activity_id: activity_id, :user_id => current_user.id ), :remote => true, :type => "submit", :class => "btn btn-success", :id => "update_score_btn", :disabled => true  %> 
+	         <!-- <span id="finish_activity_button"> <%= link_to "Finish Activity", finish_activity_path(activity_id: activity_id, :user_id => current_user.id ), :type => "submit", :class => "btn btn-success", :id => "update_score_btn", :disabled => true  %> </span> -->
+           
       </form>
     </div>	
 </div>
@@ -46,18 +47,41 @@
 
 
   //Check activity code
-  function check_code(val) {
+  function check_code(val, activity_id) {
+
+      // BUG HERE~~~~
       var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+
+      // console.log("ACTIVITY ID " + activity_id);
+      // console.log("CURRENT ID " + currentId);
 
       // Javascript GET call
       $.get('/activity_detail/' + String(currentId), function(data){     
         var activity_object = data[0];
+        // console.log(activity_object);
         if (val == activity_object.code){
           console.log("success");
-          $('#update_score_btn').removeAttr("disabled");
+          console.log("is completed + " + activity_object.is_completed);
+          // var fullHtml = '<%= link_to "Finish Activity", finish_activity_path(activity_id: ' + currentId + ', :user_id => current_user.id ), :type => "submit", :class => "btn btn-success", :id => "update_score_btn", :disabled => true  %> '
+
+          // $('#finish_activity_button').html(fullHtml);
+          // console.log($('#update_score_btn'));
+          // var current_activity_completed = document.getElementById();
+          if (!activity_object.is_completed) {
+            // $('#update_score_btn').attr('disabled', false); 
+            $('#update_score_btn').show(); 
+          }
+          
+          // $('#update_score_btn').prop('disabled',false)
+          // $('#update_score_btn').show();
+          // $('#update_score_btn').removeAttr("disabled");
         }
       	else {
-      		 $('#update_score_btn').attr('disabled', true); 
+        //   $('#update_score_btn').attr("disabled");
+      		// $('#update_score_btn').attr('disabled', true); 
+          // $('#update_score_btn').prop('disabled',true)
+          // $('#finish_activity_button').html("");
+          $('#update_score_btn').hide();
       	}
       });
   }

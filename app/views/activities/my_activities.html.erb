@@ -16,7 +16,7 @@
         <div class="col-md-12">
         	<div class="description-heading my-tasks-heading">
         		<h4>My Activities </h4>
-        		<p>Welcome, <%= current_user.user_name %>. Choose your next activity by clicking on its entry in your todo list. The activity will load in the box on the left. Once the activity is loaded, press ‘Start’ to begin.” The heading of the todo list could be “My Todo List” for a change.</p>
+        		<p>Welcome, <%= current_user.user_name %>. <%= current_user.id %>. Choose your next activity by clicking on its entry in your todo list. The activity will load in the box on the left. Once the activity is loaded, press ‘Start’ to begin.” The heading of the todo list could be “My Todo List” for a change.</p>
         	</div>
         </div>
     </div>
@@ -186,10 +186,11 @@
                                     </div>
                                     <div id="10" class="tab-pane">
                                         Tenth panel activity
-                                    </div>                                                                                                                  
+                                    </div>                                                                                                                              
                                 </div>
                             </div>
                 </section>
+
 
 
              </div>
@@ -197,6 +198,10 @@
 
        </section>
        <!--earning graph end-->
+       <!-- finish activity button -->
+          <div class="finish_container" style="position: relative; width: 100%;"> 
+                  <button class="btn btn-success" id="update_score_btn" onclick="finishCurrentActivity();" style="position: relative; width: 100%; display: none;"> Finish Activity </button>
+          </div> 
     </div>
 
     <style>
@@ -216,7 +221,7 @@
                 <!-- Insert Activity partial only if activity id matches with current logged in user -->
                 <% if current_user.id == activity.user_id %>
                     <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
-                      <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>"> 
+                      <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>" onclick="hideFinishButton();"> 
                         <%= render 'activityBar', activity: activity %> 
                       </a>
                     </span>
@@ -246,6 +251,17 @@
 
 <script>
   //Script delete this later 
+
+  var hideFinishButton = function() {
+    $('#update_score_btn').hide();
+  }
+
+  var finishCurrentActivity = function(){
+    var currentActivityId = document.getElementsByClassName('tab-pane active')[0].id;
+    $.get('/finish_cur_activity/' + String(currentActivityId), function(){  
+      console.log("Finishing current activity");
+    });
+  }
 
   // $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
 </script>

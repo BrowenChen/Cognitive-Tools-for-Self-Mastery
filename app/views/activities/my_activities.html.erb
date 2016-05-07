@@ -16,7 +16,23 @@
         <div class="col-md-12">
         	<div class="description-heading my-tasks-heading">
         		<h4>My Activities </h4>
-        		<p>Welcome, <%= current_user.user_name %>. <%= current_user.id %>. Choose your next activity by clicking on its entry in your todo list. The activity will load in the box on the left. Once the activity is loaded, press ‘Start’ to begin.” The heading of the todo list could be “My Todo List” for a change.</p>
+        		<p>Welcome, <%= current_user.user_name %>. 
+
+              <% if current_user.experimental_condition == "Initial condition" %>
+                <p> Please follow the instructions on the welcome screen first </p>
+
+              <% else %>
+
+                Choose your next activity by clicking on its entry in your todo list. The activity will load in the box on the left. Once the activity is loaded, press ‘Start’ to begin.” The heading of the todo list could be “My Todo List” for a change.</p>
+
+                 <%  if current_user.experimental_condition == "monetary condition" %>
+                    <p> For each task you can earn a certain amount of money. By making smart decisions about which tasks to do and when to do them you can earn a larger amount of money and level up quickly. Your money earned and level are shown below your username on the right.  Every time you complete a task your money increases by the money assigned to the task. The money reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus. </p>
+
+                 <%  elsif current_user.experimental_condition == "points condition" %>
+                    <p> For each task you can earn a certain number of points. By making smart decisions about which tasks to do and when to do them you can earn a large number of points and level up quickly. Your current score and level are shown below your username on the right.  Every time you complete a task your score increases by the number of points assigned to the task. The points reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus. </p>
+                 <% end %>
+              <% end %>
+
         	</div>
         </div>
     </div>
@@ -140,109 +156,110 @@
 
 </style>
 
+<% if current_user.experimental_condition != "Initial condition" %>
 
-<div class="row" style="margin: 10px;">
-    <div class="col-md-8">
-       <!--Activity Main Screen-->
-       <section class="panel entire-activity-display">
-          <header class="panel-heading">
-            Activity Display
-          </header>
-          <div class="panel-body clear">
-             <div class="container experiment-partial">
+  <div class="row" style="margin: 10px;">
+      <div class="col-md-8">
+         <!--Activity Main Screen-->
+         <section class="panel entire-activity-display">
+            <header class="panel-heading">
+              Activity Display
+            </header>
+            <div class="panel-body clear">
+               <div class="container experiment-partial">
 
-                 <section class="panel general activity-display">
-                            <div class="panel-body" id="game-panel">
-                                <div class="tab-content">
-                                    <div id="1" class="tab-pane active">
+                   <section class="panel general activity-display">
+                              <div class="panel-body" id="game-panel">
+                                  <div class="tab-content">
+                                      <div id="1" class="tab-pane active">
 
-                                        <!-- Fix to create local client side variable of which activity id and to pass it into rails -->
+                                          <!-- Fix to create local client side variable of which activity id and to pass it into rails -->
 
-                                        <%= render 'activityPanelContent', :activity_id => "1" %>
-                                    </div>
-                                    <div id="2" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "2" %>
-                                    </div>
-                                    <div id="3" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "3" %>
-                                    </div>
-                                    <div id="4" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "4" %>
-                                    </div> 
-                                    <div id="5" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "5" %>
-                                    </div>   
-                                    <div id="6" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "6" %>
-                                    </div>   
-                                    <div id="7" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "7" %>
-                                    </div>   
-                                    <div id="8" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "8" %>
-                                    </div>       
-                                    <div id="9" class="tab-pane">
-                                        <%= render 'activityPanelContent', :activity_id => "9" %>
-                                    </div>
-                                    <div id="10" class="tab-pane">
-                                        Tenth panel activity
-                                    </div>                                                                                                                              
-                                </div>
-                            </div>
-                </section>
-
-
-
-             </div>
-          </div>
-
-       </section>
-       <!--earning graph end-->
-       <!-- finish activity button -->
-          <div class="finish_container" style="position: relative; width: 100%;"> 
-                  <button class="btn btn-success" id="update_score_btn" onclick="finishCurrentActivity();" style="position: relative; width: 100%; display: none;"> Finish Activity </button>
-          </div> 
-    </div>
-
-    <style>
+                                          <%= render 'activityPanelContent', :activity_id => "1" %>
+                                      </div>
+                                      <div id="2" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "2" %>
+                                      </div>
+                                      <div id="3" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "3" %>
+                                      </div>
+                                      <div id="4" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "4" %>
+                                      </div> 
+                                      <div id="5" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "5" %>
+                                      </div>   
+                                      <div id="6" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "6" %>
+                                      </div>   
+                                      <div id="7" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "7" %>
+                                      </div>   
+                                      <div id="8" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "8" %>
+                                      </div>       
+                                      <div id="9" class="tab-pane">
+                                          <%= render 'activityPanelContent', :activity_id => "9" %>
+                                      </div>
+                                      <div id="10" class="tab-pane">
+                                          Tenth panel activity
+                                      </div>                                                                                                                              
+                                  </div>
+                              </div>
+                  </section>
 
 
-    </style>
-    
-    <div class="col-md-4">
-       <!--chat start-->
-       <section class="panel activityPanel">
-          <header class="panel-heading">
-             My Activity List
-          </header>
-          <div class="panel-body" id="noti-box">
-            <div class="activities-wrapper row" style="padding-top: 10px;">
-              <% @activities.each do |activity| %>
-                <!-- Insert Activity partial only if activity id matches with current logged in user -->
-                <% if current_user.id == activity.user_id %>
-                    <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
-                      <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>" onclick="hideFinishButton();"> 
-                        <%= render 'activityBar', activity: activity %> 
-                      </a>
-                    </span>
-                <% end %>
-              <% end %>
+
+               </div>
             </div>
-          </div>
-       </section>
-    </div>
-<!-- End row -->
-</div>
 
-<div class="activities-wrapper row">
-  <% @activities.each do |activity| %>
-    <!-- Insert Activity partial only if activity id matches with current logged in user -->
-    <% if current_user.id == activity.user_id %>
-    	<%= render 'activity', activity: activity %>
+         </section>
+         <!--earning graph end-->
+         <!-- finish activity button -->
+            <div class="finish_container" style="position: relative; width: 100%;"> 
+                    <button class="btn btn-success" id="update_score_btn" onclick="finishCurrentActivity();" style="position: relative; width: 100%; display: none;"> Finish Activity </button>
+            </div> 
+      </div>
+
+      <style>
+
+
+      </style>
+      
+      <div class="col-md-4">
+         <!--chat start-->
+         <section class="panel activityPanel">
+            <header class="panel-heading">
+               My Activity List
+            </header>
+            <div class="panel-body" id="noti-box">
+              <div class="activities-wrapper row" style="padding-top: 10px;">
+                <% @activities.each do |activity| %>
+                  <!-- Insert Activity partial only if activity id matches with current logged in user -->
+                  <% if current_user.id == activity.user_id %>
+                      <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
+                        <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>" onclick="hideFinishButton();"> 
+                          <%= render 'activityBar', activity: activity %> 
+                        </a>
+                      </span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+         </section>
+      </div>
+  <!-- End row -->
+  </div>
+
+  <div class="activities-wrapper row">
+    <% @activities.each do |activity| %>
+      <!-- Insert Activity partial only if activity id matches with current logged in user -->
+      <% if current_user.id == activity.user_id %>
+      	<%= render 'activity', activity: activity %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
-
+  </div>
+<% end %>
 
 <div class="experiment-display">
 

@@ -48,10 +48,13 @@
 	  <h1 style="text-align:center;"> Account & Help </h1>
 	  <p>
 			<div style="text-align:center;"> <strong> Username: </strong> <%= current_user.user_name %></div>
-			<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
-			<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
-
-
+			<% if current_user.experimental_condition == "points condition" %>
+				<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
+				<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
+			<% elsif current_user.experimental_condition == "monetary condition" %>
+				<div style="text-align:center;"> <b> Money Earned: <i class="fa fa-usd"></i> </b><%= current_user.score.to_f / 10.0 %> </div>
+				<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
+			<% end %>
 	  </p>
 	  <p style="text-align: center;"><a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal3">Contact</a></p>
 	</div>
@@ -69,7 +72,10 @@
 			<a class="btn btn-warning btn-md" data-toggle="modal" href="#myModal2" style="font-size: 80%;"> Export Experiment Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 		<% else %>
-			<%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 		
+
+			<!-- To get rid of the setting activities only once feature -->
+			<!-- <%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 	 -->
+
 			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
 			<a class="btn btn-danger btn-md" data-toggle="modal" href="#myModal4" onclick="quit_generate_code()" style="font-size: 80%;"> Quit Experiment</a>

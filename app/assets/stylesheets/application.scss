@@ -236,12 +236,18 @@ html {
 
 .log-in{
   position: relative;
+  font-family: gotham, helvetica, arial, sans-serif;
+  font-style: normal;
+
+  box-shadow: rgba(0, 0, 0, 0.15625) 0px 1px 2px;
+  font-weight: 400;
   margin-left: auto;
   margin-right: auto;
   text-align:center;
-  border: none;
+  border: 1px solid #dedede;;
   overflow: hidden;
   height: 450px;
+  
 }
 
 /*Overriding bootstrap */

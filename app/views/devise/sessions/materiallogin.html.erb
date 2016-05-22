@@ -1,0 +1,93 @@
+
+<br>
+<br>
+<br>
+<!-- Mixins-->
+<!-- Pen Title-->
+<!-- start -->
+<div class="container-material">
+<div class="card"></div>
+<div class="card">
+   <h1 class="title">Login</h1>
+   <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+   <div class="form-inputs form-group">
+      <div class="input-container">
+         <%= f.input :email, required: false, label: false, input_html: { class: 'form-control', id: 'Email', placeholder: 'Email' } %>
+         <!-- <label for="Email" id="email-label">Email</label> -->
+         <div class="bar"></div>
+      </div>
+      <div class="input-container">
+         <%= f.input :password, required: false, label: false, input_html: { class: 'form-control', id: "Password", placeholder: "Password" } %>
+         <!-- <label for="Password">Password</label> -->
+         <div class="bar"></div>
+      </div>
+      <!-- 	    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable?  %> -->
+   </div>
+   <div class="form-actions">
+      <div class="button-container">
+         <%= f.button :submit, "Log in", id: 'go-login-btn' %> 
+      </div>
+   </div>
+   <div class="footer">
+      <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+   </div>
+   <% end %>
+</div>
+
+<!-- Register -->
+<div class="card alt">
+   <div class="toggle"></div>
+   <h1 class="title">
+      Register
+      <div class="close"></div>
+   </h1>
+
+   <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+   <%= f.error_notification %>
+
+   <div class="form-inputs form-group register-input">
+         <style>
+
+
+         </style>
+         <div class="input-container">
+            <%= f.input :email, required: true, label: false, placeholder: 'Email', input_html: { class: 'form-control' } %>
+            <div class="bar"></div>
+         </div>
+         <div class="input-container">
+            <%= f.input :user_name, required: true, label: false, placeholder: 'User Name', input_html: { class: ' form-control' } %>
+            <div class="bar"></div>
+         </div>
+         <div class="input-container">
+            <%= f.input :password, required: true, label: false, placeholder: 'Password', input_html: { class: 'form-control' } %>
+            <div class="bar"></div>
+         </div>
+         <div class="input-container">
+            <%= f.input :password_confirmation, required: true, label: false, placeholder: 'Confirm Password', input_html: { class: 'form-control' } %>
+            <div class="bar"></div>
+         </div>
+         <div class="form-actions">
+            <div class="button-container">
+               <!-- <button><span>Next</span></button> -->
+               <%= f.button :submit, "Sign up", id: 'sign-up-button', class: 'sign-up-button' %>
+            </div>
+         </div>
+
+   </div>
+
+   <% end %>
+</div>
+
+
+
+
+<script>
+   $('.toggle').on('click', function() {
+     $('.container-material').stop().addClass('active');
+   });
+   
+   $('.close').on('click', function() {
+     $('.container-material').stop().removeClass('active');
+   });
+</script>
+

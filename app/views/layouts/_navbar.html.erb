@@ -25,21 +25,42 @@
 		    				<% if current_user.experimental_condition == "Initial condition" %>
 								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle-o"></i>  </a>		
+								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
 							<% elsif current_user.experimental_condition == "points condition" %>
 								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle-o"></i> Score: <%= current_user.score%> </a>
+								<a href="#"><i class="fa fa-circle text-info"></i> Score: <%= current_user.score%> </a>
 							<% elsif current_user.experimental_condition == "monetary condition" %>
 								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle-o"></i> Money: $ <%= current_user.score.to_f / 10.0 %> </a>										
+								<a href="#"><i class="fa fa-circle text-info"></i> Money: $ <%= current_user.score.to_f / 10.0 %>0 </a>										
 							<% else %>
 								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle-o"></i>  </a>		
+								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
 							<% end %>	
-													    			
+							<br>
+
+							<!-- Level Name -->
+							<% if current_user.experimental_condition == "Initial condition" %>
+								 <span> </span> <!-- Empty -->
+							<% else %>
+										<!-- Level Name here -->
+								<a href="#"><i class="fa fa-circle-o"></i>  
+									<% if current_user.level == 1 %>
+										Blind Mule
+									<% elsif current_user.level == 2 %>
+										Alert Dog
+									<% elsif current_user.level == 3 %>
+										Concentrated Cat
+									<% elsif current_user.level == 4 %>
+										Watchful Owl
+									<% else %>
+										Master of Attention
+									<% end %>	
+								</a>		
+							<% end %>
+
 		    			<% else %>
 		    				<h5> Please log in </h5>
 		    			<% end %>	

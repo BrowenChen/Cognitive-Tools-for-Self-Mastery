@@ -16,7 +16,13 @@
     		<div class="user-panel">
                     <div class="pull-left image">
 	    				<img src="<%= asset_path( 'avatar04.png' ) %>" id="avatar"  class="img-circle" alt="User Image"/>
-	    			</div>
+				</div>
+				<style>
+					#user-description strong {
+						
+					}
+
+				</style>
 	    			<div class="pull-left info" id="user-description">
 	    				<% if user_signed_in? %>
 		    				<h4 id="user_name"> <%= current_user.user_name %> </h4>
@@ -27,13 +33,13 @@
 								<br>	
 								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
 							<% elsif current_user.experimental_condition == "points condition" %>
-								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
+								<a href="#"><i class="fa fa-circle text-success"></i><strong> Level: <%= current_user.level %>  </strong></a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle text-info"></i> Score: <%= current_user.score%> </a>
+								<a href="#"><i class="fa fa-circle text-info"></i> <strong> Score: <%= current_user.score%> </strong></a>
 							<% elsif current_user.experimental_condition == "monetary condition" %>
-								<a href="#"><i class="fa fa-circle text-success"></i> Level: <%= current_user.level %> </a>	
+								<a href="#"><i class="fa fa-circle text-success"></i> <strong> Level: <%= current_user.level %> </strong></a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle text-info"></i> Money: $ <%= current_user.score.to_f / 10.0 %>0 </a>										
+								<a href="#"><i class="fa fa-circle text-info"></i> <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></a>										
 							<% else %>
 								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
 								<br>	

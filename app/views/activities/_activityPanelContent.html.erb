@@ -6,10 +6,13 @@
     .activity-functions {
         position: relative;
         width: 100%;
-        margin-bottom: 15px;
+        margin-bottom: 0px;
         padding-left: 0;
     }   
 
+    #activity-progress-input {
+	    margin-top: 10px;
+    }
 
     .experiment-game-container {
     	position: relative;
@@ -18,14 +21,43 @@
     	padding: 5px;
     }
 
+    #stats {
+	float: right;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	box-shadow: rgba(0, 0, 0, 0.2382) 0px 1px 5px;
+	background-color: #dff0d8;
+	border-radius: 2px;
+	color: green;
+    }
+
+    #stats p {
+	    margin-bottom: 0;
+    }
+    #stats span {
+	    color: green;
+    }
 </style>
 <div class="activity-content-wrap">
     <div class="container activity-functions">
         <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info" onclick="removeExperiment()"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
+	<div id="stats">
+		<% if current_user.experimental_condition == "points condition" %>
+			<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
+			<p><strong>Points: </strong> <span> <%= current_user.score%> </span> </p>
+		<% elsif current_user.experimental_condition == "monetary condition" %>
+			<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
+			<p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
+		<% else %>
+			
+		<% end %>
+	</div>
     </div>
-	<h2> Target Dectection <%= activity_id %></h2>
+	<h2 style="margin-top: 10px;"> Target Dectection <%= activity_id %></h2>
 	<div class="experiment-game-container" style="overflow: hidden;">
 		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  <h4 style="text-align:center; margin-top: 100px;"> Press "Start" to start the task.</h4> </div>  
 	</div>

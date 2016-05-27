@@ -108,6 +108,22 @@ class ActivitiesController < ApplicationController
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
     end 
 
+
+    #Check if all activities for this user is finished
+    @user_activities = Activity.where("user_id = ?", current_user.id);
+
+    @all_finished = true
+    @user_activities.each do |activity|
+	if !activity.is_completed
+		@all_finished = false
+	end
+    end  
+
+    puts @all_finished
+    if @all_finished == true
+	@user.update(finished_all_activities: true)
+    end 
+
     respond_to do |format|
       format.js { render js: "window.location.reload();" }  
     end
@@ -259,8 +275,15 @@ class ActivitiesController < ApplicationController
 
     # Activity.destroy_all(:user_id => params[:current_user])
     @activities.each do |record|
+	puts "TESTING UNIQUE CODE" 
+
       puts record
-      Activity.new(content: record.content, user_id: params[:current_user], points: record.points, duration: record.duration, code: record.code, a_id: record.a_id).save
+      puts current_user.user_name
+      @unique_code = current_user.user_name.chars.first + record.code + current_user.user_name.chars.last
+      puts @unique_code
+
+      #Generate random code based on current user's username
+      Activity.new(content: record.content, user_id: params[:current_user], points: record.points, duration: record.duration, code: @unique_code, a_id: record.a_id).save
       puts "created new record"
     end    
     redirect_to root_path

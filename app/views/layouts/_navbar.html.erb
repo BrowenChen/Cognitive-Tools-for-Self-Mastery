@@ -50,6 +50,8 @@
 							<!-- Level Name -->
 							<% if current_user.experimental_condition == "Initial condition" %>
 								 <span> </span> <!-- Empty -->
+							<% elsif current_user.experimental_condition == "control condition" %>
+								<span></span>
 							<% else %>
 										<!-- Level Name here -->
 								<a href="#"><i class="fa fa-circle-o"></i>  

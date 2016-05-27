@@ -76,8 +76,27 @@
 			<!-- To get rid of the setting activities only once feature -->
 			<!-- <%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 	 -->
 
-			<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
+			<% if current_user.experimental_condition == "points condition" %> 
+				<% if current_user.finished_all_activities %>
+					<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
+				<% else %>
+					<a class="btn btn-warning btn-md" data-toggle="modal" disabled=true  style="font-size: 80%;"> Generate Bonus Code</a>
+				<% end %>
+			<% elsif current_user.experimental_condition == "monetary condition" %>
+				<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
+			<% elsif current_user.experimental_condition == "control condition" %>
+				<% if current_user.finished_all_activities %>
+					<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
+				<% else %>
+					<a class="btn btn-warning btn-md" data-toggle="modal" disabled=true  style="font-size: 80%;"> Generate Bonus Code</a>
+				<% end %>
+			<% else %>
+
+					<a class="btn btn-warning btn-md" data-toggle="modal" disabled=true  style="font-size: 80%;"> Generate Bonus Code</a>
+			<% end %>	
+
 			<a class="btn btn-success" data-toggle="modal" href="#myModal" style="font-size: 80%;"> About this Experiment</a>
+
 			<a class="btn btn-danger btn-md" data-toggle="modal" href="#myModal4" onclick="quit_generate_code()" style="font-size: 80%;"> Quit Experiment</a>
 		<% end %>
 	    <!-- Modal -->
@@ -159,12 +178,24 @@
 	                    <h4 class="modal-title">Export Code</h4>
 	                </div>
 	                <div class="modal-body">
+
+			    <% if current_user.experimental_condition == "points condition" %>
+				    Congratulations! You have earned a $20 bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Reimbursement for Todo List Experiment", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there. 
+			    <% elsif current_user.experimental_condition == "monetary condition" %>
+					The amount you have earned so far is displayed on the upper left corner. If this is the first time you have collected your bonus, you will be paid the current amount you have earned. If you have collected before, you will receive and additional bonus that you have earned since then. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Reimbursement for Todo List Experiment", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there. 
+			    <% elsif current_user.experimental_condition == "control condition" %>
+
+
+			    <% else %>
+
+
+			    <% end %> 
+			    <br>
+			    <br>
 	                    Your export code is:
 	                    <br>
 	                    <strong id="export_code"> </strong>
-
 	                    <br>
-
 	                    <p> Use this code to redeem your rewards from the facilitator of this experiment.</p>
 	                </div>
 	                <div class="modal-footer">

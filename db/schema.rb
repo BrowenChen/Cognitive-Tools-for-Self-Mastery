@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428202156) do
+ActiveRecord::Schema.define(version: 20160525232651) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -68,12 +68,12 @@ ActiveRecord::Schema.define(version: 20160428202156) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "",                  null: false
-    t.string   "encrypted_password",     default: "",                  null: false
+    t.string   "email",                   default: "",                  null: false
+    t.string   "encrypted_password",      default: "",                  null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,                   null: false
+    t.integer  "sign_in_count",           default: 0,                   null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -81,11 +81,12 @@ ActiveRecord::Schema.define(version: 20160428202156) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user_name"
-    t.integer  "score",                  default: 0
-    t.integer  "level",                  default: 1
-    t.text     "experimental_condition", default: "Initial condition"
-    t.boolean  "is_active",              default: true
-    t.boolean  "is_admin",               default: false
+    t.integer  "score",                   default: 0
+    t.integer  "level",                   default: 1
+    t.text     "experimental_condition",  default: "Initial condition"
+    t.boolean  "is_active",               default: true
+    t.boolean  "is_admin",                default: false
+    t.boolean  "finished_all_activities", default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

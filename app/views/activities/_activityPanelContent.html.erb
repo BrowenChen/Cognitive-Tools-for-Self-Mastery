@@ -45,17 +45,20 @@
         <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info" onclick="removeExperiment()"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
-	<div id="stats">
 		<% if current_user.experimental_condition == "points condition" %>
-			<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
-			<p><strong>Points: </strong> <span> <%= current_user.score%> </span> </p>
+			<div id="stats">
+				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
+				<p><strong>Points: </strong> <span> <%= current_user.score%> </span> </p>
+			</div>
 		<% elsif current_user.experimental_condition == "monetary condition" %>
-			<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
-			<p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
+			<div id="stats">
+			
+				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
+				<p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
+			</div>
 		<% else %>
 			
 		<% end %>
-	</div>
     </div>
 	<h2 style="margin-top: 10px;"> Target Dectection <%= activity_id %></h2>
 	<div class="experiment-game-container" style="overflow: hidden;">

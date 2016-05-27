@@ -33,6 +33,10 @@
                  <% end %>
               <% end %>
 
+	      <% if current_user.finished_all_activities %>
+		      <p> <strong> Congratulations! You have completed all of the tasks. Please navigate to "Account", click "Generate bonus code", and redeem your points on Amazon Mechanical Turk. </strong> </p>
+
+	      <% end %>
         	</div>
         </div>
     </div>

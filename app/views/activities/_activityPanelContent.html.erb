@@ -1,7 +1,7 @@
 <style>
     /*Container for buttons in the activity container*/
     .activity-content-wrap {
-    	height: 400px;
+    	height: 300px;
     }
     .activity-functions {
         position: relative;
@@ -123,7 +123,7 @@
 
   // FrontEnd Controller for activity view
   function displayTetris() {
-    var tetrisGame = '<object data="https://cocosci.berkeley.edu/mturk/falk/TodoListExperiment/Tetris/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
+    var tetrisGame = '<object data="https://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
     $(".game-content").html(tetrisGame);
 
     //Log Tetris Time
@@ -150,7 +150,7 @@
         var act_code = activity_object.code;
         console.log(act_code + act_duration);
 
-        var http_link = "https://cocosci.berkeley.edu/mturk/falk/TodoListExperiment/Vigilance/index.html?duration=" + String(act_duration) + "&code=%22" + String(act_code) + "%22";
+        var http_link = "https://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html?duration=" + String(act_duration) + "&code=%22" + String(act_code) + "%22";
 
         // Experiment URL
         var experiment = '<object id="vigilance" data="' + String(http_link) + '" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';

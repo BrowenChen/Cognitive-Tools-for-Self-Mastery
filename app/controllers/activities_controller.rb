@@ -236,6 +236,23 @@ class ActivitiesController < ApplicationController
     else
     	render :text => "Wrong Code" 
     end
+    
+    #clear previous todo list  
+    if Activity.where(:user_id => @adminUser.id).exists?
+      Activity.where(:user_id => @adminUser.id).destroy_all
+      puts "destroying all previous activities"
+    end
+    
+    #initialize new todo list  
+    puts "Loading Todo List"
+    require 'csv' 
+    csv_text = File.read('app/assets/data/todo_list.csv')
+    csv = CSV.parse(csv_text, :headers => true)
+    csv.each do |row|
+    code_word =  (0...8).map { (65 + rand(26)).chr }.join
+    Activity.new(content: row["Name"], user_id: @adminUser.id, points: row["Points"].to_i, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
+      end
+
   end
   # def set_activity_id
   #   puts "activity_id"

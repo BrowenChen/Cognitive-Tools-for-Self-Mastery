@@ -248,9 +248,12 @@ class ActivitiesController < ApplicationController
     else
     	render :text => "Wrong Code" 
     end
-    
+  
     #set deadline
-    @deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+    Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+    Rails.application.config.time_step_in_min = 8
+    Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
+    Rails.application.config.bonus = 20
     
     #clear previous todo list  
     if Activity.where(:user_id => @adminUser.id).exists?
@@ -273,6 +276,10 @@ class ActivitiesController < ApplicationController
         Activity.new(content: row["Name"], user_id: @adminUser.id, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
     end
 
+    Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
+    Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities   
+
+
       create_points_table  
       puts "set_current_point_values"  
       set_current_point_values(current_user)    
@@ -280,9 +287,10 @@ class ActivitiesController < ApplicationController
   end
     
   def create_points_table
-      @bonus = 20 #dollars
+      @bonus = Rails.application.config.bonus #dollars
       @nr_tasks = Activity.where(user_id: 1).count
-      @constant_point_value = @bonus * 100 / @nr_tasks
+      @constant_point_value = Rails.application.config.constant_point_value
+      @total_time = Rails.application.config.total_time
       
       #Enter points for the control conditions
       activities=Activity.all                              
@@ -299,8 +307,8 @@ class ActivitiesController < ApplicationController
     csv = CSV.parse(csv_text, :headers => true)
     id=0
     csv.each do |row|      
-        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition" )
-        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "monetary condition" )
+        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: @total_time-row["time_step"].to_i+1, condition: "points condition" )
+        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition" )
     end      
   end
   # def set_activity_id
@@ -311,9 +319,9 @@ class ActivitiesController < ApplicationController
 
   def set_default_activities
       
-    @time_step = 8 #minutes
-    @constant_point_value = 5
-    @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline  
+    
+    @constant_point_value = Rails.application.constant_point_value
+      @total_time = Rails.application.total_time #total nr of time steps from beginning of experiment to deadline  
       
     puts "setting default activites"
     puts params[:current_user]
@@ -370,13 +378,22 @@ class ActivitiesController < ApplicationController
   end
 
     def set_current_point_values(current_user)
+                
+        current_time = DateTime.now()
+        puts "Deadline: #{Rails.application.config.deadline}"
+        puts "Current Time: #{Rails.application.config.deadline}"
+        minutes_left = (Rails.application.config.deadline.to_i - current_time.to_i) / 60
+        
+        remaining_time_steps = [Rails.application.config.total_time,minutes_left / Rails.application.config.time_step_in_min].min
+        puts "Remaining Time: #{remaining_time_steps}"
+        
         activities = Activity.where(user_id: current_user.id)
         condition  = User.find(current_user.id).experimental_condition
         
         @current_point_values = Array.new
         
         activities.each do |activity|
-            nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[-1].point_value
+            nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition,time_left: remaining_time_steps)[-1].point_value
             #nr_points = activity.a_id #TODO: look up points from data base. This is just for testing.
             @current_point_values.push(nr_points)            
         end

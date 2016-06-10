@@ -55,7 +55,7 @@
 			<div id="stats">
 			
 				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
-				<p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
+                <p><strong>Money: </strong> <span> $<%= (current_user.score.to_f / 100).round(2)%>0 </span> </p>
 			</div>
 		<% else %>
 			

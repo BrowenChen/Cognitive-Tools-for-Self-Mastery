@@ -52,7 +52,7 @@
 				<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
 				<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
 			<% elsif current_user.experimental_condition == "monetary condition" %>
-				<div style="text-align:center;"> <b> Money Earned: <i class="fa fa-usd"></i> </b><%= current_user.score.to_f / 10.0 %>0 </div>
+				<div style="text-align:center;"> <b> Money Earned: <i class="fa fa-usd"></i> </b><%= (current_user.score.to_f / 100).round(2) %>0 </div>
 				<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>
 			<% end %>
 	  </p>

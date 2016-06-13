@@ -90,6 +90,6 @@ end
 
 
 set_global_variables
-#init_todo_list
-#create_points_table
+init_todo_list
+create_points_table
 load_break_points

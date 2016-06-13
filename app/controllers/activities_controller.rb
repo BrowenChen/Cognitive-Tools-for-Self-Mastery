@@ -4,7 +4,19 @@ class ActivitiesController < ApplicationController
   	#ensure only you have access to modify your posts
 	before_action :owned_activity, only: [:edit, :update, :destroy] 
 
-    
+
+    def set_global_variables
+        #set deadline
+        Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+        Rails.application.config.deadline = 3.hours.from_now
+        Rails.application.config.time_step_in_min = 8
+        Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
+        Rails.application.config.bonus = 20
+        Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
+        Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /       Rails.application.config.nr_activities 
+        Rails.application.config.admin_id = 1    
+    end
+
 	def index
 	  @activities = Activity.all
 	  @users = User.all
@@ -232,6 +244,9 @@ class ActivitiesController < ApplicationController
   end
 
   def enable_admin
+    
+    set_global_variables
+      
     puts "enabling admin for current user"
     puts params[:code].to_s	
     @adminCode = '9128'
@@ -251,39 +266,21 @@ class ActivitiesController < ApplicationController
   
     #set deadline
     Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-    $Rails.application.config.deadline = 3.hours.from_now
+    Rails.application.config.deadline = 3.hours.from_now
     Rails.application.config.time_step_in_min = 8
     Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
     Rails.application.config.bonus = 20
-    
-    #clear previous todo list  
-    if Activity.where(:user_id => @adminUser.id).exists?
-      puts "destroying all previous activities"
-      Activity.where(:user_id => @adminUser.id).destroy_all      
-    end
-    
-    
-    #initialize new todo list  
-    puts "Loading Todo List"
-    require 'csv' 
-    csv_text = File.read('app/assets/data/todo_list.csv')
-      
-    puts csv_text  
-    csv = CSV.parse(csv_text, :headers => true)
-
-    csv.each do |row|                
-        code_word =  (0...8).map { (65 + rand(26)).chr }.join
-        Activity.new(content: row["Name"], user_id: @adminUser.id, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
-    end
-
     Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
-    Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities   
-
-
-      #create_points_table
-      #load_break_points
-      puts "set_current_point_values"  
-      #set_current_point_values(current_user)    
+    Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /  Rails.application.config.nr_activities 
+    
+#clear previous todo list
+=begin
+        if Activity.where(:user_id => @adminUser.id).exists?
+            puts "destroying all previous activities"
+            Activity.where(:user_id => @adminUser.id).destroy_all      
+        end
+=end
+        
       
   end
     

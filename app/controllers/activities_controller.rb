@@ -20,6 +20,7 @@ class ActivitiesController < ApplicationController
     end
 
 	def index
+	  puts "index function in controller" 
 	  @activities = Activity.all
 	  @users = User.all
 	end
@@ -339,12 +340,11 @@ class ActivitiesController < ApplicationController
 
   def set_default_activities
       
-      puts "in set_default_activities"
+      puts "in set_default_activities!!"
       puts "Testing config values" 
       puts Rails.application.config.bonus
-
     
-    @constant_point_value = Rails.application.config.constant_point_value
+      @constant_point_value = Rails.application.config.constant_point_value
       @total_time = Rails.application.config.total_time #total nr of time steps from beginning of experiment to deadline  
       
     puts "setting default activites"

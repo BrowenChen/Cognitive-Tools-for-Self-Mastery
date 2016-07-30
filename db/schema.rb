@@ -42,12 +42,6 @@ ActiveRecord::Schema.define(version: 20160605234351) do
   add_index "comments", ["activity_id"], name: "index_comments_on_activity_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
-  create_table "levels", force: :cascade do |t|
-    t.string  "Name"
-    t.string  "Required Score"
-    t.integer "Level"
-  end
-
   create_table "points", force: :cascade do |t|
     t.integer  "activity_id"
     t.datetime "created_at",  null: false

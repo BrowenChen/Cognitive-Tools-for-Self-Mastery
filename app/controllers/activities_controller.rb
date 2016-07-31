@@ -5,29 +5,29 @@ class ActivitiesController < ApplicationController
 	before_action :owned_activity, only: [:edit, :update, :destroy] 
 
 
-    def set_global_variables
-        #set deadline
-        Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-        Rails.application.config.deadline = 3.hours.from_now
-        Rails.application.config.time_step_in_min = 8
-        Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
-        Rails.application.config.bonus = 20
-        Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
-        Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /       Rails.application.config.nr_activities 
-        Rails.application.config.admin_id = 1    
+    	Rails.application.config.nr_activities = Activity.where(user_id: 1).count() + 1  
+    	Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities
+
+	def set_global_variables
+	  puts "Setting global_variables" 
+    	  #Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
     end
 
 	def index
+	  puts "index function in controller" 
 	  @activities = Activity.all
 	  @users = User.all
 	end
 
 	def new
-	  #@activity = Activity.new
 	  @activity = current_user.activities.build
 	end
 	
 	def create
+	  puts "creating new acitivty"
+	  puts current_user
+	  puts current_user.activities
+
 	  @activity = current_user.activities.build(activity_params)
 
 	  if @activity.save
@@ -186,7 +186,6 @@ class ActivitiesController < ApplicationController
 
 
   def get_activity_detail
-    # @activity = Activity.where("a_id = ?", params[:id]);
     puts current_user.id
     # puts Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id).first
     @activity = Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id);
@@ -244,35 +243,29 @@ class ActivitiesController < ApplicationController
   end
 
   def enable_admin
-    
-    set_global_variables
-      
+    puts "Removed setting global variables from enable_admin function" 
+
+    #temporary Set _global disable
+    #set_global_variables
+
     puts "enabling admin for current user"
     puts params[:code].to_s	
     @adminCode = '9128'
     puts @adminCode.eql?(params[:code])
     if params[:code].eql?(@adminCode)
-	if User.exists?(user_name: "Admin")
-		puts "Admin Account exists, setting admin privleges"
-		@adminUser = User.find_by(user_name: "Admin")
-		@adminUser.update(is_admin: true)
-	else
-		puts "No admin account"
-	end
-	render :text => "admin enabled"
+  	if User.exists?(user_name: "Admin")
+  		puts "Admin Account exists, setting admin privleges"
+  		@adminUser = User.find_by(user_name: "Admin")
+  		@adminUser.update(is_admin: true)
+  	else
+  		puts "No admin account"
+  	end
+  	   render :text => "admin enabled"
     else
     	render :text => "Wrong Code" 
     end
   
-    #set deadline
-    Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-    Rails.application.config.deadline = 3.hours.from_now
-    Rails.application.config.time_step_in_min = 8
-    Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
-    Rails.application.config.bonus = 20
-    Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
-    Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /  Rails.application.config.nr_activities 
-    
+
 #clear previous todo list
 =begin
         if Activity.where(:user_id => @adminUser.id).exists?
@@ -285,44 +278,54 @@ class ActivitiesController < ApplicationController
   end
     
   def create_points_table
+      puts "Creation of Points Table. Currently needs Debugging" 
       @bonus = Rails.application.config.bonus #dollars
       @nr_tasks = Activity.where(user_id: 1).count
       @constant_point_value = Rails.application.config.constant_point_value
       @total_time = Rails.application.config.total_time
       
       #Enter points for the control conditions
-      activities=Activity.all                              
+      
+
+      activities=Activity.all      
+      puts activities.count
+      puts "Activity Count ^"
+      #temporarily commented out
       activities.each do |record|
           Point.create(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: @total_time, condition: "constant points")
           Point.create(activity_id: record.a_id, state: 0, point_value: 0, time_left: @total_time, condition: "control condition" )
       end
-          
-    #Enter points for other conditions
-    require 'csv'
-    csv_text = File.read('app/assets/data/all_points.csv')
-    #csv_text = File.read('app/assets/data/points.csv')
+      puts "finished creating points data"     
+      puts 'Should be 80x2 entries in points'
+      # #Enter points for other conditions
+      require 'csv'
+      csv_text = File.read('app/assets/data/all_points.csv')
+      #csv_text = File.read('app/assets/data/points.csv')
 
-    csv = CSV.parse(csv_text, :headers => true)
-    id=0
-    csv.each do |row|      
-        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "points condition" )
-        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition")
-    end      
+      csv = CSV.parse(csv_text, :headers => true)
+      id=0
+      puts csv.count
+      puts "The total count of CSV. Additional points created should be this count x2 + previous"
+      csv.each do |row|      
+          Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "points condition" )
+          Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition")
+      end     
+      puts "Created points from all_points.csv. Should total 403200 + 160 new Points records in DB" 
   end
   # def set_activity_id
   #   puts "activity_id"
   #   puts params[:activity_id]
   # end  
 
+ #Needs testing
  def load_break_points
-     
      #Clear old point entries for break activity 
      #Point.where(activity_id: 0).destroy_all
      
     @total_time = Rails.application.config.total_time
     #Enter points for other conditions
     require 'csv'
-     csv_text = File.read('app/assets/data/break_points.csv')
+    csv_text = File.read('app/assets/data/break_points.csv')
     #csv_text = File.read('app/assets/data/points.csv')
 
     csv = CSV.parse(csv_text, :headers => true)
@@ -340,19 +343,24 @@ class ActivitiesController < ApplicationController
 
   def set_default_activities
       
-      puts "in set_default_activities"
+      puts "In Set_default activities, initialization of Todo list"
+      puts "Testing config values" 
     
-    @constant_point_value = Rails.application.config.constant_point_value
+      @constant_point_value = Rails.application.config.constant_point_value
       @total_time = Rails.application.config.total_time #total nr of time steps from beginning of experiment to deadline  
       
-    puts "setting default activites"
-    puts params[:current_user]
+      puts "setting default activites"
+      puts params[:current_user]
 
-    @admin_id = User.where(:user_name => "Admin")[0].id  
+      @admin_id = User.where(:user_name => "Admin")[0].id  
 
-    puts "Delete user's activities"
+      puts "Delete user's activities"
     
+      #Deletion of user's past activities
     if Activity.where(:user_id => params[:current_user]).exists? && params[:current_user] != @admin_id
+    #if Activity.where(:user_id => params[:current_user]).exists? 
+      puts params[:current_user]      
+      
       Activity.where(:user_id => params[:current_user]).destroy_all
       puts "destroying all previous activities"
     end
@@ -366,7 +374,10 @@ class ActivitiesController < ApplicationController
 
     experimental_conditions = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
 
-    condition = experimental_conditions.shuffle.sample
+    # condition = experimental_conditions.shuffle.sample
+    #TEMPORARY TESTING. REVERT LATER ^^^ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    condition = @points_condition
+
     #@random_condition = "constant points"
 
     puts "picking random condition"
@@ -388,18 +399,29 @@ class ActivitiesController < ApplicationController
 
       #Generate random code based on current user's username        
         #nr_points = Point.where(activity_id: record.id, time_left: @total_time, state: 0, condition: @random_condition)[0].point_value
-        nr_points = Point.where(activity_id: record.a_id, state: 0, condition: condition)[0].point_value
-        Activity.create(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id)
+        
+        #nr_points = Point.where(activity_id: record.a_id, state: 0, condition: condition)[0]
+	      #nr_points = nr_points.point_value
+        #TEMPORARY TESTING. REVERT LATER XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        nr_points = 188
+
+        Activity.new(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id).save
+
       puts "created new record"
     end         
-      
+   
+   #ERROR HERE 
+
     puts "set_current_point_values"  
-      set_current_point_values(current_user)    
+    set_current_point_values(current_user)    
+   
+    #potential bug here 
+    #TEMPORARY TESTING. REVERT LATER. POSSIBLE BUG HERE  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    #if condition=="points condition" || condition=="monetary condition"
+    #  update_score_and_points(current_user)  
+    #end
     
-      if condition=="points condition" || condition=="monetary condition"
-        update_score_and_points(current_user)  
-      end
-      
+
     redirect_to root_path
                   
   end
@@ -409,7 +431,6 @@ class ActivitiesController < ApplicationController
         #puts "Deadline: #{Rails.application.config.deadline}"
         #puts "Current Time: #{Rails.application.config.deadline}"
         minutes_left = (Rails.application.config.deadline.to_i - current_time.to_i) / 60
-        
         remaining_time_steps = [Rails.application.config.total_time,minutes_left / Rails.application.config.time_step_in_min].min
         #puts "Remaining Time: #{remaining_time_steps}"
         
@@ -418,27 +439,54 @@ class ActivitiesController < ApplicationController
     end
     
     def set_current_point_values(current_user)
-                
+   	     puts "in set_current_points" 
+	       puts "TEMPORARILY CREATING POINTS TABLE" 
+         create_points_table
         remaining_time_steps = get_remaining_time_steps
         activities = Activity.where(user_id: current_user.id)
         condition  = User.find(current_user.id).experimental_condition
         
         @current_point_values = Array.new
-        
+        puts "beinning loop"
+
         activities.each do |activity|
             case condition
                 when "control condition"
+		                puts "control"
                     nr_points = 0
                 when "constant points"
+		                puts "constant" 
                     nr_points = Rails.application.config.constant_point_value
                 when "points condition", "monetary condition"
-                    puts "last case"
-                    nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition,time_left: remaining_time_steps)[-1].point_value
+                    puts "POINTS & MONTEARY CONDITION CASE"
+            		    #bug
+            		    puts "SQL points query details"
+            		    puts activity.a_id
+            		    #What is get_state_id
+            		    @state_id = get_state_id
+            		    puts @state_id
+            		    puts "State_id bug, what is state_id"
+            		    puts condition
+            		    puts remaining_time_steps
+                                #nr_points = Point.where(activity_id: activity.a_id, state: @state_id, condition: condition,time_left: remaining_time_steps)
+            	 	    #temporary test	    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+		                #Bug, calling POINTS Sql when these values do not exists yet
+                    nr_points = Point.where(activity_id: activity.a_id, state: @state_id, condition: "constant points",time_left: 1260.0)
+            		    puts "This is a point object" 
+            		    puts nr_points.count
+            		    puts "there is no point value when no points can be gained from the database"
+            		    puts nr_points.point_value
+            		    
+            		    #nr_points = nr_points.point_value
+            	 	    puts "This should be the value"
+            		    puts nr_points
+
             #nr_points = activity.a_id #TODO: look up points from data base. This is just for testing.
                 else
                     puts "neither case"
             end
-            
+  	    puts "adding to current_points" 
+
             #act=Activity.where(user_id: current_user.id, points: nr_points, activity_id: activity.a_id)
             #act.points=nr_points
             @current_point_values.push(nr_points)            
@@ -449,10 +497,10 @@ class ActivitiesController < ApplicationController
         
         return @current_point_values    
     end
-    
+   
+    #TODO: Debug and test this later
     def update_score_and_points(current_user)
         require 'rufus-scheduler'
-
         scheduler = Rufus::Scheduler.new
 
         scheduler.every '8m' do

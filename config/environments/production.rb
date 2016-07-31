@@ -46,7 +46,9 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :debug
+  #config.log_level = :debug
+  config.logger = Logger.new(STDOUT)
+  config.logger.level = Logger::DEBUG
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -76,4 +78,16 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+
+
+  #Custom Falk's Global variables
+  #config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+  #config.deadline = 3.hours.from_now
+  #config.time_step_in_min = 8
+  #config.total_time= 7*24*60/Rails.application.config.time_step_in_min
+  #config.bonus = 20
+  #config.nr_activities = Activity.where(user_id: 1).count() + 1  
+  #config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities
+  #config.admin_id = 1    
 end

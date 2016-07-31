@@ -41,4 +41,16 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  #
+  #
+  # Custom Falk's global variables
+  config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+  config.deadline = 3.hours.from_now
+  config.time_step_in_min = 8
+  config.total_time = 7*24*60/Rails.application.config.time_step_in_min
+  config.bonus = 20
+  #config.nr_activities = Activity.where(user_id: 1).count() + 1  
+  #config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities
+  config.admin_id = 1    
+
 end

@@ -4,7 +4,6 @@ class ActivitiesController < ApplicationController
   	#ensure only you have access to modify your posts
 	before_action :owned_activity, only: [:edit, :update, :destroy] 
 
-    
 	def index
 	  @activities = Activity.all
 	  @users = User.all
@@ -249,8 +248,6 @@ class ActivitiesController < ApplicationController
     	render :text => "Wrong Code" 
     end
     
-    #set deadline
-    @deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
     
     #clear previous todo list  
     if Activity.where(:user_id => @adminUser.id).exists?
@@ -280,15 +277,12 @@ class ActivitiesController < ApplicationController
   end
     
   def create_points_table
-      @bonus = 20 #dollars
-      @nr_tasks = Activity.where(user_id: 1).count
-      @constant_point_value = @bonus * 100 / @nr_tasks
       
       #Enter points for the control conditions
       activities=Activity.all                              
       activities.each do |record|
           Point.create(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: @total_time, condition: "constant points")
-          Point.create(activity_id: record.a_id, state: 0, point_value: 0, time_left: @total_time, condition: "control condition" )
+          Point.create(activity_id: record.a_id, state: 0, point_value: 0, time_left: @constant_point_value, condition: "control condition" )
       end
           
     #Enter points for other conditions
@@ -300,7 +294,7 @@ class ActivitiesController < ApplicationController
     id=0
     csv.each do |row|      
         Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition" )
-        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "monetary condition" )
+        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i/10, time_left: row["time_step"], condition: "monetary condition" )
     end      
   end
   # def set_activity_id
@@ -376,7 +370,7 @@ class ActivitiesController < ApplicationController
         @current_point_values = Array.new
         
         activities.each do |activity|
-            nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[-1].point_value
+            nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0].point_value
             #nr_points = activity.a_id #TODO: look up points from data base. This is just for testing.
             @current_point_values.push(nr_points)            
         end

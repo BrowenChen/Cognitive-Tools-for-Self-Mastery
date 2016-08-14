@@ -6,16 +6,14 @@ class ActivitiesController < ApplicationController
 
 
     def set_global_variables
-	#This is duplicated	
         #set deadline
-	puts "Setting global_variables" 
-    	Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-    	Rails.application.config.deadline = 3.hours.from_now
-    	Rails.application.config.time_step_in_min = 8
-    	Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
-    	Rails.application.config.bonus = 20
-    	Rails.application.config.nr_activities = Activity.where(user_id: 1).count() + 1  
-    	Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities
+        Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+        Rails.application.config.deadline = 3.hours.from_now
+        Rails.application.config.time_step_in_min = 8
+        Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
+        Rails.application.config.bonus = 20
+        Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
+        Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /       Rails.application.config.nr_activities 
         Rails.application.config.admin_id = 1    
     end
 
@@ -246,13 +244,9 @@ class ActivitiesController < ApplicationController
   end
 
   def enable_admin
-    puts "Set_global Variables when enabling admin ----" 
-
+    
     set_global_variables
       
-    #Duplbicate
-    #set deadline
-
     puts "enabling admin for current user"
     puts params[:code].to_s	
     @adminCode = '9128'
@@ -270,7 +264,14 @@ class ActivitiesController < ApplicationController
     	render :text => "Wrong Code" 
     end
   
-
+    #set deadline
+    Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+    Rails.application.config.deadline = 3.hours.from_now
+    Rails.application.config.time_step_in_min = 8
+    Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
+    Rails.application.config.bonus = 20
+    Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
+    Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /  Rails.application.config.nr_activities 
     
 #clear previous todo list
 =begin
@@ -340,9 +341,6 @@ class ActivitiesController < ApplicationController
   def set_default_activities
       
       puts "in set_default_activities"
-      puts "Testing config values" 
-      puts Rails.application.config.bonus
-
     
     @constant_point_value = Rails.application.config.constant_point_value
       @total_time = Rails.application.config.total_time #total nr of time steps from beginning of experiment to deadline  

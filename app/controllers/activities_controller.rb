@@ -251,15 +251,15 @@ class ActivitiesController < ApplicationController
   
     #set deadline
     #Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-    Rails.application.config.deadline = 3.hours.from_now
+    Rails.application.config.deadline = 2.hours.from_now
     Rails.application.config.time_step_in_min = 8
     Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
     Rails.application.config.bonus = 20
     
     #clear previous todo list  
     if Activity.where(:user_id => @adminUser.id).exists?
+      Activity.where(:user_id => @adminUser.id).destroy_all
       puts "destroying all previous activities"
-      Activity.where(:user_id => @adminUser.id).destroy_all      
     end
     
     
@@ -280,8 +280,8 @@ class ActivitiesController < ApplicationController
     Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities   
 
 
-      #create_points_table
-      #load_break_points
+      create_points_table
+      load_break_points
       puts "set_current_point_values"  
       #set_current_point_values(current_user)    
       
@@ -440,13 +440,10 @@ class ActivitiesController < ApplicationController
                     puts "neither case"
             end
             
-            #act=Activity.where(user_id: current_user.id, points: nr_points, activity_id: activity.a_id)
-            #act.points=nr_points
             @current_point_values.push(nr_points)            
         end
         
         puts @current_point_values        
-        
         
         return @current_point_values    
     end
@@ -492,8 +489,7 @@ class ActivitiesController < ApplicationController
                         puts "Break Points: #{break_points}"
                         user_record.update(score: new_score)     
                         puts "The user's score has been updated."
-                        #my_activities(user_record.id)
-                        #redirect_to :back
+                        my_activities
 
                     end
                 end

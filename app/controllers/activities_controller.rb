@@ -82,7 +82,7 @@ class ActivitiesController < ApplicationController
     @user = User.find(current_user.id)
     puts @user.user_name
     
-    current_point_values = set_current_point_values(@user) 
+    current_point_values = set_current_point_values(current_user) 
       puts "current_point_values: "
       puts current_point_values  
       puts "@activity.id: "
@@ -250,8 +250,7 @@ class ActivitiesController < ApplicationController
     end
   
     #set deadline
-    #Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-    Rails.application.config.deadline = 2.hours.from_now
+    Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
     Rails.application.config.time_step_in_min = 8
     Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
     Rails.application.config.bonus = 20
@@ -271,7 +270,8 @@ class ActivitiesController < ApplicationController
     puts csv_text  
     csv = CSV.parse(csv_text, :headers => true)
 
-    csv.each do |row|                
+    csv.each do |row|        
+        
         code_word =  (0...8).map { (65 + rand(26)).chr }.join
         Activity.new(content: row["Name"], user_id: @adminUser.id, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
     end
@@ -280,10 +280,9 @@ class ActivitiesController < ApplicationController
     Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus / Rails.application.config.nr_activities   
 
 
-      create_points_table
-      load_break_points
+      create_points_table  
       puts "set_current_point_values"  
-      #set_current_point_values(current_user)    
+      set_current_point_values(current_user)    
       
   end
     
@@ -302,14 +301,14 @@ class ActivitiesController < ApplicationController
           
     #Enter points for other conditions
     require 'csv'
-    csv_text = File.read('app/assets/data/all_points.csv')
-    #csv_text = File.read('app/assets/data/points.csv')
+    #csv_text = File.read('app/assets/data/all_points.csv')
+    csv_text = File.read('app/assets/data/points.csv')
 
     csv = CSV.parse(csv_text, :headers => true)
     id=0
     csv.each do |row|      
-        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "points condition" )
-        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition")
+        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: @total_time-row["time_step"].to_i+1, condition: "points condition" )
+        Point.create(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition" )
     end      
   end
   # def set_activity_id
@@ -317,35 +316,12 @@ class ActivitiesController < ApplicationController
   #   puts params[:activity_id]
   # end  
 
- def load_break_points
-     
-     #Clear old point entries for break activity 
-     #Point.where(activity_id: 0).destroy_all
-     
-    @total_time = Rails.application.config.total_time
-    #Enter points for other conditions
-    require 'csv'
-     csv_text = File.read('app/assets/data/break_points.csv')
-    #csv_text = File.read('app/assets/data/points.csv')
-
-    csv = CSV.parse(csv_text, :headers => true)
-    id=0
-    puts csv[0]["time_step"]
-    puts @total_time
-    puts @total_time-csv[0]["time_step"].to_i+1
-     
-    csv.each do |row|      
-        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "points condition" )
-        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition" )
-    end
-     
- end
 
   def set_default_activities
       
     
-    @constant_point_value = Rails.application.config.constant_point_value
-      @total_time = Rails.application.config.total_time #total nr of time steps from beginning of experiment to deadline  
+    @constant_point_value = Rails.application.constant_point_value
+      @total_time = Rails.application.total_time #total nr of time steps from beginning of experiment to deadline  
       
     puts "setting default activites"
     puts params[:current_user]
@@ -396,106 +372,34 @@ class ActivitiesController < ApplicationController
       
     puts "set_current_point_values"  
       set_current_point_values(current_user)    
-    
-      if condition=="points condition" || condition=="monetary condition"
-        update_score_and_points(current_user)  
-      end
       
     redirect_to root_path
                   
   end
 
-    def get_remaining_time_steps
+    def set_current_point_values(current_user)
+                
         current_time = DateTime.now()
-        #puts "Deadline: #{Rails.application.config.deadline}"
-        #puts "Current Time: #{Rails.application.config.deadline}"
+        puts "Deadline: #{Rails.application.config.deadline}"
+        puts "Current Time: #{Rails.application.config.deadline}"
         minutes_left = (Rails.application.config.deadline.to_i - current_time.to_i) / 60
         
         remaining_time_steps = [Rails.application.config.total_time,minutes_left / Rails.application.config.time_step_in_min].min
-        #puts "Remaining Time: #{remaining_time_steps}"
+        puts "Remaining Time: #{remaining_time_steps}"
         
-        return remaining_time_steps
-
-    end
-    
-    def set_current_point_values(current_user)
-                
-        remaining_time_steps = get_remaining_time_steps
         activities = Activity.where(user_id: current_user.id)
         condition  = User.find(current_user.id).experimental_condition
         
         @current_point_values = Array.new
         
         activities.each do |activity|
-            case condition
-                when "control condition"
-                    nr_points = 0
-                when "constant points"
-                    nr_points = Rails.application.config.constant_point_value
-                when "points condition", "monetary condition"
-                    puts "last case"
-                    nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition,time_left: remaining_time_steps)[-1].point_value
+            nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition,time_left: remaining_time_steps)[-1].point_value
             #nr_points = activity.a_id #TODO: look up points from data base. This is just for testing.
-                else
-                    puts "neither case"
-            end
-            
             @current_point_values.push(nr_points)            
         end
         
-        puts @current_point_values        
-        
+        puts @current_point_values
         return @current_point_values    
-    end
-    
-    def update_score_and_points(current_user)
-        require 'rufus-scheduler'
-
-        scheduler = Rufus::Scheduler.new
-
-        scheduler.every '1m' do
-            ActiveRecord::Base.connection_pool.with_connection do
-                set_current_point_values(current_user)
-                #check if the user is currently working on one of the tasks
-                user_actions=Quitter.where(user_id: current_user.id)
-                
-                unless user_actions.empty?
-                    last_action = user_actions[-1]
-                    #quit_activity = last_action.time_quit != nil
-                    #played_tetris = last_action.tetris_time != nil
-                
-                    puts "in scheduler"
-                    working = last_action.activity_start_time != nil && last_action.activityAbortTime == nil       
-                    if working
-                        puts "User was working"
-                    else
-                        puts "User was slacking"
-                    end
-
-                    unless working
-                        puts "Updating Score by according to break points"
-                        puts "State ID: #{get_state_id}"
-                        puts "Remaining Time: #{get_remaining_time_steps}"
-
-
-                        break_points = Point.where(state: get_state_id, activity_id: 0, time_left: get_remaining_time_steps)[-1].point_value
-                        
-                        user_record=User.find(current_user.id)
-                        new_score = user_record.score + break_points
-                        
-                        #debug @new_score
-                        #debug User.find(current_user.id)
-                        
-                        puts "Break Points: #{break_points}"
-                        user_record.update(score: new_score)     
-                        puts "The user's score has been updated."
-                        my_activities
-
-                    end
-                end
-            end
-        end
-
     end
 
     def get_state_id

@@ -13,7 +13,7 @@ def set_global_variables
     Rails.application.config.time_step_in_min = 8
     Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
     Rails.application.config.bonus = 20
-    Rails.application.config.nr_activities = 5
+    Rails.application.config.nr_activities = Activity.where(user_id: 1).count()  
     Rails.application.config.constant_point_value = 100 * Rails.application.config.bonus /       Rails.application.config.nr_activities 
     Rails.application.config.admin_id = 1
 

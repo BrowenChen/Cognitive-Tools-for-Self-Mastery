@@ -340,7 +340,6 @@ class ActivitiesController < ApplicationController
 
   def set_default_activities
       
-      puts "in set_default_activities"
     
     @constant_point_value = Rails.application.config.constant_point_value
       @total_time = Rails.application.config.total_time #total nr of time steps from beginning of experiment to deadline  
@@ -350,7 +349,7 @@ class ActivitiesController < ApplicationController
 
     puts "Delete user's activities"
 
-    @admin_id = User.where(:user_name => "Admin")[0].id  
+    @admin_id = User.where(:user_name => "Admin")  
     if Activity.where(:user_id => params[:current_user]).exists? && params[:current_user] != @admin_id
       Activity.where(:user_id => params[:current_user]).destroy_all
       puts "destroying all previous activities"
@@ -492,7 +491,6 @@ class ActivitiesController < ApplicationController
                         puts "The user's score has been updated."
                         #my_activities(user_record.id)
                         #redirect_to :back
-                        render
 
                     end
                 end

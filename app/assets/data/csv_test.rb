@@ -1,7 +1,7 @@
 puts 'test'
 
 
-   
+require 'csv'    
 
 ActiveRecord::Base.connection.create_table :levels, :force => true do |t|
     t.string   "Name"
@@ -9,8 +9,8 @@ ActiveRecord::Base.connection.create_table :levels, :force => true do |t|
     t.integer  "Level"
 end 
 
-require 'csv' 
-csv_text = File.read('app/assets/data/todo_lis.csv')
+
+csv_text = File.read('app/assets/data/levels_for_procrastination_experiment1.csv')
 csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
     puts row

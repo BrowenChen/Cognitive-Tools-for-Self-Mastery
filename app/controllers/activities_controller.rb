@@ -250,8 +250,8 @@ class ActivitiesController < ApplicationController
     end
   
     #set deadline
-    Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-    $Rails.application.config.deadline = 3.hours.from_now
+    #Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+    Rails.application.config.deadline = 3.hours.from_now
     Rails.application.config.time_step_in_min = 8
     Rails.application.config.total_time= 7*24*60/Rails.application.config.time_step_in_min
     Rails.application.config.bonus = 20
@@ -456,7 +456,7 @@ class ActivitiesController < ApplicationController
 
         scheduler = Rufus::Scheduler.new
 
-        scheduler.every '8m' do
+        scheduler.every '1m' do
             ActiveRecord::Base.connection_pool.with_connection do
                 set_current_point_values(current_user)
                 #check if the user is currently working on one of the tasks

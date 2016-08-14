@@ -259,11 +259,13 @@ class ActivitiesController < ApplicationController
     @control_condition = "control condition"
     @monetary_condition = "monetary condition"
     @points_condition = "points condition"
+    @control_condition2 = "constant points"
 
-    experimental_condition = [@control_condition, @points_condition, @monetary_condition]
+    experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
+   
 
     @random_condition = experimental_condition.shuffle.sample
-
+    
     puts "picking random condition"
     puts @random_condition
     User.find(current_user.id).update(:experimental_condition => @random_condition)
@@ -283,7 +285,13 @@ class ActivitiesController < ApplicationController
       puts @unique_code
 
       #Generate random code based on current user's username
-      Activity.new(content: record.content, user_id: params[:current_user], points: record.points, duration: record.duration, code: @unique_code, a_id: record.a_id).save
+      if @random_condition == "constant points" 
+	points = 5
+      else
+	points = record.points
+      end
+
+      Activity.new(content: record.content, user_id: params[:current_user], points: points, duration: record.duration, code: @unique_code, a_id: record.a_id).save
       puts "created new record"
     end    
     redirect_to root_path

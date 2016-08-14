@@ -32,7 +32,7 @@
 								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
 								<br>	
 								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
-							<% elsif current_user.experimental_condition=="points condition" || current_user.experimental_condition=="constant points" %>
+							<% elsif current_user.experimental_condition == "points condition" %>
 								<a href="#"><i class="fa fa-circle text-success"></i><strong> Level: <%= current_user.level %>  </strong></a>	
 								<br>	
 								<a href="#"><i class="fa fa-circle text-info"></i> <strong> Score: <%= current_user.score%> </strong></a>

@@ -45,8 +45,7 @@
         <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info" onclick="removeExperiment()"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
-        <% current_user.experimental_condition %>
-		<% if current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points"%>
+		<% if current_user.experimental_condition == "points condition" %>
 			<div id="stats">
 				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
 				<p><strong>Points: </strong> <span> <%= current_user.score%> </span> </p>

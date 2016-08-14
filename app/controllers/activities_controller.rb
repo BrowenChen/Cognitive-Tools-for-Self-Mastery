@@ -348,10 +348,9 @@ class ActivitiesController < ApplicationController
     puts "setting default activites"
     puts params[:current_user]
 
-    @admin_id = User.where(:user_name => "Admin")[0].id  
-
     puts "Delete user's activities"
-    
+
+    @admin_id = User.where(:user_name => "Admin")[0].id  
     if Activity.where(:user_id => params[:current_user]).exists? && params[:current_user] != @admin_id
       Activity.where(:user_id => params[:current_user]).destroy_all
       puts "destroying all previous activities"

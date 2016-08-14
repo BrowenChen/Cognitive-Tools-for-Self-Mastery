@@ -219,6 +219,34 @@ class ActivitiesController < ApplicationController
     render :text => "abort activity"
   end
 
+  #Loading function to load in csv todo list only when Admin account is enabled.
+  def load_todo_from_csv(adminUser)
+	require 'csv'
+
+
+	puts "Loading todo from csv"
+
+	puts "Checking if previous activities exist, and deleting them" 
+
+	if Activity.where(:user_id => adminUser.id).exists?
+		Activity.where(:user_id => adminUser.id).destroy_all
+		puts "destorying all previous activit=eis" 
+	end
+
+	csv_text = File.read('app/assets/data/todo_list.csv')
+	csv = CSV.parse(csv_text, :headers => true)
+
+	puts "Random code word for CSV todos" 
+	csv.each do |row|
+		code_word = (0...8).map { (65 + rand(26)).chr }.join
+		puts code_word
+		puts adminUser.id
+		Activity.new(content: row["Name"], user_id: @adminUser.id, points: row["Points"].to_i, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
+	end
+
+
+  end
+
   def enable_admin
     puts "enabling admin for current user"
     puts params[:code].to_s	
@@ -229,6 +257,7 @@ class ActivitiesController < ApplicationController
 		puts "Admin Account exists, setting admin privleges"
 		@adminUser = User.find_by(user_name: "Admin")
 		@adminUser.update(is_admin: true)
+		load_todo_from_csv(@adminUser)
 	else
 		puts "No admin account"
 	end
@@ -236,6 +265,10 @@ class ActivitiesController < ApplicationController
     else
     	render :text => "Wrong Code" 
     end
+
+
+
+
   end
   # def set_activity_id
   #   puts "activity_id"

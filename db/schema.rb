@@ -84,7 +84,6 @@ ActiveRecord::Schema.define(version: 20160525232651) do
     t.integer  "score",                   default: 0
     t.integer  "level",                   default: 1
     t.text     "experimental_condition",  default: "Initial condition"
-    t.string   "experiment_state"
     t.boolean  "is_active",               default: true
     t.boolean  "is_admin",                default: false
     t.boolean  "finished_all_activities", default: false

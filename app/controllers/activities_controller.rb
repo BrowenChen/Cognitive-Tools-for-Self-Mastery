@@ -9,6 +9,8 @@ class ActivitiesController < ApplicationController
 	#This is duplicated	
         #set deadline
 	puts "Setting global_variables" 
+	puts "SETTTING " 
+
     	Rails.application.config.deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
     	Rails.application.config.deadline = 3.hours.from_now
     	Rails.application.config.time_step_in_min = 8
@@ -250,7 +252,7 @@ class ActivitiesController < ApplicationController
     puts "Set_global Variables when enabling admin ----" 
 
     #temporary Set _global disable
-    #set_global_variables
+    set_global_variables
       
     #Duplbicate
     #set deadline

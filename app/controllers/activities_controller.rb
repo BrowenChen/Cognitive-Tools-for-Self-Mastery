@@ -249,7 +249,8 @@ class ActivitiesController < ApplicationController
   def enable_admin
     puts "Set_global Variables when enabling admin ----" 
 
-    set_global_variables
+    #temporary Set _global disable
+    #set_global_variables
       
     #Duplbicate
     #set deadline

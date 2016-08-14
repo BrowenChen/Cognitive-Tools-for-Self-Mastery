@@ -465,7 +465,7 @@ class ActivitiesController < ApplicationController
                     #played_tetris = last_action.tetris_time != nil
                 
                     puts "in scheduler"
-                    working = last_action.activity_start_time != nil && last_action.activityAbortTime == nil && last_action.activity_finish_time==nil      
+                    working = last_action.activity_start_time != nil && last_action.activityAbortTime == nil       
                     if working
                         puts "User was working"
                     else

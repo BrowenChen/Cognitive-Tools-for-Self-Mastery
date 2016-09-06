@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160525232651) do
+ActiveRecord::Schema.define(version: 20160817050529) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(version: 20160525232651) do
 
   add_index "comments", ["activity_id"], name: "index_comments_on_activity_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "points", force: :cascade do |t|
+    t.integer  "activity_id"
+    t.float    "timestamps"
+    t.integer  "state"
+    t.integer  "point_value"
+    t.float    "time_left"
+    t.string   "condition"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "points", ["activity_id"], name: "index_points_on_activity_id"
 
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at", null: false

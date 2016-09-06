@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  activity_id: 
+  state: 1
+  point_value: 1
+  time_left: 1.5
+  condition: MyString
+
+two:
+  activity_id: 
+  state: 1
+  point_value: 1
+  time_left: 1.5
+  condition: MyString

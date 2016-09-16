@@ -8,8 +8,8 @@ class ActivitiesController < ApplicationController
   # @@constant_point_value = 5
   @@bonus = 20 #dollars
   @@adminUser = User.find_by(user_name: "Admin")
-  @@nr_tasks = Activity.where(user_id: @@adminUser.id).count
-  @@constant_point_value = @@bonus * 100 / @@nr_tasks  
+  #@@nr_tasks = Activity.where(user_id: @@adminUser.id).count
+  #@@constant_point_value = @@bonus * 100 / @@nr_tasks  
   @@deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
 
   #Class variables used in timesteps
@@ -267,17 +267,16 @@ class ActivitiesController < ApplicationController
   	csv.each do |row|
   		code_word = (0...8).map { (65 + rand(26)).chr }.join
   		puts code_word
-  		puts adminUser.id
-      puts row["Name"]
-      puts row["Points"].to_i
-      puts Float(row["Duration"])
-      puts code_word
-      puts row["Number"]
+  	    puts adminUser.id
+        puts row["Name"]
+        puts row["Points"].to_i
+        puts Float(row["Duration"])
+        puts code_word
+        puts row["Number"]
   		Activity.new(content: row["Name"], user_id: @adminUser.id, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
 
-      puts "created new activity"
+        puts "created new activity"
     end
-
 
     create_points_table
     set_current_point_values(current_user)
@@ -312,19 +311,22 @@ class ActivitiesController < ApplicationController
     Point.destroy_all
     puts "Destroying all previous points"
 
-  	activities = Activity.all
+    @nr_tasks = Activity.where(user_id: @@adminUser.id).count
+    @constant_point_value = @@bonus * 100 / @nr_tasks  
+  	
+    activities = Activity.all
   	activities.each do |record|
   		puts record
   		
   		#TODO: 
-      Point.new(activity_id: record.a_id, state: 0, point_value: @@constant_point_value, time_left: 0, condition: "constant points").save
+      Point.new(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points").save
   		Point.new(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition").save
   	end
 
 
   	csv_text = File.read('app/assets/data/points.csv')
   	csv = CSV.parse(csv_text, :headers => true)
-  	id=0
+  	#id=0
   	csv.each do |row|
   		#
   		#TODO:
@@ -340,7 +342,6 @@ class ActivitiesController < ApplicationController
     puts "Delete user's activities"
 
     @time_step = 8 #minutes
-    @constant_point_value = 5
     @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline  
        
     if Activity.where(:user_id => params[:current_user]).exists?
@@ -389,7 +390,7 @@ class ActivitiesController < ApplicationController
           #Generate random code based on current user's username        
          #nr_points = Point.where(activity_id: record.id, time_left: @total_time, state: 0, condition: @random_condition)[0].point_value
       
-      nr_points = Point.where(activity_id: record.a_id, state: 0, condition: @random_condition)[0].point_value
+      #nr_points = Point.where(activity_id: record.a_id, state: 0, condition: @random_condition)[0].point_value
       Activity.new(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id).save
       
       puts "created new record"
@@ -410,7 +411,7 @@ class ActivitiesController < ApplicationController
   	@current_point_values = Array.new
 
   	activities.each do |activity|
-  		@nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
+  	  @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
       puts "Point value is "
       
       if @nr_points != nil
@@ -419,7 +420,7 @@ class ActivitiesController < ApplicationController
         @nr_points = @nr_points.point_value
   	  end
 
-    	@current_point_values.push(@nr_points)
+      @current_point_values.push(@nr_points)
   	end
     puts "Current Point values"
   	puts @current_point_values

@@ -1,68 +1,71 @@
 class ActivitiesController < ApplicationController
-	before_action :authenticate_user!
-	before_action :set_activity, only: [:show, :edit, :update, :destroy]  
-  	#ensure only you have access to modify your posts
-	before_action :owned_activity, only: [:edit, :update, :destroy] 
+  before_action :authenticate_user!
+  before_action :set_activity, only: [:show, :edit, :update, :destroy]  
+  #ensure only you have access to modify your posts
+  before_action :owned_activity, only: [:edit, :update, :destroy] 
 
-  # Class variables
-  # @@constant_point_value = 5
+    # Class variables
+    # @@constant_point_value = 5
   @@bonus = 20 #dollars
   @@adminUser = User.find_by(user_name: "Admin")
   #@@nr_tasks = Activity.where(user_id: @@adminUser.id).count
-  #@@constant_point_value = @@bonus * 100 / @@nr_tasks  
-  @@deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-
-  #Class variables used in timesteps
+    #@@constant_point_value = @@bonus * 100 / @@nr_tasks  
+    #@@deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
+  @@deadline = 2.hours.from_now
+  puts @@deadline
+  puts "DEADLINE"
+    #
+    #Class variables used in timesteps
   @@time_step = 8 #minutes
   @@total_time = 7*24*60/@@time_step #total nr of time steps from beginning of experiment to deadline  
 
-	def index
-	  @activities = Activity.all
-	  @users = User.all
-	end
+  def index
+	@activities = Activity.all
+	@users = User.all
+  end
 
-	def new
+  def new
 	  #@activity = Activity.new
-	  @activity = current_user.activities.build
-	end
+	@activity = current_user.activities.build
+  end
 	
-	def create
-	  @activity = current_user.activities.build(activity_params)
+  def create
+	@activity = current_user.activities.build(activity_params)
 
-	  if @activity.save
-		  puts "CREATED ACTIVITY" 
-		  flash[:success] = "Your activity has been created!"
-		  redirect_to activities_path
-	  else
-		  flash[:alert]  = "Your new activity couldn't be created!"
-		  render :new
-	  end
+	if @activity.save
+	  puts "CREATED ACTIVITY" 
+	  flash[:success] = "Your activity has been created!"
+	  redirect_to activities_path
+	else
+	  flash[:alert]  = "Your new activity couldn't be created!"
+	  render :new
 	end
+  end
 
-	def show
-    set_current_point_values(current_user)
-	  @activity = Activity.find(params[:id])
-	end
+  def show
+      set_current_point_values(current_user)
+	@activity = Activity.find(params[:id])
+  end
 
-	def edit  
-	end
+  def edit  
+  end
 
-	def update  
-  	  if @activity.update(activity_params)
-      	flash[:success] = "Activity updated."
-      	redirect_to activities_path  
-      else
-        flash.now[:alert] = "Update failed.  Please check the form."
-        render :edit
-      end      		  	
+  def update  
+  	if @activity.update(activity_params)
+      flash[:success] = "Activity updated."
+      redirect_to activities_path  
+    else
+      flash.now[:alert] = "Update failed.  Please check the form."
+      render :edit
+    end      		  	
   	  # redirect_to(activity_path(@activity))
-	end  
+  end  
 
-	def destroy
-	  @activity = Activity.find(params[:id])
-	  @activity.destroy
-	  redirect_to activities_path	  
-	end
+  def destroy
+	@activity = Activity.find(params[:id])
+    @activity.destroy
+	redirect_to activities_path	  
+  end
 
   # to display all of my activities
   def my_activities
@@ -279,6 +282,7 @@ class ActivitiesController < ApplicationController
     end
 
     create_points_table
+    load_break_points
     set_current_point_values(current_user)
 
   end
@@ -300,7 +304,7 @@ class ActivitiesController < ApplicationController
 
     	render :text => "admin enabled"
     else
-        	render :text => "Wrong Code" 
+        render :text => "Wrong Code" 
     end
   end
 
@@ -317,23 +321,52 @@ class ActivitiesController < ApplicationController
     activities = Activity.all
   	activities.each do |record|
   		puts record
-  		
   		#TODO: 
-      Point.new(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points").save
+        Point.new(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points").save
   		Point.new(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition").save
   	end
 
-
+    #points csv file shortened
   	csv_text = File.read('app/assets/data/points.csv')
+    #compressed all points file.  
+  	#csv_text = File.read('app/assets/data/compressed_points.csv')
   	csv = CSV.parse(csv_text, :headers => true)
   	#id=0
   	csv.each do |row|
-  		#
   		#TODO:
-  		Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition").save
-      Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i/10, time_left: row["time_step"], condition: "monetary condition").save
+        puts "Point value!!!" 
+        puts row["point_value"]
+  		Point.new(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: row["time_step"].to_i, condition: "points condition").save
+        Point.new(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i/10, time_left: row["time_step"].to_i, condition: "monetary condition").save
   	end
   end
+
+  def load_break_points
+    #Clear old point entries for break activit
+    puts "Load_break points function" 
+    require 'csv'
+
+    @total_time = @@total_time
+    csv_text = File.read('app/assets/data/compressed_break_points.csv')
+
+    csv = CSV.parse(csv_text, :headers => true)
+    #id=0
+
+    #debugging logs
+    puts "Time step from csv"
+    puts csv[0]["time_step"]
+    puts @total_time
+    puts @total_time-csv[0]["time_step"].to_i+1
+
+    #break_points csv
+    csv.each do |row|
+        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "points condition")
+
+        Point.create(activity_id: row["activity_id"].to_i, state: row["state_id"].to_i, point_value: row["point_value"].to_i, time_left: @total_time-row["time_step"].to_i+1, condition: "monetary condition")
+    end
+
+  end
+
 
   def set_default_activities
     puts "setting default activites"
@@ -426,6 +459,45 @@ class ActivitiesController < ApplicationController
   	puts @current_point_values
   	return @current_point_values
   end 
+
+  def update_score_and_points(current_user)
+    require 'rufus-scheduler'
+    scheduler = Rufus::Scheduler.new
+
+    scheduler.every '8m' do
+        ActiveRecord::Base.connection_pool.with_connection do
+            set_current_point_values(current_user)
+            #check if user is currently working on one of the tasks
+            user_actions=Quitter.where(user_id: current_user.id)
+
+            unless user_actions.empty?
+                last_action = user_actions[-1]
+                puts "in scheduler"
+                working = last_action.activity_start_time != nil && last_action.activityAbortTime == nil
+                if working
+                    puts "User was working"
+                else 
+                    puts "User was slacking"
+                end
+
+                unless working
+                    puts "Updating score according to break points"
+                    #puts "State ID: #{get_state_id}"
+                    #puts "Remaining Time: #{get_remaining_time_steps}"
+
+                    break_point = Point.where(state: get_state_id, activity_id: 0, time_left: get_remaining_time_steps)[-1].point_value
+                    user_record = User.find(current_user.id)
+                    new_score = user_record.score + break_point
+
+                    puts "Break Point #{break_point}"
+                    user_record.update(score: new_score)
+                    puts "Users score has been updated"
+                    my_activities
+                end
+            end
+        end
+    end
+  end
 
   def get_state_id
   	#get ID's of completed activities

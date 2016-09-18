@@ -134,6 +134,7 @@ GEM
       json (~> 1.4)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    rufus-scheduler (3.2.1)
     sass (3.4.21)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -187,6 +188,7 @@ DEPENDENCIES
   paperclip (~> 4.3)
   pg
   rails (= 4.2.4)
+  rufus-scheduler
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   simple_form
@@ -197,4 +199,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.10.6
+   1.13.1

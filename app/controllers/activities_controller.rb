@@ -434,38 +434,64 @@ class ActivitiesController < ApplicationController
 
   end
 
+  def get_remaining_time_steps
+    current_time = DateTime.now()
+    minutes_left = (@@deadline.to_i - current_time.to_i) / 60
+    remaining_time_steps = [minutes_left / @@time_step].min 
+    puts "Remaining Time"
+    puts minutes_left
+    puts remaining_time_steps
+    return remaining_time_steps
+  end
 
   def set_current_point_values(current_user)
     puts "SETTING CURRENT POINTS VALUE"
+
+    remaining_time_steps = get_remaining_time_steps
+
   	activities = Activity.where(user_id: current_user.id)
     puts "Number of activities"
     puts activities.count
   	condition = User.find(current_user.id).experimental_condition
   	@current_point_values = Array.new
+    puts "User's condition --- "
+    puts condition
 
   	activities.each do |activity|
-  	  @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
-      puts "Point value is "
-      
-      if @nr_points != nil
-        puts "Number points is not nil"
-        puts @nr_points.point_value
-        @nr_points = @nr_points.point_value
-  	  end
-
+  	  # @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
+      case condition
+        when "control condition"
+            @nr_points = 0
+        when "constant points"
+            puts "constant points"
+            @nr_tasks = Activity.where(user_id: @@adminUser.id).count
+            @constant_point_value = @@bonus * 100 / @nr_tasks  
+            @nr_points = @consant_point_value
+            puts @nr_points
+        when "points condition", "monetary condition"
+            puts " last case"
+            puts remaining_time_steps
+          
+            @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition, time_left: remaining_time_steps)[-1].point_value
+        else
+            puts "neither case"
+            @nr_points = 0
+      end
+        
       @current_point_values.push(@nr_points)
   	end
     puts "Current Point values"
   	puts @current_point_values
   	return @current_point_values
   end 
-
+  
   def update_score_and_points(current_user)
     require 'rufus-scheduler'
     scheduler = Rufus::Scheduler.new
 
     scheduler.every '8m' do
         ActiveRecord::Base.connection_pool.with_connection do
+            puts "update score and points" 
             set_current_point_values(current_user)
             #check if user is currently working on one of the tasks
             user_actions=Quitter.where(user_id: current_user.id)

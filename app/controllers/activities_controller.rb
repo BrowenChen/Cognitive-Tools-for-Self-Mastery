@@ -1,21 +1,19 @@
 class ActivitiesController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_activity, only: [:show, :edit, :update, :destroy]  
-  	#ensure only you have access to modify your posts
-	before_action :owned_activity, only: [:edit, :update, :destroy] 
+	before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  #ensure only you have access to modify your posts
+	before_action :owned_activity, only: [:edit, :update, :destroy]
 
   # Class variables
-  # @@constant_point_value = 5
   @@bonus = 20 #dollars
   @@adminUser = User.find_by(user_name: "Admin")
-  #@@nr_tasks = Activity.where(user_id: @@adminUser.id).count
-  #@@constant_point_value = @@bonus * 100 / @@nr_tasks  
   @@deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
 
   #Class variables used in timesteps
   @@time_step = 8 #minutes
-  @@total_time = 7*24*60/@@time_step #total nr of time steps from beginning of experiment to deadline  
+  @@total_time = 7*24*60/@@time_step #total nr of time steps from beginning of experiment to deadline
 
+	# Main route for Todo app.
 	def index
 	  @activities = Activity.all
 	  @users = User.all
@@ -25,12 +23,13 @@ class ActivitiesController < ApplicationController
 	  #@activity = Activity.new
 	  @activity = current_user.activities.build
 	end
-	
+
+	# Create an activity by an Admin using "New Activity" form. Not used b/c
+	# Activities are imported via CSV.
 	def create
 	  @activity = current_user.activities.build(activity_params)
-
 	  if @activity.save
-		  puts "CREATED ACTIVITY" 
+		  puts "CREATED ACTIVITY"
 		  flash[:success] = "Your activity has been created!"
 		  redirect_to activities_path
 	  else
@@ -44,55 +43,55 @@ class ActivitiesController < ApplicationController
 	  @activity = Activity.find(params[:id])
 	end
 
-	def edit  
+	def edit
 	end
 
-	def update  
+	def update
   	  if @activity.update(activity_params)
       	flash[:success] = "Activity updated."
-      	redirect_to activities_path  
+      	redirect_to activities_path
       else
         flash.now[:alert] = "Update failed.  Please check the form."
         render :edit
-      end      		  	
+      end
   	  # redirect_to(activity_path(@activity))
-	end  
+	end
 
 	def destroy
 	  @activity = Activity.find(params[:id])
 	  @activity.destroy
-	  redirect_to activities_path	  
+	  redirect_to activities_path
 	end
 
-  # to display all of my activities
+  # To display all of my activities
   def my_activities
-    set_current_point_values(current_user)   
+    set_current_point_values(current_user)
     @activities = Activity.where(:user_id => params[:id])
   end
 
-  # to display all of my completed activities
+  # To display all of my completed activities
   def my_completed_activities
     @activities = Activity.where(["user_id = ? and is_completed = ?", params[:id], true])
   end
 
 
-  #user details page
+  # Renders user details page
   def user_details
     @details = [User.find(current_user.id).score, User.find(current_user.id).level]
   end
 
   # Finish activity version that is a get request and takes in :act_id
+	# Queries the database to update completion details and updates User's score + level
+	# Params: - :act_id: Passed in through API route for activity id to update
   def finish_cur_activity
     puts "finish cur activity"
     @activity_id = params[:act_id]
     puts @activity_id
     puts current_user.id
     @activity = Activity.where("a_id = ? AND user_id = ?", @activity_id, current_user.id).first;
-    # puts @activity.
 
     @user = User.find(current_user.id)
     puts @user.user_name
-    # @new_score = @user.score + @activity.points 
 
     #Put check if user is not in control condition with no point value
     if current_user.experimental_condition != "control condition"
@@ -113,7 +112,7 @@ class ActivitiesController < ApplicationController
       elsif @user.level < 4 and @new_score >= 1200 and @new_score < 2000
         @user.update(level: 4)
       elsif @user.level < 5 and @new_score >= 2000
-        @user.update(level: 5)      
+        @user.update(level: 5)
       else
         puts "Else case for updating levels"
       end
@@ -132,33 +131,29 @@ class ActivitiesController < ApplicationController
     else
       puts "This is called in the case that an activity is finished before it is started"
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
-    end 
-
+    end
 
     #Check if all activities for this user is finished
     @user_activities = Activity.where("user_id = ?", current_user.id);
 
     @all_finished = true
     @user_activities.each do |activity|
-  	if !activity.is_completed
-  		@all_finished = false
-  	end
-
-    end  
-
+	  	if !activity.is_completed
+	  		@all_finished = false
+	  	end
+    end
     puts @all_finished
     if @all_finished == true
 	     @user.update(finished_all_activities: true)
-    end 
-
+    end
+		# Updates all points for this user
     set_current_point_values(current_user)
 
     respond_to do |format|
-      format.js { render js: "window.location.reload();" }  
+      format.js { render js: "window.location.reload();" }
     end
-  end    
+  end
 
-  #testing show message
   def finish_activity
     @activity_id = params[:activity_id]
     puts @activity_id
@@ -166,7 +161,7 @@ class ActivitiesController < ApplicationController
     puts @activity.points
     @user = User.find(params[:user_id])
     puts @user.user_name
-    @new_score = @user.score + @activity.points 
+    @new_score = @user.score + @activity.points
     puts @new_score
     @user.update(score: @new_score)
     puts Time.now
@@ -182,30 +177,19 @@ class ActivitiesController < ApplicationController
     else
       puts "This is called in the case that an activity is finished before it is started"
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
-    end 
+    end
 
     respond_to do |format|
-      format.js { render js: "window.location.reload();" }  
+      format.js { render js: "window.location.reload();" }
     end
   end
 
 
   def get_activity_detail
-    # @activity = Activity.where("a_id = ?", params[:id]);
-    # puts Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id).first
     @activity = Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id);
     puts "Getting activity detail"
     @act_duration = @activity.first.duration
     @act_code = @activity.first.code
-
-    # if Quitter.exists?(activity_id: params[:id], user_id: current_user.id)
-    #   puts "Activity exists with the user."
-    #   quitter = Quitter.find_by(activity_id: params[:id])
-    #   quitter.update(activity_start_time: Time.new.to_s)
-    # else
-    # Quitter.create(user_id: current_user.id, activity_id: params[:id], activity_start_time: Time.new.to_s)
-    # end    
-
     render json: @activity
   end
 
@@ -222,6 +206,8 @@ class ActivitiesController < ApplicationController
     render :text => "delete activity"
   end
 
+	# Aborts the current activity and logs data into Quitter class for exporting
+	# params: - :id: Id of the activity to abort.
   def abort_activity
     Time.zone = "America/Los_Angeles"
     puts Time.zone.now.to_s
@@ -241,51 +227,56 @@ class ActivitiesController < ApplicationController
     else
       puts "Create a new Quitter Record for activity abort time.  "
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activityAbortTime: Time.now.to_s)
-    end 
-    
+    end
+
     # puts @activity
     render :text => "abort activity"
   end
 
   #Loading function to load in csv todo list only when Admin account is enabled.
+	# Uses CSV data to create activities that all experimentees will use into their accounts
+	# When "initialize todo" button is pressed.
+	#params - :adminUser: ID of admin user to check if Admin user exists.
   def load_todo_from_csv(adminUser)
   	require 'csv'
 
   	puts "Loading todo from csv"
-  	puts "Checking if previous activities exist, and deleting them" 
+  	puts "Checking if previous activities exist, and deleting them"
 
   	if Activity.where(:user_id => adminUser.id).exists?
       puts "admin User exists"
   		Activity.where(:user_id => adminUser.id).destroy_all
-  		puts "destorying all previous activiteis" 
+  		puts "destorying all previous activiteis"
   	end
 
   	csv_text = File.read('app/assets/data/todo_list.csv')
   	csv = CSV.parse(csv_text, :headers => true)
 
-  	puts "Random code word for CSV todos" 
+  	puts "Random code word for CSV todos"
   	csv.each do |row|
   		code_word = (0...8).map { (65 + rand(26)).chr }.join
   		puts code_word
-  	    puts adminUser.id
-        puts row["Name"]
-        puts row["Points"].to_i
-        puts Float(row["Duration"])
-        puts code_word
-        puts row["Number"]
+	    puts adminUser.id
+      puts row["Name"]
+      puts row["Points"].to_i
+      puts Float(row["Duration"])
+      puts code_word
+      puts row["Number"]
   		Activity.new(content: row["Name"], user_id: @adminUser.id, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
-
-        puts "created new activity"
+      puts "created new activity"
     end
 
     create_points_table
     set_current_point_values(current_user)
-
   end
 
+	# Enables the user account with name "Admin" to have admin priviledges.
+	# Code passed in through enable_admin/:code route, and checked if it is the correct code.
+	# params - :code: Code passed in through API route.
   def enable_admin
     puts "enabling admin for current user"
-    puts params[:code].to_s	
+    puts params[:code].to_s
+		# Set Arbitrary admin code. enable_admin/[admin code]
     @adminCode = '9128'
     puts @adminCode.eql?(params[:code])
     if params[:code].eql?(@adminCode)
@@ -297,14 +288,13 @@ class ActivitiesController < ApplicationController
     	else
     		puts "No admin account"
     	end
-
     	render :text => "admin enabled"
     else
-        	render :text => "Wrong Code" 
+        	render :text => "Wrong Code"
     end
   end
 
-  #Create points table from CSV file TODO:
+  #Creates points table from CSV file "points.csv"
   def create_points_table
     require 'csv'
     puts "CREATING POINTS TABLE"
@@ -312,38 +302,35 @@ class ActivitiesController < ApplicationController
     puts "Destroying all previous points"
 
     @nr_tasks = Activity.where(user_id: @@adminUser.id).count
-    @constant_point_value = @@bonus * 100 / @nr_tasks  
-  	
+    @constant_point_value = @@bonus * 100 / @nr_tasks
+
     activities = Activity.all
   	activities.each do |record|
   		puts record
-  		
-  		#TODO: 
       Point.new(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points").save
   		Point.new(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition").save
   	end
 
-
   	csv_text = File.read('app/assets/data/points.csv')
   	csv = CSV.parse(csv_text, :headers => true)
-  	#id=0
+
   	csv.each do |row|
-  		#
-  		#TODO:
   		Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition").save
       Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i/10, time_left: row["time_step"], condition: "monetary condition").save
   	end
   end
 
+	# Sets default activities for an experimentee.
+	# Pulls admin's todo list and initializes experimentee's account with Admin's todo list
+	# params - :current_user: The user id of the current user initializing their todo list.
   def set_default_activities
     puts "setting default activites"
     puts params[:current_user]
-
     puts "Delete user's activities"
 
     @time_step = 8 #minutes
-    @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline  
-       
+    @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline
+
     if Activity.where(:user_id => params[:current_user]).exists?
       Activity.where(:user_id => params[:current_user]).destroy_all
       puts "destroying all previous activities"
@@ -357,53 +344,40 @@ class ActivitiesController < ApplicationController
     @control_condition2 = "constant points"
 
     experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
-   
 
     @random_condition = experimental_condition.shuffle.sample
-    
+
     puts "picking random condition"
     puts @random_condition
     User.find(current_user.id).update(:experimental_condition => @random_condition)
-    
+
     puts "saving user's random condition"
 
     @admin_id = User.where(:user_name => "Admin")
     @activities = Activity.where(:user_id => @admin_id)
     puts @activities.count
 
-    # Activity.destroy_all(:user_id => params[:current_user])
     @activities.each do |record|
-	    puts "TESTING UNIQUE CODE" 
-
+	    puts "Unique code for activity: "
       puts record
       puts current_user.user_name
       @unique_code = current_user.user_name.chars.first + record.code + current_user.user_name.chars.last
       puts @unique_code
-
-      #Generate random code based on current user's username
-      # if @random_condition == "constant points" 
-	     #   points = 5
-      # else
-	     #   points = record.points
-      # end
-      # Activity.new(content: record.content, user_id: params[:current_user], points: points, duration: record.duration, code: @unique_code, a_id: record.a_id).save
-          #Generate random code based on current user's username        
-         #nr_points = Point.where(activity_id: record.id, time_left: @total_time, state: 0, condition: @random_condition)[0].point_value
-      
-      #nr_points = Point.where(activity_id: record.a_id, state: 0, condition: @random_condition)[0].point_value
       Activity.new(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id).save
-      
-      puts "created new record"
-      puts "set_current_point_values"  
-      set_current_point_values(current_user)  
-    end    
-    redirect_to root_path
 
+      puts "created new record"
+      puts "set_current_point_values"
+      set_current_point_values(current_user)
+    end
+    redirect_to root_path
   end
 
-
+	# Sets up current point values for current user's activity points.
+	# This is updated with state_id, based off of how many activities a user has completed.
+	# This function is called whenever updates occur, to update point values of current user
+	# params - :current_user: User model of the current logged in user.
   def set_current_point_values(current_user)
-    puts "SETTING CURRENT POINTS VALUE"
+    puts "**Setting Current Point values**"
   	activities = Activity.where(user_id: current_user.id)
     puts "Number of activities"
     puts activities.count
@@ -412,52 +386,52 @@ class ActivitiesController < ApplicationController
 
   	activities.each do |activity|
   	  @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
-      puts "Point value is "
-      
+      puts "Point value is: "
+
       if @nr_points != nil
-        puts "Number points is not nil"
+        puts "Checked that nr_points is not nil"
         puts @nr_points.point_value
         @nr_points = @nr_points.point_value
   	  end
 
       @current_point_values.push(@nr_points)
   	end
-    puts "Current Point values"
+    puts "Current Point values:"
   	puts @current_point_values
   	return @current_point_values
-  end 
+  end
 
+	# Gets the state_id for the current user, which is computed based off number of completed
+	# activities this user has done.
   def get_state_id
   	#get ID's of completed activities
-  	puts "In get state id"
+  	puts "Getting State ID of the user."
     @nr_activities = Activity.where(user_id: current_user.id).count()
   	puts @nr_activities
 
   	@completed_activities = Activity.where(user_id: current_user.id, is_completed: true)
 
   	state_id = 0
-
-    puts @completed_activities
-    if @completed_activities != nil 
-      puts "completed activities is not nil"
+    puts @completed_activities.length
+    puts "Outputting the completed activities"
+    if @completed_activities.length != 0
+      puts "Completed activities array isn't empty"
     	@completed_activities.each do |activity|
     		position = activity.a_id
     		state_id += 2 ** (@nr_activities - position)
     	end
     end
 
-    puts "The state id is"
+    puts "The state id is: "
     puts state_id
 
   	return state_id
   end
 
-
+	# Function to render all data from activities and users for the experimenter
   def export_data
-    # Function to render all data from activities and users for the experimenter 
     @quitters = Quitter.all
     render json: @quitters
-    # render :text => "Rendering all data from database for export "
   end
 
   def export_user_data
@@ -474,7 +448,7 @@ class ActivitiesController < ApplicationController
     @user_score = current_user.score
     @user_quit = current_user.is_active
 
-    puts "Is user acitive"
+    puts "Is user acitive?"
     puts @user_quit
     puts @user_id
     puts @user_experimental_condition
@@ -487,11 +461,11 @@ class ActivitiesController < ApplicationController
       puts record
       if record.is_completed
         @score = @score + "1"
-      else 
+      else
         @score = @score + "0"
       end
       puts @score
-    end      
+    end
     @score = @score + "i"
 
     # User ID
@@ -514,11 +488,11 @@ class ActivitiesController < ApplicationController
     end
     @score += "e"
     puts @score
-    
+
     render json: @score.to_json
   end
 
-	private 
+	private
 
 	def activity_params
 	  params.require(:activity).permit(:image, :content, :points, :duration, :code, :a_id)
@@ -528,83 +502,12 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find(params[:id])
     puts @activity[:duration]
     puts "The activities of this user"
-  end	
-
-  def owned_activity 
-    unless current_user == @activity.user
-      flash[:alert] = "That post doesn't belong to you!"
-      redirect_to root_path  
-    end    
   end
 
-  # # GET /posts
-  # # GET /posts.json
-  # def index
-  #   @posts = Post.all
-  # end
-
-  # # GET /posts/1
-  # # GET /posts/1.json
-  # def show
-  # end
-
-  # # GET /posts/new
-  # def new
-  #   @post = Post.new
-  # end
-
-  # # GET /posts/1/edit
-  # def edit
-  # end
-
-  # # POST /posts
-  # # POST /posts.json
-  # def create
-  #   @post = Post.new(post_params)
-
-  #   respond_to do |format|
-  #     if @post.save
-  #       format.html { redirect_to @post, notice: 'Post was successfully created.' }
-  #       format.json { render :show, status: :created, location: @post }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @post.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # # PATCH/PUT /posts/1
-  # # PATCH/PUT /posts/1.json
-  # def update
-  #   respond_to do |format|
-  #     if @post.update(post_params)
-  #       format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-  #       format.json { render :show, status: :ok, location: @post }
-  #     else
-  #       format.html { render :edit }
-  #       format.json { render json: @post.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
-  # # DELETE /posts/1
-  # # DELETE /posts/1.json
-  # def destroy
-  #   @post.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
-  # private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_post
-  #     @post = Post.find(params[:id])
-  #   end
-
-  #   # Never trust parameters from the scary internet, only allow the white list through.
-  #   def post_params
-  #     params.fetch(:post, {})
-  #   end	
+  def owned_activity
+    unless current_user == @activity.user
+      flash[:alert] = "That post doesn't belong to you!"
+      redirect_to root_path
+    end
+  end
 end

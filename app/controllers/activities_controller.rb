@@ -249,7 +249,7 @@ class ActivitiesController < ApplicationController
   		puts "destorying all previous activiteis"
   	end
 
-  	csv_text = File.read('app/assets/data/todo_list.csv')
+  	csv_text = File.read(File.join(Rails.root, 'app/assets/data/todo_list.csv'))
   	csv = CSV.parse(csv_text, :headers => true)
 
   	puts "Random code word for CSV todos"
@@ -311,7 +311,7 @@ class ActivitiesController < ApplicationController
   		Point.new(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition").save
   	end
 
-  	csv_text = File.read('app/assets/data/points.csv')
+  	csv_text = File.read(File.join(Rails.root, 'app/assets/data/points.csv'))
   	csv = CSV.parse(csv_text, :headers => true)
 
   	csv.each do |row|

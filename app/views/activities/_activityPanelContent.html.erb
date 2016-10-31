@@ -45,8 +45,7 @@
         <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info" onclick="removeExperiment()"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
-        <% current_user.experimental_condition %>
-		<% if current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points"%>
+		<% if current_user.experimental_condition == "points condition" %>
 			<div id="stats">
 				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
 				<p><strong>Points: </strong> <span> <%= current_user.score%> </span> </p>
@@ -55,7 +54,7 @@
 			<div id="stats">
 			
 				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
-                <p><strong>Money: </strong> <span> $<%= (current_user.score.to_f / 100).round(2)%>0 </span> </p>
+				<p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
 			</div>
 		<% else %>
 			
@@ -168,7 +167,7 @@
 
   function removeExperiment() {
     var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-    $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Task Aborted </h4>");
+    $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Experiment Aborted </h4>");
     $.get('/abort_activity/' + String(currentId), function(data){ 
       console.log(data);
     });

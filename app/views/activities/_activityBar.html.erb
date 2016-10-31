@@ -63,11 +63,11 @@
 	    <span class="activity-bar-content"><strong style="font-size: 90%;"><%= activity.content %></strong> <span style="font-size: 80%;">(<%= activity.duration %> min)</span>
 	    	<!-- Psuedo Rewards with points condition -->
 	    	<% if current_user.experimental_condition == "Initial condition" %>
-	    		<span style="float: right; font-size: 80%;"><%= activity.points %> <i class="fa fa-star-o"></i> </span>
-	    	<% elsif current_user.experimental_condition == "points condition" %>
-	    		<span style="float: right; font-size: 80%;"><%= activity.points %> <i class="fa fa-star-o"></i> </span>
+                <span style="float: right; font-size: 80%;"><%= @current_point_values[activity.a_id-1] %> <i class="fa fa-star-o"> </i> </span>
+	    	<% elsif current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
+	    		<span style="float: right; font-size: 80%;"><%= @current_point_values[activity.a_id-1]%> <i class="fa fa-star-o"></i> </span>
 			<% elsif current_user.experimental_condition == "monetary condition" %>
-	    		<span style="float: right; font-size: 80%;"><i class="fa fa-usd"></i> <%= activity.points.to_f / 10.0 %>0  </span>	    		
+	    		<span style="float: right; font-size: 80%;"><i class="fa fa-usd"></i> <%= @current_point_values[activity.a_id-1]/ 10.0 %>0  </span>	    		
 	    	<% end %>
 	    </span>
 	 </div>

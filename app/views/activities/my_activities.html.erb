@@ -17,7 +17,13 @@
         	<div class="description-heading my-tasks-heading">
         		<h4>My Activities </h4>
         		<p>Welcome, <%= current_user.user_name %>. 
+                    
+                    
+	      <% if current_user.finished_all_activities %>
+		      <p> <strong> Congratulations! You have completed all of the tasks. Please navigate to "Account", click "Generate bonus code", and redeem your points on Amazon Mechanical Turk. </strong> </p>
 
+                <% else %>
+                    
               <% if current_user.experimental_condition == "Initial condition" %>
                 <p> Please follow the instructions on the welcome screen first </p>
 
@@ -32,11 +38,8 @@
                     <p> For each task you can earn a certain number of points. By making smart decisions about which tasks to do and when to do them you can earn a large number of points and level up quickly. Your current score and level are shown below your username on the right.  Every time you complete a task your score increases by the number of points assigned to the task. The points reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus. </p>
                  <% end %>
               <% end %>
+            <% end %>
 
-	      <% if current_user.finished_all_activities %>
-		      <p> <strong> Congratulations! You have completed all of the tasks. Please navigate to "Account", click "Generate bonus code", and redeem your points on Amazon Mechanical Turk. </strong> </p>
-
-	      <% end %>
         	</div>
         </div>
     </div>

@@ -92,7 +92,9 @@ class ActivitiesController < ApplicationController
 
     @user = User.find(current_user.id)
     puts @user.user_name
-
+    puts current_user.experimental_condition
+    puts "User's experimental condition"
+    
     #Put check if user is not in control condition with no point value
     if current_user.experimental_condition != "control condition"
       @current_point_values = set_current_point_values(current_user)
@@ -345,7 +347,8 @@ class ActivitiesController < ApplicationController
 
     experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
 
-    @random_condition = experimental_condition.shuffle.sample
+    #@random_condition = experimental_condition.shuffle.sample
+    @random_condition = @control_condition2
 
     puts "picking random condition"
     puts @random_condition
@@ -384,18 +387,32 @@ class ActivitiesController < ApplicationController
   	condition = User.find(current_user.id).experimental_condition
   	@current_point_values = Array.new
 
-  	activities.each do |activity|
-  	  @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
-      puts "Point value is: "
 
-      if @nr_points != nil
-        puts "Checked that nr_points is not nil"
-        puts @nr_points.point_value
-        @nr_points = @nr_points.point_value
-  	  end
+    puts "User's condition is: "
+    puts condition
+    
+    if condition == "constant points"
+        puts "pushing constant points into current_point_values array"
+        @nr_tasks = Activity.where(user_id: @@adminUser.id).count
+        @constant_point_value = @@bonus * 100 / @nr_tasks
+        activities.each do |activity|
+            @current_point_values.push(@constant_point_value)
+        end
+    else
+  	    activities.each do |activity|
+  	        @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
+            puts "Point value is: "
 
-      @current_point_values.push(@nr_points)
-  	end
+            if @nr_points != nil
+                puts "Checked that nr_points is not nil"
+                puts @nr_points.point_value
+                @nr_points = @nr_points.point_value
+  	        end
+
+            @current_point_values.push(@nr_points)
+  	    end
+    end
+
     puts "Current Point values:"
   	puts @current_point_values
   	return @current_point_values

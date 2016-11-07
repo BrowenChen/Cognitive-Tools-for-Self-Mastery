@@ -1,4 +1,11 @@
 <!-- only displaying my activities -->
+<style>
+
+#congrats {
+    font-size: 200%
+}
+    
+</style>
 
 <section class="content">
     <div class="row">
@@ -20,7 +27,7 @@
                     
                     
 	      <% if current_user.finished_all_activities %>
-		      <p> <strong> Congratulations! You have completed all of the tasks. Please navigate to "Account", click "Generate bonus code", and redeem your points on Amazon Mechanical Turk. </strong> </p>
+		      <p id='congrats'> <strong> Congratulations! You have completed all of the tasks. Please navigate to "Account", click "Generate bonus code", and redeem your points on Amazon Mechanical Turk. </strong> </p>
 
                 <% else %>
                     

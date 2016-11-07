@@ -104,7 +104,18 @@
           // var current_activity_completed = document.getElementById();
           if (!activity_object.is_completed) {
             // $('#update_score_btn').attr('disabled', false); 
-            $('#update_score_btn').show(); 
+            $('#update_score_btn').show();
+            
+            //call finishCurrentActivity() when the user presses ENTER
+            $(document).ready(function() {
+                $(window).keydown(function(event){
+                    if(event.keyCode == 13) {
+                        finishCurrentActivity()
+                        return true;
+                    }
+                });
+            });
+  
           }
           
           // $('#update_score_btn').prop('disabled',false)
@@ -112,6 +123,15 @@
           // $('#update_score_btn').removeAttr("disabled");
         }
       	else {
+            //disable submitting the form on ENTER
+            $(document).ready(function() {
+                $(window).keydown(function(event){
+                    if(event.keyCode == 13) {
+                        event.preventDefault();
+                        return false;
+                    }
+                });
+            });
         //   $('#update_score_btn').attr("disabled");
       		// $('#update_score_btn').attr('disabled', true); 
           // $('#update_score_btn').prop('disabled',true)

@@ -8,7 +8,7 @@
         width: 100%;
         margin-bottom: 0px;
         padding-left: 0;
-    }   
+    }
 
     #activity-progress-input {
 	    margin-top: 10px;
@@ -31,7 +31,7 @@
 	background-color: #dff0d8;
 	border-radius: 70px;
 	color: green;
-    font-size: 175%;
+    font-size: 135%;
     }
 
     #stats p {
@@ -40,8 +40,8 @@
     #stats span {
 	    color: green;
     }
-    
-    
+
+
 </style>
 <div class="activity-content-wrap">
     <div class="container activity-functions">
@@ -55,17 +55,17 @@
 			</div>
 		<% elsif current_user.experimental_condition == "monetary condition" %>
 			<div id="stats">
-			
+
 				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
 				<p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
 			</div>
 		<% else %>
-			
+
 		<% end %>
     </div>
 	<h2 style="margin-top: 10px;"> Target Detection <%= activity_id %></h2>
 	<div class="experiment-game-container" style="overflow: hidden;">
-		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  <h4 style="text-align:center; margin-top: 100px;"> Press "Start" to start the task.</h4> </div>  
+		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  <h4 style="text-align:center; margin-top: 100px;"> Press "Start" to start the task.</h4> </div>
 	</div>
 
     <div class="row" style="padding: 5px; padding-left: 15px;">
@@ -74,15 +74,15 @@
           <div class="form-group">
               <input type="password" class="form-control" id="activity-progress-input" placeholder="Enter Code Here" style="padding: 5px; width: 90%;" onkeyup="check_code(this.value, <%= activity_id %>)">
           </div>
-          <!-- <button type="submit" class="btn btn-success">Update Activity</button> --> 
+          <!-- <button type="submit" class="btn btn-success">Update Activity</button> -->
 
 	         <!-- <span id="finish_activity_button"> <%= link_to "Finish Activity", finish_activity_path(activity_id: activity_id, :user_id => current_user.id ), :type => "submit", :class => "btn btn-success", :id => "update_score_btn", :disabled => true  %> </span> -->
-           
+
       </form>
-    </div>	
+    </div>
 </div>
 <script>
-    
+
     $(document).ready(function() {
         $(window).keydown(function(event){
             if(event.keyCode == 13) {
@@ -103,7 +103,7 @@
       // console.log("CURRENT ID " + currentId);
 
       // Javascript GET call
-      $.get('/activity_detail/' + String(currentId), function(data){     
+      $.get('/activity_detail/' + String(currentId), function(data){
         var activity_object = data[0];
         // console.log(activity_object);
         if (val == activity_object.code){
@@ -115,9 +115,9 @@
           // console.log($('#update_score_btn'));
           // var current_activity_completed = document.getElementById();
           if (!activity_object.is_completed) {
-            // $('#update_score_btn').attr('disabled', false); 
+            // $('#update_score_btn').attr('disabled', false);
             $('#update_score_btn').show();
-            
+
             //call finishCurrentActivity() when the user presses ENTER
             $(document).ready(function() {
                 $(window).keydown(function(event){
@@ -127,9 +127,9 @@
                     }
                 });
             });
-  
+
           }
-          
+
           // $('#update_score_btn').prop('disabled',false)
           // $('#update_score_btn').show();
           // $('#update_score_btn').removeAttr("disabled");
@@ -145,7 +145,7 @@
                 });
             });
         //   $('#update_score_btn').attr("disabled");
-      		// $('#update_score_btn').attr('disabled', true); 
+      		// $('#update_score_btn').attr('disabled', true);
           // $('#update_score_btn').prop('disabled',true)
           // $('#finish_activity_button').html("");
           $('#update_score_btn').hide();
@@ -161,13 +161,13 @@
     //Log Tetris Time
     $.get('/start_tetris/', function(data) {
 	     console.log(data);
-    });    
+    });
 
   }
 
   function displayExperiment() {
 
-      // GET request to backend with activity id, to get the activity's completion code and duration from the backend. 
+      // GET request to backend with activity id, to get the activity's completion code and duration from the backend.
       //Get the current active activity Id.
       var currentId = document.getElementsByClassName('tab-pane active')[0].id;
       console.log("displaying ex");
@@ -175,7 +175,7 @@
 
 
       // Javascript GET call
-      $.get('/activity_detail/' + String(currentId), function(data){ 
+      $.get('/activity_detail/' + String(currentId), function(data){
         console.log(data[0]);
         var activity_object = data[0];
         var act_duration = activity_object.duration;
@@ -186,12 +186,12 @@
 
         // Experiment URL
         var experiment = '<object id="vigilance" data="' + String(http_link) + '" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
-    
+
         $(".game-content").html(experiment);
-      });      
+      });
 
       // Starting Activity and logging in db
-      $.get('/start_activity/' + String(currentId), function(data){ 
+      $.get('/start_activity/' + String(currentId), function(data){
         console.log(data[0]);
       });
       // document.getElementById('vigilance').style.width = '350px';
@@ -200,7 +200,7 @@
   function removeExperiment() {
     var currentId = document.getElementsByClassName('tab-pane active')[0].id;
     $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Experiment Aborted </h4>");
-    $.get('/abort_activity/' + String(currentId), function(data){ 
+    $.get('/abort_activity/' + String(currentId), function(data){
       console.log(data);
     });
   }

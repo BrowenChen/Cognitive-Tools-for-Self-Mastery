@@ -303,6 +303,7 @@ class ActivitiesController < ApplicationController
     Point.destroy_all
     puts "Destroying all previous points"
 
+    @@adminUser = User.find_by(user_name: "Admin")
     @nr_tasks = Activity.where(user_id: @@adminUser.id).count
     @constant_point_value = @@bonus * 100 / @nr_tasks
 
@@ -333,9 +334,18 @@ class ActivitiesController < ApplicationController
     @time_step = 8 #minutes
     @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline
 
+
+    @admin_id = User.where(:user_name => "Admin")
     if Activity.where(:user_id => params[:current_user]).exists?
-      Activity.where(:user_id => params[:current_user]).destroy_all
-      puts "destroying all previous activities"
+      # Dont delete admin's activities
+      puts "Dont delete addmin's activities"
+      puts params[:current_user]
+
+      # Quick FIX. user id is 
+      if params[:current_user] != '1'
+        Activity.where(:user_id => params[:current_user]).destroy_all
+        puts "destroying all previous activities"
+      end
     end
 
     puts "Also randomizing experimental condition"
@@ -359,17 +369,20 @@ class ActivitiesController < ApplicationController
     @activities = Activity.where(:user_id => @admin_id)
     puts @activities.count
 
-    @activities.each do |record|
-	    puts "Unique code for activity: "
-      puts record
-      puts current_user.user_name
-      @unique_code = current_user.user_name.chars.first + record.code + current_user.user_name.chars.last
-      puts @unique_code
-      Activity.new(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id).save
+    #Add if user is not Admin.
+    if params[:current_user] != '1'
+        @activities.each do |record|
+	        puts "Unique code for activity: "
+            puts record
+            puts current_user.user_name
+            @unique_code = current_user.user_name.chars.first + record.code + current_user.user_name.chars.last
+            puts @unique_code
+            Activity.new(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id).save
 
-      puts "created new record"
-      puts "set_current_point_values"
-      set_current_point_values(current_user)
+            puts "created new record"
+            puts "set_current_point_values"
+            set_current_point_values(current_user)
+        end
     end
     redirect_to root_path
   end

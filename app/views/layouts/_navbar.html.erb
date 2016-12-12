@@ -33,17 +33,17 @@
 								<br>	
 								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
 							<% elsif current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
-								<a href="#"><i class="fa fa-circle text-success"></i><strong> Level: <%= current_user.level %>  </strong></a>	
+								<i class="fa fa-circle text-success"></i><strong> Level: <%= current_user.level %>  </strong>	
 								<br>	
-								<a href="#"><i class="fa fa-circle text-info"></i> <strong> Score: <%= current_user.score%> </strong></a>
+								<i class="fa fa-circle text-info"></i> <strong> Score: <%= current_user.score%> </strong>
 							<% elsif current_user.experimental_condition == "monetary condition" %>
-								<a href="#"><i class="fa fa-circle text-success"></i> <strong> Level: <%= current_user.level %> </strong></a>	
+								<i class="fa fa-circle text-success"></i> <strong> Level: <%= current_user.level %> </strong></a>	
 								<br>	
-								<a href="#"><i class="fa fa-circle text-info"></i> <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></a>										
+								<i class="fa fa-circle text-info"></i> <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></a>										
 							<% else %>
-								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
+								<i class="fa fa-circle text-success"></i>	
 								<br>	
-								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
+								<i class="fa fa-circle text-info"></i>		
 							<% end %>	
 							<br>
 
@@ -54,7 +54,7 @@
 								<span></span>
 							<% else %>
 										<!-- Level Name here -->
-								<a href="#"><i class="fa fa-circle-o"></i>  
+								<i class="fa fa-circle-o"></i>  
 									<% if current_user.level == 1 %>
 										Blind Mule
 									<% elsif current_user.level == 2 %>
@@ -65,8 +65,7 @@
 										Watchful Owl
 									<% else %>
 										Master of Attention
-									<% end %>	
-								</a>		
+									<% end %>									
 							<% end %>
 
 		    			<% else %>

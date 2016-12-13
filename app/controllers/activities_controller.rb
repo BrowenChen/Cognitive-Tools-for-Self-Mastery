@@ -422,7 +422,7 @@ class ActivitiesController < ApplicationController
                 @nr_points = @nr_points.point_value
   	        end
 
-            @current_point_values.push(@nr_points)
+            @current_point_values[activity.a_id-1]=@nr_points
   	    end
     end
 

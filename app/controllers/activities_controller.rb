@@ -357,8 +357,7 @@ class ActivitiesController < ApplicationController
 
     experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
 
-    #@random_condition = experimental_condition.shuffle.sample
-    @random_condition = experimental_condition[current_user.id % 4]
+    @random_condition = experimental_condition.shuffle.sample
 
     puts "picking random condition"
     puts @random_condition

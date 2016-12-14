@@ -357,7 +357,8 @@ class ActivitiesController < ApplicationController
 
     experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
 
-    @random_condition = experimental_condition.shuffle.sample
+    #@random_condition = experimental_condition.shuffle.sample
+    @random_condition = experimental_condition[current_user.id % 4]
 
     puts "picking random condition"
     puts @random_condition
@@ -421,7 +422,7 @@ class ActivitiesController < ApplicationController
                 @nr_points = @nr_points.point_value
   	        end
 
-            @current_point_values.push(@nr_points)
+            @current_point_values[activity.a_id-1]=@nr_points
   	    end
     end
 

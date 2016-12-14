@@ -157,6 +157,7 @@
   function displayTetris() {
     var tetrisGame = '<object data="https://cocosci.berkeley.edu/mturk/falk/taskRating/Tetris/index.html" style="width: 100%; height: 100%; overflow: hidden;";/>';
     $(".game-content").html(tetrisGame);
+      
 
     //Log Tetris Time
     $.get('/start_tetris/', function(data) {
@@ -199,7 +200,7 @@
 
   function removeExperiment() {
     var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-    $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Experiment Aborted </h4>");
+    $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Task Aborted. <br/> Please select a new task and press Start! </h4>");
     $.get('/abort_activity/' + String(currentId), function(data){
       console.log(data);
     });

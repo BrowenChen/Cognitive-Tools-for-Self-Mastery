@@ -152,14 +152,14 @@
 	                    <h4 class="modal-title">Quitting Experiment</h4>
 	                </div>
 	                <div class="modal-body">
-						<p> Are you sure you want to quit the experiment for good? If you quit now, there will be no return. You will not be able to resume the experiment and you will not be able to earn the $20 bonus for completing the experiment. Instead, you will receive a much smaller bonus of $3 per hour that you worked on the tasks. If you choose to quit, please make sure to copy and paste or write down the following bonus code: </p>         
-          				Your export code is:
+						<p> Are you sure you want to quit the experiment for good? If you quit now, you will not be able to return. You will  receive a bonus of $3 per hour of successfully completed tasks rather than the full $20 bonus you can receive if you finish the experiment by the deadline. </p>         
+          				Your code is:
 	                    <br>
 	                    <strong id="quit_code"> </strong>
 	                    <br>
 	                    <br>
 		
-	                    <p> To collect your bonus, please log in to Amazon Mechanical Turk, find the HIT called “Reimbursement for Todo List Experiment” by the requester “CoCoSci Lab at UC Berkeley” and paste this code.” </p>	                    
+	                    <p>  If you choose to quit, please copy and paste or write down this bonus code and enter it into the "Reimbursement for Todo List Experiment” by requester “CoCoSci Lab at UC Berkeley”.</p>	                    
 	                </div>
 	                <div class="modal-footer">
 	                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
@@ -180,7 +180,7 @@
 	                <div class="modal-body">
 
 			    <% if current_user.experimental_condition == "points condition" %>
-				    Congratulations! You have earned a $20 bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Reimbursement for Todo List Experiment", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there. 
+				    Congratulations! You have earned a $20 bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Reimbursement for Todo List Experiment", by the requester "CoCoSci Lab at UC Berkeley", and input the code there. 
 			    <% elsif current_user.experimental_condition == "monetary condition" %>
 					The amount you have earned so far is displayed on the upper left corner. If this is the first time you have collected your bonus, you will be paid the current amount you have earned. If you have collected before, you will receive and additional bonus that you have earned since then. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Reimbursement for Todo List Experiment", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there. 
 			    <% elsif current_user.experimental_condition == "control condition" %>

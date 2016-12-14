@@ -76,7 +76,7 @@
 			<!-- To get rid of the setting activities only once feature -->
 			<!-- <%= link_to "Set Activities", set_default_activities_path(:current_user => current_user.id), :class => "btn btn-info btn-md", :id => "set_default_act_btn" %> 	 -->
 
-			<% if current_user.experimental_condition == "points condition" %> 
+			<% if current_user.experimental_condition == "points condition" or current_user.experimental_condition == "constant points" %> 
 				<% if current_user.finished_all_activities %>
 					<a class="btn btn-warning btn-md" data-toggle="modal"  href="#myModal2" style="font-size: 80%;" onclick="generate_code()"> Generate Bonus Code</a>
 				<% else %>

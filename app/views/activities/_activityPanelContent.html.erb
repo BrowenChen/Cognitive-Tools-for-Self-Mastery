@@ -184,6 +184,7 @@
         console.log(act_code + act_duration);
 
         var http_link = "http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/task.html?number=" + String(currentID) + "&code=%22" + String(act_code) + "%22";
+        console.log(http_link)
 
         // Experiment URL
         var experiment = '<object id="vigilance" data="' + String(http_link) + '" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';

@@ -1,1 +1,10 @@
-Number,Name,Duration,Points,Dollars1,Target Detection 1,0.5,7,0.072,Target Detection 2,1,13,0.133,Target Detection 3,2,26,0.264,Target Detection 4,4,51,0.515,Target Detection 5,8,99,0.996,Target Detection 6,16,193,1.937,Target Detection 7,24,284,2.848,Target Detection 8,32,374,3.749,Target Detection 9,40,461,4.61
+Number,Name,Duration,Points,Dollars
+1,Writing Assignment 1,0.5,7,0.07
+2,Writing Assignment 2,1,13,0.13
+3,Writing Assignment 3,2,26,0.26
+4,Writing Assignment 4,4,51,0.51
+5,Writing Assignment 5,8,99,0.99
+6,Writing Assignment 6,16,193,1.93
+7,Writing Assignment 7,24,284,2.84
+8,Writing Assignment 8,32,374,3.74
+9,Writing Assignment 9,40,461,4.61

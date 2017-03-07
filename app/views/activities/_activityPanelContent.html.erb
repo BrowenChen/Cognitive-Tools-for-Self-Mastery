@@ -63,7 +63,7 @@
 
 		<% end %>
     </div>
-	<h2 style="margin-top: 10px;"> Target Detection <%= activity_id %></h2>
+	<h2 style="margin-top: 10px;"> Writing Assignment <%= activity_id %></h2>
 	<div class="experiment-game-container" style="overflow: hidden;">
 		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  <h4 style="text-align:center; margin-top: 100px;"> Press "Start" to start the task.</h4> </div>
 	</div>
@@ -183,7 +183,7 @@
         var act_code = activity_object.code;
         console.log(act_code + act_duration);
 
-        var http_link = "http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/task.html?number=" + String(currentId) + "&code=%22" + String(act_code) + "%22";
+        var http_link = "http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/procrastination_task.html?number=" + String(currentId) + "&code=%22" + String(act_code) + "%22";
         console.log(http_link)
 
         // Experiment URL

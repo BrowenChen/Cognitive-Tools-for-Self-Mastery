@@ -252,7 +252,7 @@
                   <!-- Insert Activity partial only if activity id matches with current logged in user -->
                   <% if current_user.id == activity.user_id %>
                       <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
-                        <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>" onclick="hideFinishButton();"> 
+                        <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>" onclick="hideFinishButton(); displayExperiment(<%= activity.a_id%>);"> 
                           <%= render 'activityBar', activity: activity %> 
                         </a>
                       </span>
@@ -281,6 +281,41 @@
 
 
 <script>
+
+  function displayExperiment(currentId) {
+
+      // GET request to backend with activity id, to get the activity's completion code and duration from the backend.
+      //Get the current active activity Id.
+      //var currentId = document.getElementsByClassName('tab-pane active')[0].id;
+      console.log("displaying ex");
+
+
+
+      // Javascript GET call
+      $.get('/activity_detail/' + String(currentId), function(data){
+        console.log(data[0]);
+        var activity_object = data[0];
+        var act_duration = activity_object.duration;
+        var act_code = activity_object.code;
+        console.log(act_code + act_duration);
+
+        var http_link = "https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/procrastination_task.html?number=" + String(currentId) + "&code=%22" + String(act_code) + "%22";
+        console.log(http_link)
+
+        // Experiment URL
+        var experiment = '<object id="vigilance" data="' + String(http_link) + '" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
+
+        $(".game-content").html(experiment);
+      });
+
+      // Starting Activity and logging in db
+      $.get('/start_activity/' + String(currentId), function(data){
+        console.log(data[0]);
+      });
+      // document.getElementById('vigilance').style.width = '350px';
+  }    
+    
+    
   //Script delete this later 
 
   var hideFinishButton = function() {

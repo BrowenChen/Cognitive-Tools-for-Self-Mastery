@@ -176,6 +176,11 @@
     
 function procrastinate(activity){
     
+    var currentActivityId = 6;
+    alert('Trying')
+    //$.get('/finish_cur_activity/', {act_id: currentActivityId});
+    $.get('/finish_cur_activity/' + currentActivityId)
+    
     $.get('/start_tetris/', function(data) {
 	     console.log(data);
     });
@@ -187,12 +192,12 @@ function procrastinate(activity){
     
     if (activity==2){
         //Reddit
-        window.open("http://www.reddit.com")
+        setTimeout( function(){window.open("http://www.reddit.com")},500)
     }
     
     if (activity==3){
         //News
-        window.open("http://news.google.com")
+        setTimeout( function(){window.open("http://news.google.com")},500)
     }
     
 }

@@ -85,7 +85,7 @@ class ActivitiesController < ApplicationController
 	# Params: - :act_id: Passed in through API route for activity id to update
   def finish_cur_activity
     puts "finish cur activity"
-    @activity_id = params[:act_id]
+    @activity_id = params[:act_id].to_i
     puts @activity_id
     puts current_user.id
     @activity = Activity.where("a_id = ? AND user_id = ?", @activity_id, current_user.id).first;
@@ -101,9 +101,10 @@ class ActivitiesController < ApplicationController
       puts "Current_point values: "
       puts @current_point_values
       puts "Activity id"
-      puts @activity.a_id
+      #puts @activity.a_id
+      puts @activity_id
 
-      @new_score = @user.score + @current_point_values[@activity.a_id-1]
+      @new_score = @user.score + @current_point_values[@activity_id-1]
       puts @new_score
       @user.update(score: @new_score)
       #update user level here
@@ -121,8 +122,10 @@ class ActivitiesController < ApplicationController
     end
 
     puts Time.now
-    @activity.update(activity_time_completed: Time.now);
-    @activity.update(is_completed: true);
+    if (@activity)  
+        @activity.update(activity_time_completed: Time.now);
+        @activity.update(is_completed: true);
+    end
 
     # Update the Quitter class to record the time this activity finished
     # If activity has been started, hasn't been finished or aborted yet.
@@ -135,7 +138,7 @@ class ActivitiesController < ApplicationController
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
     end
 
-    #Check if all activities for this user is finished
+    #Check if all activities for this user is finished      
     @user_activities = Activity.where("user_id = ?", current_user.id);
 
     @all_finished = true
@@ -410,6 +413,7 @@ class ActivitiesController < ApplicationController
         activities.each do |activity|
             @current_point_values.push(@constant_point_value)
         end
+        @current_point_values.push(0)
     else
   	    activities.each do |activity|
   	        @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
@@ -423,6 +427,8 @@ class ActivitiesController < ApplicationController
 
             @current_point_values[activity.a_id-1]=@nr_points
   	    end
+        p=Point.where(activity_id:6,state:0,condition:'points condition')
+        @current_point_values.push(p[0]['point_value'])
     end
 
     puts "Current Point values:"

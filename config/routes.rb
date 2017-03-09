@@ -23,9 +23,10 @@ Rails.application.routes.draw do
   # delete activity with activity ID
   get 'delete_activity/:id' => 'activities#delete_activity', as: :delete_activity
 
-  get '/finish_activity' => 'activities#finish_activity', as: :finish_activity
+  get '/finish_cur_activity/:act_id' => 'activities#finish_cur_activity',   as: :finish_cur_activity
+    
+  get '/finish_activity/:user_id/:activity_id' => 'activities#finish_activity', as: :finish_activity
 
-  get '/finish_cur_activity/:act_id' => 'activities#finish_cur_activity'
 
   get '/quit_experiment' => 'rewards#quit_experiment'
 

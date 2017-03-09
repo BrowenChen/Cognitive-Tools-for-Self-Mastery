@@ -9,7 +9,7 @@ Password: password
 Username: Admin
 
 1. Open the repo.
-2. Deploy to heroku: heroku push
+2. Deploy to heroku: git push heroku master
 3. Heroku run rake db:migrate.
 4. heroku ps:scale web=1  (Scale a web dyno)
 5. Create an account with “Admin” as the username (!Important)

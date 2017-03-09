@@ -108,13 +108,13 @@ class ActivitiesController < ApplicationController
       puts @new_score
       @user.update(score: @new_score)
       #update user level here
-      if @user.level < 2 and @new_score >= 200 and @new_score < 600
+      if @user.level < 2 and @new_score >= 150 and @new_score < 500
         @user.update(level: 2)
-      elsif @user.level < 3 and @new_score >= 600 and @new_score < 1200
+      elsif @user.level < 3 and @new_score >= 500 and @new_score < 1000
         @user.update(level: 3)
-      elsif @user.level < 4 and @new_score >= 1200 and @new_score < 2000
+      elsif @user.level < 4 and @new_score >= 1000 and @new_score < 1500
         @user.update(level: 4)
-      elsif @user.level < 5 and @new_score >= 2000
+      elsif @user.level < 5 and @new_score >= 1500
         @user.update(level: 5)
       else
         puts "Else case for updating levels"

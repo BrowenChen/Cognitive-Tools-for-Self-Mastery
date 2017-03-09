@@ -20,6 +20,13 @@
     	border: 1px solid #eee;
     	padding: 5px;
     }
+    
+    .btn-youtube{
+        background-image: image-url('youtube.png');
+        font-size:0;
+        width:50px;
+        height:50px;
+    }
 
     #stats {
 	float: right;
@@ -48,6 +55,10 @@
         <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info" onclick="removeExperiment()"> Abort </button>
         <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
+        <button class="btn-youtube" id="youtube"  onclick="procrastinate(1)"> <img src=<% image_url('youtube.png') %> alt='YouTube'> </button>
+        <button class="btn btn-reddit" onclick="procrastinate(2)"> Reddit </button>
+        <button class="btn btn-news" onclick="procrastinate(3)"> News </button>
+        
 		<% if current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
 			<div id="stats">
 				<p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
@@ -165,6 +176,24 @@
     });
 
   }
+    
+function procrastinate(activity){
+    
+    if (activity==1){
+        //Youtube
+        window.open("http://www.youtube.com")
+    }
+    
+    if (activity==2){
+        //Reddit
+        window.open("http://www.reddit.com")
+    }
+    
+    if (activity==3){
+        //News
+        window.open("http://news.google.com")
+    }
+}
 
   function displayExperiment() {
 

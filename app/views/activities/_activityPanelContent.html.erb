@@ -22,10 +22,7 @@
     }
     
     .btn-youtube{
-        background-image: image-url('youtube.png');
-        font-size:0;
-        width:50px;
-        height:50px;
+        background-image: <% asset_path('youtube.png') %>; 
     }
 
     #stats {
@@ -54,10 +51,10 @@
     <div class="container activity-functions">
         <button class="btn btn-danger" onclick="displayExperiment()"> Start </button>
         <button class="btn btn-info" onclick="removeExperiment()"> Abort </button>
-        <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>
-        <button class="btn-youtube" id="youtube"  onclick="procrastinate(1)"> <img src=<% image_url('youtube.png') %> alt='YouTube'> </button>
-        <button class="btn btn-reddit" onclick="procrastinate(2)"> Reddit </button>
-        <button class="btn btn-news" onclick="procrastinate(3)"> News </button>
+        <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>        
+        <button class="btn btn-link" id="youtube"  onclick="procrastinate(1)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="50px"/> </button>
+        <button class="btn btn-link" onclick="procrastinate(2)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="50px"/> </button>
+        <button class="btn btn-link" onclick="procrastinate(3)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="50px"/> </button>
         
 		<% if current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
 			<div id="stats">
@@ -179,6 +176,10 @@
     
 function procrastinate(activity){
     
+    $.get('/start_tetris/', function(data) {
+	     console.log(data);
+    });
+    
     if (activity==1){
         //Youtube
         window.open("http://www.youtube.com")
@@ -193,6 +194,7 @@ function procrastinate(activity){
         //News
         window.open("http://news.google.com")
     }
+    
 }
 
   function displayExperiment() {

@@ -37,14 +37,13 @@
                         <i class="fa fa-circle text-info"></i> <span style="font-size:150%"><strong> Score: <%= current_user.score%> </strong></span>
 							<% elsif current_user.experimental_condition == "monetary condition" %>
 								<i class="fa fa-circle text-success"></i> <span style="font-size:150%"><strong> Level: <%= current_user.level %> </strong>
-								</span>	
-                <i class="fa fa-circle text-info"></i> <div style="font-size:150%"> <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></div>
+								</span>
+                <div style="font-size:125%"><i class="fa fa-circle text-info"></i>  <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></div>
 							<% else %>
 								<i class="fa fa-circle text-success"></i>	
 								<br>	
 								<i class="fa fa-circle text-info"></i>		
 							<% end %>	
-							<br>
 
 							<!-- Level Name -->
 							<% if current_user.experimental_condition == "Initial condition" %>

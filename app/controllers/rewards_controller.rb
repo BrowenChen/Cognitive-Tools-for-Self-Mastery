@@ -33,7 +33,7 @@ class RewardsController < ApplicationController
 		# else
 		Quitter.create(user_id: current_user.id, tetris_time: Time.new.to_s)
 		# end		
-		render :text => "Starting Tetris"
+		#render :text => "Starting Tetris"
 	end
 
 	#Abort activity

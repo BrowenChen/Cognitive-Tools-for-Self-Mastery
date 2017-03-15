@@ -51,7 +51,7 @@
     <div class="container activity-functions">
         <!-- <button class="btn btn-danger" onclick="displayExperiment()"> Start </button> -->
         <button class="btn btn-danger" onclick="removeExperiment()"> Abort </button>
-        <button class="btn btn-warning" onclick="displayTetris()"> Play Tetris </button>        
+        <button class="btn btn-link" onclick="procrastinate(0)"> <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/tetris.jpg" width="50px"/> </button>        
         <button class="btn btn-link" id="youtube"  onclick="procrastinate(1)"> <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="50px"/> </button>
         <button class="btn btn-link" onclick="procrastinate(2)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="50px"/> </button>
         <button class="btn btn-link" onclick="procrastinate(3)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="50px"/> </button>
@@ -73,7 +73,7 @@
     </div>
 	<h2 style="margin-top: 10px;"> Writing Assignment <%= activity_id %></h2>
 	<div class="experiment-game-container" style="overflow: hidden;">
-		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  <h4 style="text-align:center; margin-top: 100px;"> Press "Start" to start the task.</h4> </div>
+		<div class="game-content" style="width: 100%; height: 100%; overflow: hidden;">  <h4 style="text-align:center; margin-top: 100px;"> Please select a task to work on!</h4> </div>
 	</div>
 
     <div class="row" style="padding: 5px; padding-left: 15px;">
@@ -176,13 +176,17 @@
     
 function procrastinate(activity){
     
-    var currentActivityId = 6;
+    //var currentActivityId = 6;
     //alert('Trying')
     //$.get('/finish_cur_activity/', {act_id: currentActivityId});
     
     $.get('/start_tetris/', function(data) {
 	     console.log(data);
     });
+    
+    if (activity==0){
+        url="http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html"
+    }
     
     if (activity==1){
         //Youtube
@@ -201,7 +205,11 @@ function procrastinate(activity){
     
     //setTimeout(function(){window.open(url)},1000)
     //$.get('/finish_cur_activity/' + currentActivityId, function(data){window.open(url)})
-    $.get('/finish_cur_activity/' + currentActivityId)
+    //$.get('/finish_cur_activity/' + currentActivityId)
+    
+    $.get('/start_tetris/', function(data) {
+	     console.log(data);
+    });
     
     window.open(url)
     

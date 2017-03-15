@@ -51,10 +51,10 @@
     <div class="container activity-functions">
         <!-- <button class="btn btn-danger" onclick="displayExperiment()"> Start </button> -->
         <button class="btn btn-danger" onclick="removeExperiment()"> Abort </button>
-        <button class="btn btn-link" onclick="procrastinate(0)"> <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/tetris.jpg" width="50px"/> </button>        
-        <button class="btn btn-link" id="youtube"  onclick="procrastinate(1)"> <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="50px"/> </button>
-        <button class="btn btn-link" onclick="procrastinate(2)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="50px"/> </button>
-        <button class="btn btn-link" onclick="procrastinate(3)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="50px"/> </button>
+        <button class="btn btn-link" onclick="procrastinate(0)"> <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/tetris.jpg" width="0px"/> </button>        
+        <button class="btn btn-link" id="youtube"  onclick="procrastinate(1)"> <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="70px"/> </button>
+        <button class="btn btn-link" onclick="procrastinate(2)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="70px"/> </button>
+        <button class="btn btn-link" onclick="procrastinate(3)"> <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="70px"/> </button>
         
 		<% if current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
 			<div id="stats">

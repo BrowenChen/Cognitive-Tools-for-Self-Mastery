@@ -29,17 +29,16 @@
 
 		    				<!-- Psuedo Rewards with levels or points, or none displayed -->
 		    				<% if current_user.experimental_condition == "Initial condition" %>
-								<a href="#"><i class="fa fa-circle text-success"></i>  </a>	
+								<i class="fa fa-circle text-success"></i>
 								<br>	
-								<a href="#"><i class="fa fa-circle text-info"></i>  </a>		
+								<i class="fa fa-circle text-info"></i>		
 							<% elsif current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
-								<i class="fa fa-circle text-success"></i><strong> Level: <%= current_user.level %>  </strong>	
-								<br>	
-								<i class="fa fa-circle text-info"></i> <strong> Score: <%= current_user.score%> </strong>
+                        <i class="fa fa-circle text-success"></i> <span style="font-size:150%"><strong> Level: <%= current_user.level %>  </strong> </span>	                         <br/>
+                        <i class="fa fa-circle text-info"></i> <span style="font-size:150%"><strong> Score: <%= current_user.score%> </strong></span>
 							<% elsif current_user.experimental_condition == "monetary condition" %>
-								<i class="fa fa-circle text-success"></i> <strong> Level: <%= current_user.level %> </strong></a>	
-								<br>	
-								<i class="fa fa-circle text-info"></i> <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></a>										
+								<i class="fa fa-circle text-success"></i> <span style="font-size:150%"><strong> Level: <%= current_user.level %> </strong>
+								</span>	
+                <i class="fa fa-circle text-info"></i> <div style="font-size:150%"> <strong> Money: $ <%= current_user.score.to_f / 10.0 %>0 </strong></div>
 							<% else %>
 								<i class="fa fa-circle text-success"></i>	
 								<br>	
@@ -54,7 +53,8 @@
 								<span></span>
 							<% else %>
 										<!-- Level Name here -->
-								<i class="fa fa-circle-o"></i>  
+								<i class="fa fa-circle-o"></i>
+                                <span style="font-size:125%">
 									<% if current_user.level == 1 %>
 										Columnist
 									<% elsif current_user.level == 2 %>
@@ -65,7 +65,8 @@
 										Pulitzer Prize
 									<% else %>
 										Nobel Prize in Literature
-									<% end %>									
+									<% end %>	
+                                </span>
 							<% end %>
 
 		    			<% else %>
@@ -74,6 +75,7 @@
 	    			</div>										
     		</div>
     	</div>
+        <br/><br/>
 
 	    <div>
 			<ul class="nav nav-custom-list">

@@ -26,6 +26,7 @@ class ActivitiesController < ApplicationController
 	end
     
     before_filter :submitText
+    protect_from_forgery :except => :submitText
     def submitText    
       puts "in submitText"
       puts params[:text]

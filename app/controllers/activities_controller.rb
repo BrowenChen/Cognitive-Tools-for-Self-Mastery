@@ -13,6 +13,7 @@ class ActivitiesController < ApplicationController
   @@time_step = 8 #minutes
   @@total_time = 7*24*60/@@time_step #total nr of time steps from beginning of experiment to deadline
 
+            
 	# Main route for Todo app.
 	def index
 	  @activities = Activity.all
@@ -23,6 +24,11 @@ class ActivitiesController < ApplicationController
 	  #@activity = Activity.new
 	  @activity = current_user.activities.build
 	end
+    
+    before_filter :submitText
+    def submitText    
+      puts params[:text]
+    end
 
 	# Create an activity by an Admin using "New Activity" form. Not used b/c
 	# Activities are imported via CSV.
@@ -546,4 +552,5 @@ class ActivitiesController < ApplicationController
       redirect_to root_path
     end
   end
+    
 end

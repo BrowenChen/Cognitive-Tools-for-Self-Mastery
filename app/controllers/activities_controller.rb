@@ -28,9 +28,11 @@ class ActivitiesController < ApplicationController
     before_filter :submitText
     protect_from_forgery :except => :submitText
     def submitText    
-      puts "in submitText"
-      puts params[:text]
-      puts "end of submitText "
+        Rails.logger.info "in submitText"
+        Rails.logger.info params[:text]
+        Rails.logger.info "end of submitText "
+
+        render nothing: true
     end
     
     # Resque form for invalid authentificitytoken

@@ -30,9 +30,9 @@ class ActivitiesController < ApplicationController
     def submitText    
         puts "in submitText"
         puts params[:text]
-        Rails.logger.info "in submitText"
-        Rails.logger.info params[:text]
-        Rails.logger.info "end of submitText "
+        #Rails.logger.info "in submitText"
+        #Rails.logger.info params[:text]
+        #Rails.logger.info "end of submitText "
 
         render nothing: true
     end

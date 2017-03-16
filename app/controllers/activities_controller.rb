@@ -31,6 +31,13 @@ class ActivitiesController < ApplicationController
       puts params[:text]
       puts "end of submitText "
     end
+    
+    # Resque form for invalid authentificitytoken
+    rescue_from ActionController::InvalidAuthenticityToken, :with => :bad_token
+    def bad_token
+      flash[:warning] = "Session expired"
+      redirect_to root_path
+    end
 
 	# Create an activity by an Admin using "New Activity" form. Not used b/c
 	# Activities are imported via CSV.

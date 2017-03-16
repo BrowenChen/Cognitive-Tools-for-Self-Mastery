@@ -25,7 +25,7 @@ class ActivitiesController < ApplicationController
 	  @activity = current_user.activities.build
 	end
     
-    before_filter :submitText
+    skip_before_filter :verify_authenticity_token, :only => :submitText
     protect_from_forgery :except => :submitText
     def submitText    
         Rails.logger.info "in submitText"

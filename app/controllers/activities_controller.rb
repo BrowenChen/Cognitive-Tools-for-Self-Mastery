@@ -27,7 +27,9 @@ class ActivitiesController < ApplicationController
     
     before_filter :submitText
     def submitText    
+      puts "in submitText"
       puts params[:text]
+      puts "end of submitText "
     end
 
 	# Create an activity by an Admin using "New Activity" form. Not used b/c

@@ -378,10 +378,11 @@ class ActivitiesController < ApplicationController
     @points_condition = "points condition"
     @control_condition2 = "constant points"
 
-    #experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
-    experimental_condition = [@control_condition] #only for piloting purposes
+    experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
+    #experimental_condition = [@control_condition] #only for piloting purposes
 
-    @random_condition = experimental_condition.shuffle.sample
+    #@random_condition = experimental_condition.shuffle.sample
+    @random_condition = "control condition"
 
     puts "picking random condition"
     puts @random_condition

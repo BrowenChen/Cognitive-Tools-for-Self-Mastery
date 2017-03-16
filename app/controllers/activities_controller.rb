@@ -28,6 +28,8 @@ class ActivitiesController < ApplicationController
     skip_before_filter :verify_authenticity_token, :only => :submitText
     protect_from_forgery :except => :submitText
     def submitText    
+        puts "in submitText"
+        puts params[:text]
         Rails.logger.info "in submitText"
         Rails.logger.info params[:text]
         Rails.logger.info "end of submitText "

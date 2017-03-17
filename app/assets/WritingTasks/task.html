@@ -1,0 +1,63 @@
+<html>
+<head>
+    <title>Writing Task</title>
+
+    <script src="js/jquery.min.js"> </script>
+    <script src="js/underscore.js"> </script>
+    <link href="css/style.css" rel="stylesheet" type="text/css"></link>    
+    <script src="js/questions.js"></script>
+</head>
+    
+<body>
+    
+    <script>
+        // Set parameter values
+      
+        //set default values
+        number=0
+
+        //update parameters according to query string   
+        if (location.search!=''){
+            parameters=location.search.substring(1).split('&')
+            
+            for (par=0; par<parameters.length; par++){
+                if (parameters[par].slice(0,6)=='number')
+                    eval(unescape(parameters[par]))    
+            }
+        }
+        
+    </script>
+
+<div id = "instructions" class='block-text'>
+
+    <div id = "question" class='question'> </div>
+</div>
+<div class='warning'>
+Your answer should be original and of the highest quality. If you copy your answer from a different source, then your submission may be rejected.
+</div>
+
+<div id="answer" > <!-- style="display:none;" -->
+<!--  <h1>Answer</h1> -->
+<div align="center">    
+<textarea rows="50" cols="100">
+This is where the worker would type their answer. Please do not type here. Instead, please only answer the questions below.
+</textarea>
+    
+    <div align="center"><button align="center">  Submit  </button></div>
+</div>
+    
+</div>
+        
+<script>    
+    
+    
+        task_index=number
+        $("#question").html(questions[task_index])
+
+    
+</script>
+    
+    
+</body>
+
+</html>

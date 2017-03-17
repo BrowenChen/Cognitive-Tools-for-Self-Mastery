@@ -1,0 +1,175 @@
+/**
+## General styles
+This stuff can be ported from experiment to experiment.*/
+
+/** We want the page to sit flush inside the browser window - that means no margins or padding. Also, use a nice-looking serif font. */
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Palatino Linotype, Bookman Antiqua, Palatino, serif;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+h1 {
+    line-height: 150%;
+    text-align: center;
+}
+
+h2 {
+    line-height: 140%;
+}
+
+.question{
+    width: 75%;
+    margin-left: 2cm;
+    font-weight: 200;
+    font-size: 150%;
+    margin-top: 1cm;
+    margin-bottom: 1cm;
+}
+
+/** We manage display using "slides". A slide is a <code>div</code> that takes up the entire page. Only one slide should be visible at a time. Navigation between slides is most sensibly accomplished using using buttons, rather than keyboard events. */
+.slide {
+	width: 95%;
+	height: 95%;
+	display: none;
+	position: absolute;
+	margin: 0;
+	margin-left: 0.5%;
+	padding: 1% 2% 1% 2%;
+	align: center;
+}
+
+.counter{
+  font-size: 32px;
+  line-height: 36px;
+}
+
+input, select, button {font-family: Georgia, serif; font-size: 14px;}
+
+button {
+	background: url(images/button-gradient.png);
+	border: 1px solid #999;
+	border-top: 1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	margin: 2px;
+	padding-left: 3px;
+	padding-right: 3px;
+	height: 29px;
+	min-width: 80px;
+	overflow: visible;
+	vertical-align: middle;
+}
+.numberLineButton {
+    height: 25px;
+    width: 4px;
+    border: 0px solid #999;
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	min-width: 0px;
+	overflow: visible;
+}
+
+.heading {
+  font-size: 20px;
+  line-height: 140%;    
+  font-weight: 600;
+}
+
+button:active {
+	border-left: 1px solid #c9c9c9;
+	border-top: 1px solid #c9c9c9;
+	background: none;
+	background-color: #c9c9c9;
+	vertical-align: middle;
+}
+
+button[disabled] {
+	background: url(images/zen-button.png);
+	border: 1px solid #999;
+	border-top: 1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	cursor: not-allowed;
+	vertical-align: middle;
+}
+
+
+/**
+## Experiment-specific styles
+This stuff will vary by experiment.
+*/
+
+#logo-text {
+  font-weight: bold;
+}
+
+#instructions {
+  text-align: center;
+}
+
+.warning {
+    background-color: #f2dede;
+    display: block;
+    border-color: #ebccd1;
+    color: #a94442;
+    width: 450px;
+    text-align: justify;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.hint {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+    width: 450px;
+    text-align: justify;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.block-text {
+  width: 450px;
+  text-align: justify;
+  margin: 0 auto;
+  margin-bottom: 1em;
+}
+
+.exampleRow {
+	height: 50px;
+	overflow: hidden;
+}
+
+.block-col {
+  width: 250px;
+  text-align: justify;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  align: center;
+}
+
+#legal {
+  margin: 0 auto;
+  margin-top: 1.5em;
+  font-size: 0.8em;
+}
+
+#number {
+  font-size: 32px;
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  text-align: left;
+  width: 200px;
+}

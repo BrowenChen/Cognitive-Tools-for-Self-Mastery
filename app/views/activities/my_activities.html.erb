@@ -84,6 +84,27 @@
 <!-- <div style="text-align:center;"> <%= current_user.user_name %> </div> -->
 
 <style>
+  .warning, .hint {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+    display: block;
+    width: 450px;
+    text-align: justify;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+
+  .warning {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+  }
 
     .entire-activity-display {
         position: relative;
@@ -171,98 +192,59 @@
 </style>
 
 <% if current_user.experimental_condition != "Initial condition" %>
-
   <div class="row" style="margin: 10px;">
-      <div class="col-md-8">
-         <!--Activity Main Screen-->
-         <section class="panel entire-activity-display">
-            <header class="panel-heading">
-              Activity Display
-            </header>
-            <div class="panel-body clear">
-               <div class="container experiment-partial">
+    <div class="col-md-8">
+      <!--Activity Main Screen-->
+      <section class="panel entire-activity-display">
+        <header class="panel-heading">
+          Activity Display
+        </header>
+        <div class="panel-body clear">
+           <div class="container experiment-partial">
+              <section class="panel general activity-display">
+                <div class="panel-body" id="game-panel">
+                  <div class="tab-content">
+                    <div class="tab-pane active">
+                      <%= render 'activityPanelContent' %>
+                    </div>
+                  </div>
+                </div>
+              </section>
+           </div>
+        </div>
+      </section>
 
-                   <section class="panel general activity-display">
-                              <div class="panel-body" id="game-panel">
-                                  <div class="tab-content">
-                                      <div id="1" class="tab-pane active">
-
-                                          <!-- Fix to create local client side variable of which activity id and to pass it into rails -->
-
-                                          <%= render 'activityPanelContent', :activity_id => "1" %>
-                                      </div>
-                                      <div id="2" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "2" %>
-                                      </div>
-                                      <div id="3" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "3" %>
-                                      </div>
-                                      <div id="4" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "4" %>
-                                      </div> 
-                                      <div id="5" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "5" %>
-                                      </div>   
-                                      <div id="6" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "6" %>
-                                      </div>   
-                                      <div id="7" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "7" %>
-                                      </div>   
-                                      <div id="8" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "8" %>
-                                      </div>       
-                                      <div id="9" class="tab-pane">
-                                          <%= render 'activityPanelContent', :activity_id => "9" %>
-                                      </div>
-                                      <div id="10" class="tab-pane">
-                                          Tenth panel activity
-                                      </div>                                                                                                                              
-                                  </div>
-                              </div>
-                  </section>
-
-
-
-               </div>
-            </div>
-
-         </section>
-         <!--earning graph end-->
-         <!-- finish activity button -->
-            <div class="finish_container" style="position: relative; width: 100%;"> 
-                    <button class="btn btn-success" id="update_score_btn" onclick="finishCurrentActivity();" style="position: relative; width: 100%; display: none;"> Finish Activity </button>
-            </div> 
+      <!--earning graph end-->
+      <!-- finish activity button -->
+      <div class="finish_container" style="position: relative; width: 100%;">
+        <button class="btn btn-success" id="update_score_btn" style="position:relative; width:100%; display:none;">
+          Finish Activity
+        </button>
       </div>
+    </div>
 
-      <style>
-
-
-      </style>
-      
-      <div class="col-md-4">
-         <!--chat start-->
-         <section class="panel activityPanel">
-            <header class="panel-heading">
-              My Todo List
-            </header>
-            <div class="panel-body" id="noti-box">
-              <div class="activities-wrapper row" style="padding-top: 10px;">
-                <% @activities.each do |activity| %>
-                  <!-- Insert Activity partial only if activity id matches with current logged in user -->
-                  <% if current_user.id == activity.user_id %>
-                      <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
-                        <a id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>" onclick="hideFinishButton(); displayExperiment(<%= activity.a_id%>);"> 
-                          <%= render 'activityBar', activity: activity %> 
-                        </a>
-                      </span>
-                  <% end %>
-                <% end %>
-              </div>
-            </div>
-         </section>
-      </div>
-  <!-- End row -->
+    <div class="col-md-4">
+      <!--chat start-->
+      <section class="panel activityPanel">
+        <header class="panel-heading">
+          My Todo List
+        </header>
+        <div class="panel-body" id="noti-box">
+          <div class="activities-wrapper row" style="padding-top: 10px;">
+            <% @activities.each do |activity| %>
+              <!-- Insert Activity partial only if activity id matches with current logged in user -->
+              <% if current_user.id == activity.user_id %>
+                <span data-item-id="<%= activity.a_id%>" id="activity_<%= activity.a_id%>">
+                  <a class='activity-item' id="activity_select" data-toggle="tab" href="#<%= activity.a_id%>">
+                    <%= render 'activityBar', activity: activity %> 
+                  </a>
+                </span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 
   <div class="activities-wrapper row">
@@ -275,59 +257,4 @@
   </div>
 <% end %>
 
-<div class="experiment-display">
-
-</div>
-
-
-<script>
-
-  function displayExperiment(currentId) {
-
-      // GET request to backend with activity id, to get the activity's completion code and duration from the backend.
-      //Get the current active activity Id.
-      //var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-      console.log("displaying ex");
-
-
-
-      // Javascript GET call
-      $.get('/activity_detail/' + String(currentId), function(data){
-        console.log(data[0]);
-        var activity_object = data[0];
-        var act_duration = activity_object.duration;
-        var act_code = activity_object.code;
-        console.log(act_code + act_duration);
-
-        var http_link = "https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/procrastination_task.html?number=" + String(currentId) + "&code=%22" + String(act_code) + "%22";
-        console.log(http_link)
-
-        // Experiment URL
-        var experiment = '<object id="vigilance" data="' + String(http_link) + '" style="display: table; width: 100%; height: 100%; overflow: hidden;";/>';
-
-        $(".game-content").html(experiment);
-      });
-
-      // Starting Activity and logging in db
-      $.get('/start_activity/' + String(currentId), function(data){
-        console.log(data[0]);
-      });
-      // document.getElementById('vigilance').style.width = '350px';
-  }    
-    
-    
-  //Script delete this later 
-
-  var hideFinishButton = function() {
-    $('#update_score_btn').hide();
-  }
-
-  var finishCurrentActivity = function(){
-    var currentActivityId = document.getElementsByClassName('tab-pane active')[0].id;
-    $.get('/finish_cur_activity/' + String(currentActivityId), function(){  
-      console.log("Finishing current activity");
-    });
-  }
-
-  // $("#2").html('<object data="http://cocosci.berkeley.edu/mturk/falk/taskRating/Vigilance/index.html"/>');
-</script>
+<div class="experiment-display"></div>

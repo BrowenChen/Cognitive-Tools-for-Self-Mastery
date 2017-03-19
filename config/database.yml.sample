@@ -1,0 +1,8 @@
+default: &default
+  adapter: pg
+  database: cognitive_tools_development
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default

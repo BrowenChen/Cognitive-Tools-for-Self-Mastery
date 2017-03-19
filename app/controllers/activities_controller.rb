@@ -13,7 +13,7 @@ class ActivitiesController < ApplicationController
   @@time_step = 8 #minutes
   @@total_time = 7*24*60/@@time_step #total nr of time steps from beginning of experiment to deadline
 
-            
+
 	# Main route for Todo app.
 	def index
 	  @activities = Activity.all
@@ -24,10 +24,10 @@ class ActivitiesController < ApplicationController
 	  #@activity = Activity.new
 	  @activity = current_user.activities.build
 	end
-    
+
     skip_before_filter :verify_authenticity_token, :only => :submitText
     protect_from_forgery :except => :submitText
-    def submitText    
+    def submitText
         puts "in submitText"
         puts params[:text]
         #Rails.logger.info "in submitText"
@@ -36,7 +36,7 @@ class ActivitiesController < ApplicationController
 
         render nothing: true
     end
-    
+
     # Resque form for invalid authentificitytoken
     rescue_from ActionController::InvalidAuthenticityToken, :with => :bad_token
     def bad_token
@@ -114,7 +114,7 @@ class ActivitiesController < ApplicationController
     puts @user.user_name
     puts current_user.experimental_condition
     puts "User's experimental condition"
-    
+
     #Put check if user is not in control condition with no point value
     if current_user.experimental_condition != "control condition"
       @current_point_values = set_current_point_values(current_user)
@@ -142,7 +142,7 @@ class ActivitiesController < ApplicationController
     end
 
     puts Time.now
-    if (@activity)  
+    if (@activity)
         @activity.update(activity_time_completed: Time.now);
         @activity.update(is_completed: true);
     end
@@ -158,7 +158,7 @@ class ActivitiesController < ApplicationController
       Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
     end
 
-    #Check if all activities for this user is finished      
+    #Check if all activities for this user is finished
     @user_activities = Activity.where("user_id = ?", current_user.id);
 
     @all_finished = true
@@ -209,19 +209,13 @@ class ActivitiesController < ApplicationController
     end
   end
 
-
   def get_activity_detail
-    @activity = Activity.where("a_id = ? AND user_id = ?", params[:id], current_user.id);
-    puts "Getting activity detail"
-    @act_duration = @activity.first.duration
-    @act_code = @activity.first.code
-    render json: @activity
+    render json: current_user.activities.find_by(a_id: params[:id])
   end
-
 
   def start_activity
     Quitter.create(user_id: current_user.id, activity_id: params[:id], activity_start_time: Time.new.to_s)
-    render :text => "Starting activity"
+    render nothing: true
   end
 
   def delete_activity
@@ -364,7 +358,7 @@ class ActivitiesController < ApplicationController
       puts "Dont delete addmin's activities"
       puts params[:current_user]
 
-      # Quick FIX. user id is 
+      # Quick FIX. user id is
       if params[:current_user] != '1'
         Activity.where(:user_id => params[:current_user]).destroy_all
         puts "destroying all previous activities"
@@ -427,7 +421,7 @@ class ActivitiesController < ApplicationController
 
     puts "User's condition is: "
     puts condition
-    
+
     if condition == "constant points"
         puts "pushing constant points into current_point_values array"
         @nr_tasks = Activity.where(user_id: @@adminUser.id).count
@@ -450,7 +444,7 @@ class ActivitiesController < ApplicationController
             @current_point_values[activity.a_id-1]=@nr_points
   	    end
         p=Point.where(activity_id:6,state:0,condition:'points condition')
-        @current_point_values.push(p[0]['point_value'])
+        @current_point_values.push(p[0]['point_value']) if p.any?
     end
 
     puts "Current Point values:"
@@ -549,6 +543,10 @@ class ActivitiesController < ApplicationController
     render json: @score.to_json
   end
 
+  def by_code
+    render json: current_user.activities.find_by(code: params[:id])
+  end
+
 	private
 
 	def activity_params
@@ -567,5 +565,5 @@ class ActivitiesController < ApplicationController
       redirect_to root_path
     end
   end
-    
+
 end

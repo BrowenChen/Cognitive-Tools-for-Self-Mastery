@@ -1,0 +1,17 @@
+= link_to 'Generate JSON', '#', class: 'btn'
+
+table.table
+  thead
+    tr
+      th User
+      th Activity code
+      th Answer
+      th Time completed
+
+  tbody
+    - @answers.each do |answer|
+      tr
+        td= answer.user.user_name
+        td= answer.activity.code
+        td= answer.answer
+        td= answer.activity.activity_time_completed

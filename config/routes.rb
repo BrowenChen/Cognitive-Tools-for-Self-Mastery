@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   resources :answers, only: :create
 
+  namespace :admin do
+    resources :answers, only: :index
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
   get 'activities/:id' => 'activities#activity'

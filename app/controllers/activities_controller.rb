@@ -418,7 +418,7 @@ class ActivitiesController < ApplicationController
     if @adminUser = User.find_by(user_name: "Admin")
       @adminUser.update(is_admin: true)
       load_todo_from_csv(@adminUser)
-    else
+    end
 
     render text: 'admin enabled'
   end

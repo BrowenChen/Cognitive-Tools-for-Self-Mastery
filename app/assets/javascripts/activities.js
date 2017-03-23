@@ -1,7 +1,7 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(document).ready(function() {
+$(document).on('ready page:load', function() {
   $('.input-controls').hide();
   $('#completion-code').html('');
 

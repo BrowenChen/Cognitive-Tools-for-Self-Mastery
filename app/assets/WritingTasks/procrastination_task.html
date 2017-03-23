@@ -7,28 +7,6 @@
   <script src="js/jquery.min.js"> </script>
   <script src="js/underscore.js"> </script>
   <script src="js/questions.js"></script>
-
-  <script>
-    function recordAnswer(){
-      var answer = $("#answer_text").val()
-
-      if (wordCount(answer)>min_nr_words) {
-        $("#completion_code").html(code)
-        $("#completion_message").show()
-        $("#answer").hide()
-        $("#instructions").hide()
-      } else {
-        $("#too_short").show()
-        $("#answer").hide()
-        //$("#nr_words").html(min_nr_words)
-      }
-    }
-
-    function wordCount(str) {
-      return str.split(" ").length;
-    }
-
-  </script>
 </head>
 
 <body>
@@ -59,10 +37,6 @@
   <div id="instructions">
     <!-- <strong>Please complete the following writing assignment in the text box below.</strong> -->
     <div id="question" class='question'></div>
-
-    <div class='warning'>
-      Your text should be original and of the highest quality. If you copy from a different source, then your submission will be rejected.
-    </div>
   </div>
 
   <script>

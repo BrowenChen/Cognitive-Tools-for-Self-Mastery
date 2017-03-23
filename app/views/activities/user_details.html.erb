@@ -226,8 +226,9 @@
 			<li> Instruct experimentee's to create an account, click their account, and set their activities to get all the activities that an admin as set. </li>
 		</ul>
 		<br>
-		 <%= link_to "Export Data", export_data_path(), :class => "btn btn-warning btn-md", :id => "export_data_btn" %> 
-		 <%= link_to "Export User Data", export_user_data_path(), :class => "btn btn-success btn-md", :id => "export_user_data_btn" %> 
+		 <%= link_to "Export Data", export_data_path, :class => "btn btn-warning btn-md", :id => "export_data_btn" %> 
+		 <%= link_to "Export User Data", export_user_data_path, :class => "btn btn-success btn-md", :id => "export_user_data_btn" %> 
+		 <%= link_to "Export Answers", admin_answers_path(format: :json), :class => "btn btn-success btn-md", :id => "export_user_data_btn" %> 
 	</div>
 <% end %>
 

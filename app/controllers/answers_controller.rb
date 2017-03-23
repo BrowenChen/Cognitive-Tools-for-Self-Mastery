@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.build(answer_params)
-    raise if @answer.activity.user_id != current_user.id # handle later
+    raise if !current_user.is_admin? && @answer.activity.user_id != current_user.id # handle later
 
     @answer.save
   end

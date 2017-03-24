@@ -44,10 +44,17 @@
 
 
 <div class="user-container container">
+    
 	<div class="jumbotron user-jumbo">
 	  <h1 style="text-align:center;"> Account & Help </h1>
 	  <p>
-			<div style="text-align:center;"> <strong> Username: </strong> <%= current_user.user_name %></div>
+        <div style="text-align:center;"> <strong> Username: </strong> <%= current_user.user_name %> </div>
+        <div>
+                    If you have completed all of the tasks, then this page lets you generate the Bonus Code that will get you paid via Amazon Mechanical Turk. If you would like to contact the experimenter then please click the Contact button. If you want to learn more about the purpose of the experiment, then you can click the About button. Finally, if you want to quit the experiment for good, then you can click the Quit Experiment button.
+
+            </div>
+        
+        
 			<% if current_user.experimental_condition == "points condition" %>
 				<div style="text-align:center;"> <b> Score: </b><%= current_user.score %> </div>
 				<div style="text-align:center;"> <b> Level: </b><%= current_user.level %> </div>

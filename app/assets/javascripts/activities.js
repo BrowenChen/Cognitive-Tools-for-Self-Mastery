@@ -1,6 +1,8 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
+required_lengths=[100,100,100,100,50]
+
 $(document).on('ready page:load', function() {
   $('.input-controls').hide();
   $('#completion-code').html('');
@@ -31,6 +33,7 @@ $(document).on('ready page:load', function() {
     var questionId = $(this).parent().data('question-id');
 
     $('.activity-number').html(questionId);
+    $('#requiredLength').html(required_lengths[questionId-1])
     $('#answer_activity_id').val(activityId);
 
     $.getJSON('/activity_detail/' + activityId, function(activity) {

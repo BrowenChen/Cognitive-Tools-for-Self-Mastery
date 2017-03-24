@@ -94,8 +94,8 @@
         </h4>
       </div>
       <div class='input-controls'>
-        <div class='warning'>
-          Your text should be original and of the highest quality, and you have to write at least 100 words. If you copy from a different source, then your submission will be rejected.
+        <div class='warning' id='additionalInstructions'>
+            Your text should be original and of the highest quality, and you have to write at least <span id='requiredLength'>100</span> words. If you copy from a different source, then your submission will be rejected.
         </div>
 
         <%= f.text_area :answer, rows: 8, style: 'width:80%; margin:0 10%;' %>

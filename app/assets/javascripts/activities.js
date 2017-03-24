@@ -30,7 +30,7 @@ $(document).on('ready page:load', function() {
     var activityId = $(this).parent().data('activity-id');
     var questionId = $(this).parent().data('question-id');
 
-    $('.activity-number').html(activityId);
+    $('.activity-number').html(questionId);
     $('#answer_activity_id').val(activityId);
 
     $.getJSON('/activity_detail/' + activityId, function(activity) {

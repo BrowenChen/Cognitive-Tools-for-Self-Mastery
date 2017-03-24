@@ -80,14 +80,13 @@ class ActivitiesController < ApplicationController
 	# Queries the database to update completion details and updates User's score + level
 	# Params: - :act_id: Passed in through API route for activity id to update
   def finish_cur_activity
-    @activity_id = params[:act_id].to_i
-    @activity = current_user.activities.find_by(a_id: @activity_id)
+    @activity = current_user.activities.find(params[:act_id])
     @user = User.find(current_user.id)
 
     if current_user.experimental_condition != "control condition"
       @current_point_values = set_current_point_values(current_user)
 
-      @new_score = current_user.score + @current_point_values[@activity_id-1]
+      @new_score = current_user.score + @current_point_values[@activity.a_id-1]
       current_user.update(score: @new_score)
 
       if current_user.level < 2 && @new_score >= 150 && @new_score < 500
@@ -109,13 +108,13 @@ class ActivitiesController < ApplicationController
 
     # Update the Quitter class to record the time this activity finished
     # If activity has been started, hasn't been finished or aborted yet.
-    if Quitter.exists?(activity_id:  @activity_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil)
+    if Quitter.exists?(activity_id:  @activity.a_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil)
       puts "Activity exists with the user AND THE ACTIVITY IS FINISHED."
-      quitter = Quitter.find_by! activity_id: @activity_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil
+      quitter = Quitter.find_by! activity_id: @activity.a_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil
       quitter.update(activity_finish_time: Time.new.to_s)
     else
       puts "This is called in the case that an activity is finished before it is started"
-      Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
+      Quitter.create(user_id: current_user.id, activity_id: @activity.a_id, activity_finish_time: Time.now.to_s)
     end
 
     unless current_user.activities.detect { |activity| !activity.is_completed }
@@ -155,11 +154,12 @@ class ActivitiesController < ApplicationController
   end
 
   def get_activity_detail
-    render json: current_user.activities.find_by(a_id: params[:id])
+    render json: current_user.activities.find(params[:id])
   end
 
   def start_activity
-    Quitter.create(user_id: current_user.id, activity_id: params[:id], activity_start_time: Time.new.to_s)
+    activity = current_user.activities.find(params[:id])
+    Quitter.create(user_id: current_user.id, activity_id: activity.a_id, activity_start_time: Time.new.to_s)
     render nothing: true
   end
 

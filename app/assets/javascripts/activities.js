@@ -27,7 +27,8 @@ $(document).on('ready page:load', function() {
   $('.activity-item').on('click', function() {
     $('#update_score_btn').hide();
 
-    var activityId = $(this).parent().data('item-id');
+    var activityId = $(this).parent().data('activity-id');
+    var questionId = $(this).parent().data('question-id');
 
     $('.activity-number').html(activityId);
     $('#answer_activity_id').val(activityId);
@@ -35,7 +36,7 @@ $(document).on('ready page:load', function() {
     $.getJSON('/activity_detail/' + activityId, function(activity) {
       $('.input-controls').show();
 
-      var http_link = "https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/procrastination_task.html?number=" + activityId + "&code=%22" + activity.code + "%22";
+      var http_link = "https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/WritingTasks/procrastination_task.html?number=" + questionId + "&code=%22" + activity.code + "%22";
 
       $(".game-content").html('<object id="vigilance" data="' + http_link + '" style="display:table; width:100%; height:100%; overflow:hidden;"/>');
     });

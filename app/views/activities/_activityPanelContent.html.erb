@@ -128,15 +128,6 @@
 </div>
 
 <script>
-  $(document).ready(function() {
-    $(window).keydown(function(event) {
-      if (event.keyCode == 13) {
-        event.preventDefault();
-        return false;
-      }
-    });
-  });
-
   function removeExperiment() {
     var currentId = document.getElementsByClassName('tab-pane active')[0].id;
     $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Task Aborted. <br/> Please select a new task! </h4>");

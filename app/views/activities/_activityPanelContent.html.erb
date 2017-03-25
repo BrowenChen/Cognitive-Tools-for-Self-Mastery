@@ -106,9 +106,9 @@
     <div class='hint' style='display:none' id='success-message'>
       Thank you! Your response has been recorded and will be graded when you submit the HIT.
       <br>
-      The code for checking off this writing assignment from your todo list is <strong><span id="completion-code"></span></strong>.
+      The code for checking off this writing assignment from your to-do list is <strong><span id="completion-code"></span></strong>.
       <br>
-      Please copy this code and paste it into the text box below the assignment. A green button with the caption <strong>Finish Activity</strong> will appear at the bottom of the page. Please make sure to click it to check off the task from your todo list.
+      Please copy this code and paste it into the text box below the assignment. A green button with the caption <strong>Finish Activity</strong> will appear at the bottom of the page. Please make sure to click it to check off the task from your to-do list.
       <br>
       If your response does not meet the requirements of this assignments then you will lose some or all of your bonus.
     </div>
@@ -140,7 +140,7 @@
 
   function removeExperiment() {
     var currentId = document.getElementsByClassName('tab-pane active')[0].id;
-    $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Task Aborted. <br/> Please select a new task and press Start! </h4>");
+    $(".game-content").html("<h4 style='text-align:center; margin-top: 100px;''> Task Aborted. <br/> Please select a new task! </h4>");
     $.get('/abort_activity/' + String(currentId));
   }
 </script>

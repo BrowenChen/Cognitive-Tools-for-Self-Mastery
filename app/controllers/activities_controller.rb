@@ -191,14 +191,14 @@ class ActivitiesController < ApplicationController
     render text: 'abort activity'
   end
 
-  #Loading function to load in csv todo list only when Admin account is enabled.
+  #Loading function to load in csv to-do list only when Admin account is enabled.
 	# Uses CSV data to create activities that all experimentees will use into their accounts
-	# When "initialize todo" button is pressed.
+	# When "initialize to-do" button is pressed.
 	#params - :adminUser: ID of admin user to check if Admin user exists.
   def load_todo_from_csv(adminUser)
   	require 'csv'
 
-  	puts "Loading todo from csv"
+  	puts "Loading to-do from csv"
   	puts "Checking if previous activities exist, and deleting them"
 
   	if Activity.where(:user_id => adminUser.id).exists?
@@ -210,7 +210,7 @@ class ActivitiesController < ApplicationController
   	csv_text = File.read(File.join(Rails.root, 'app/assets/data/todo_list.csv'))
   	csv = CSV.parse(csv_text, :headers => true)
 
-  	puts "Random code word for CSV todos"
+  	puts "Random code word for CSV to-dos"
   	csv.each do |row|
   		code_word = (0...8).map { (65 + rand(26)).chr }.join
   		puts code_word
@@ -253,8 +253,8 @@ class ActivitiesController < ApplicationController
   end
 
 	# Sets default activities for an experimentee.
-	# Pulls admin's todo list and initializes experimentee's account with Admin's todo list
-	# params - :current_user: The user id of the current user initializing their todo list.
+	# Pulls admin's todo list and initializes experimentee's account with Admin's to-do list
+	# params - :current_user: The user id of the current user initializing their to-do list.
   def set_default_activities
     @time_step = 8 #minutes
     @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline

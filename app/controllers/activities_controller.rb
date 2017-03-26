@@ -76,59 +76,6 @@ class ActivitiesController < ApplicationController
     @details = [current_user.score, current_user.level]
   end
 
-  # Finish activity version that is a get request and takes in :act_id
-	# Queries the database to update completion details and updates User's score + level
-	# Params: - :act_id: Passed in through API route for activity id to update
-  def finish_cur_activity
-    @activity = current_user.activities.find(params[:act_id])
-    @user = User.find(current_user.id)
-
-    if current_user.experimental_condition != "control condition"
-      @current_point_values = set_current_point_values(current_user)
-
-      @new_score = current_user.score + @current_point_values[@activity.a_id-1]
-      current_user.update(score: @new_score)
-
-      if current_user.level < 2 && @new_score >= 150 && @new_score < 500
-        current_user.update(level: 2)
-      elsif current_user.level < 3 && @new_score >= 500 && @new_score < 1000
-        current_user.update(level: 3)
-      elsif current_user.level < 4 && @new_score >= 1000 && @new_score < 1500
-        current_user.update(level: 4)
-      elsif current_user.level < 5 && @new_score >= 1500
-        current_user.update(level: 5)
-      else
-        puts "Else case for updating levels"
-      end
-    end
-
-    if @activity
-      @activity.update(activity_time_completed: Time.now, is_completed: true)
-    end
-
-    # Update the Quitter class to record the time this activity finished
-    # If activity has been started, hasn't been finished or aborted yet.
-    if Quitter.exists?(activity_id:  @activity.a_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil)
-      puts "Activity exists with the user AND THE ACTIVITY IS FINISHED."
-      quitter = Quitter.find_by! activity_id: @activity.a_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil
-      quitter.update(activity_finish_time: Time.new.to_s)
-    else
-      puts "This is called in the case that an activity is finished before it is started"
-      Quitter.create(user_id: current_user.id, activity_id: @activity.a_id, activity_finish_time: Time.now.to_s)
-    end
-
-    unless current_user.activities.detect { |activity| !activity.is_completed }
-	     current_user.update(finished_all_activities: true)
-    end
-
-		# Updates all points for this user
-    set_current_point_values(current_user)
-
-    respond_to do |format|
-      format.js { render js: "window.location.reload();" }
-    end
-  end
-
   def finish_activity
     @activity_id = params[:activity_id]
     @user = User.find(params[:user_id])

@@ -1,8 +1,5 @@
 - if @answer.persisted?
-  | $('.game-content').html('');
-  | $('.input-controls').hide();
-  | $('#success-message, .code-confirmation').show();
-  | $('#completion-code').html('#{@answer.activity.code}');
+  | window.location.reload();
 
 - else
   | $('#fail-message').show();

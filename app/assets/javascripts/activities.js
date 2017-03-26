@@ -12,20 +12,6 @@ $(document).on('ready page:load', function() {
     $('.input-controls').show();
   });
 
-  $('.code-confirmation input').on('keyup', function() {
-    $.getJSON('/activities/' + this.value + '/by_code', function(activity) {
-      if (activity && activity.id.toString() == $('#answer_activity_id').val()) {
-        $('.finish_container button').show();
-      }
-    });
-  });
-
-  $('.finish_container button').on('click', function() {
-    var activityId = $('#answer_activity_id').val();
-
-    $.get('/finish_cur_activity/' + activityId);
-  });
-
   $('.activity-item').on('click', function() {
     $('#update_score_btn').hide();
 

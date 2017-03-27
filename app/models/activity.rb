@@ -8,6 +8,6 @@ class Activity < ActiveRecord::Base
   validates :user_id, presence: true
 
   def question
-    QUESTIONS[a_id]
+    QUESTIONS[a_id][0]
   end
 end

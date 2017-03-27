@@ -1,6 +1,6 @@
 QUESTIONS = {
   # Easy
-  5 => ['What is your favorite TV show and why?', 100],
+  5 => ['What is your favorite TV show and why?', 50],
   # 'What were the 5 most popular TV shows in the US in 2016?',
   # 'What are you looking forward to this year?',
   # 'Please write a review for one of your favorite movies.',

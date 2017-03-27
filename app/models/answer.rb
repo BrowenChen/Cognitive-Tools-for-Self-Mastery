@@ -7,8 +7,8 @@ class Answer < ActiveRecord::Base
   private
 
   def validate_long_answer
-    return if answer && answer.split.size >= QUESTION[answer.activity.a_id][1]
-
+    return if answer && answer.split.size >= QUESTIONS[activity.a_id][1]
+    puts activity.a_id  
     errors.add(:answer, 'is not long enough')
   end
 end

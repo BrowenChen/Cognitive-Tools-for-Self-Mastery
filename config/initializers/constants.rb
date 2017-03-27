@@ -1,12 +1,12 @@
 QUESTIONS = {
   # Easy
-  5 => 'What is your favorite TV show and why?',
+  5 => ['What is your favorite TV show and why?', 100],
   # 'What were the 5 most popular TV shows in the US in 2016?',
   # 'What are you looking forward to this year?',
   # 'Please write a review for one of your favorite movies.',
 
   # Medium
-  2 => 'Please analyze the causes and implications of the British exit referendum in June 2016.',
+  2 => ['Please analyze the causes and implications of the British exit referendum in June 2016.', 100],
   # 'Please describe the sequence of events that led to the abolition of slavery.',
   # 'Please write the strong argument in favor of a political position you disagree with.',
   # 'Please write about an accomplishment or personal quality that you are proud of.',
@@ -16,13 +16,13 @@ QUESTIONS = {
   # Hard
   # 'Write a song about what it is like to work on Mechanical Turk.',
   # 'Write a poem about what it feels like to get rejected over and over again.',
-  1 => 'How has North Korea\'s economic policy changed since the 1950s? What are the reasons and implications of these changes?',
+  1 => ['How has North Korea\'s economic policy changed since the 1950s? What are the reasons and implications of these changes?', 100],
   # 'Write a sonnet about the black plague.',
   # 'Write a haiku about shame and embarrassment.',
   # 'Write five sentences about American politics without using the letter "r".',
   # 'Write an original, extremely funny joke without using the letter "e".',
   # 'Analyze the disadvantages of adding emulsifiers to food.',
   # 'Discuss the advantages and disadvantages of future space tourism.',
-  3 => 'Describe with examples the importance of recognizing and responding to concerns about children and young people\'s development.',
-  4 => 'Write an essay about how society should assign value to human life.'
+  3 => ['Describe with examples the importance of recognizing and responding to concerns about children and young people\'s development.', 100],
+  4 => ['Write an essay about how society should assign value to human life.', 100]
 }

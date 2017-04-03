@@ -7,6 +7,22 @@ $(document).on('ready page:load', function() {
   $('.input-controls').hide();
   $('#completion-code').html('');
 
+  var changeLinks = function() {
+    ['youtube', 'reddit', 'news'].forEach(function(site) {
+      var anchor = $('.' + site + '-link');
+      var index = (anchor.data('link-index') + 1) % 10;
+      var link = window.links[site][index];
+
+      anchor
+        .attr('href', link[0])
+        .attr('title', link[1])
+        .data('link-index', index);
+    });
+  };
+
+  setInterval(changeLinks, 60000);
+  changeLinks();
+
   $('.retry-button').on('click', function() {
     $('#fail-message').hide();
     $('.input-controls').show();

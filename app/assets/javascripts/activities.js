@@ -48,4 +48,8 @@ $(document).on('ready page:load', function() {
 
     $.post('/start_activity/' + activityId);
   });
+
+  $('.btn-link').on('click', function() {
+    $.post('/start_activity/0?qid=' + $(this).data('qid'));
+  });
 });

@@ -105,8 +105,8 @@ class ActivitiesController < ApplicationController
   end
 
   def start_activity
-    activity = current_user.activities.find(params[:id])
-    Quitter.create(user_id: current_user.id, activity_id: activity.a_id, activity_start_time: Time.new.to_s)
+    qid = params[:id].to_i == 0 ? params[:qid] : current_user.activities.find(params[:id]).a_id
+    Quitter.create(user_id: current_user.id, activity_id: qid, activity_start_time: Time.new.to_s)
     render nothing: true
   end
 

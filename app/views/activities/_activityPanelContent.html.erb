@@ -1,4 +1,24 @@
 <style>
+    .btn-link {
+      width: 20%;
+      overflow: hidden;
+    }
+
+    .btn-link .img-wrapper {
+      height: 55px;
+    }
+
+    .btn-link img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .btn-link span {
+      width: 100%;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
     /*Container for buttons in the activity container*/
     .activity-functions {
         position: relative;
@@ -48,19 +68,31 @@
       <button class="btn btn-danger" onclick="removeExperiment()"> Abort </button>
 
       <a class="btn btn-link tetris-link" target='_blank' href='http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html' data-qid=6>
-        <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/tetris.jpg" width="75px"/>
+        <div class='img-wrapper'>
+          <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/tetris.jpg" width="75px"/>
+        </div>
+        <span>&nbsp;</span>
       </a>
 
       <a class="btn btn-link youtube-link" target='_blank' href='http://www.youtube.com' data-link-index=0 data-qid=7>
-        <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="75px"/>
+        <div class='img-wrapper'>
+          <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="75px"/>
+        </div>
+        <span></span>
       </a>
 
       <a class="btn btn-link reddit-link" target='_blank' href='http://www.reddit.com' data-link-index=0 data-qid=8>
-        <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="75px"/>
+        <div class='img-wrapper'>
+          <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="75px"/>
+        </div>
+        <span></span>
       </a>
 
       <a class="btn btn-link news-link" target='_blank' href='http://news.google.com' data-link-index=0 data-qid=9>
-        <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="75px"/>
+        <div class='img-wrapper'>
+          <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="75px"/>
+        </div>
+        <span></span>
       </a>
     </div>
 

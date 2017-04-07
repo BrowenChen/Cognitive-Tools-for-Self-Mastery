@@ -16,7 +16,8 @@ $(document).on('ready page:load', function() {
       anchor
         .attr('href', link[0])
         .attr('title', link[1])
-        .data('link-index', index);
+        .data('link-index', index)
+        .find('span').text(link[1]);
     });
   };
 

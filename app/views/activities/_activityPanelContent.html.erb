@@ -1,22 +1,11 @@
 <style>
-    .btn-link {
-      width: 20%;
-      overflow: hidden;
+    .external-link {
+      white-space: nowrap;
     }
 
-    .btn-link .img-wrapper {
-      height: 55px;
-    }
-
-    .btn-link img {
-      max-width: 100%;
-      max-height: 100%;
-    }
-
-    .btn-link span {
-      width: 100%;
-      white-space: normal;
-      word-wrap: break-word;
+    .external-link img {
+      height: 50px;
+      padding: 0 10px;
     }
 
     /*Container for buttons in the activity container*/
@@ -64,36 +53,14 @@
 
 <div class="activity-content-wrap">
   <div class="container activity-functions">
-    <div align="center">
-      <button class="btn btn-danger" onclick="removeExperiment()"> Abort </button>
+    <div align="center" style='height:50px; overflow:hidden;'>
+      <div style='max-width:20%;' class='pull-left'>
+        <button class="btn btn-danger" onclick="removeExperiment()"> Abort </button>
+      </div>
 
-      <a class="btn btn-link tetris-link" target='_blank' href='http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html' data-qid=6>
-        <div class='img-wrapper'>
-          <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/tetris.jpg" width="75px"/>
-        </div>
-        <span>&nbsp;</span>
-      </a>
-
-      <a class="btn btn-link youtube-link" target='_blank' href='http://www.youtube.com' data-link-index=0 data-qid=7>
-        <div class='img-wrapper'>
-          <img src="https://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/youtube.png" width="75px"/>
-        </div>
-        <span></span>
-      </a>
-
-      <a class="btn btn-link reddit-link" target='_blank' href='http://www.reddit.com' data-link-index=0 data-qid=8>
-        <div class='img-wrapper'>
-          <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/reddit.jpg" width="75px"/>
-        </div>
-        <span></span>
-      </a>
-
-      <a class="btn btn-link news-link" target='_blank' href='http://news.google.com' data-link-index=0 data-qid=9>
-        <div class='img-wrapper'>
-          <img src="http://cocosci.berkeley.edu/mturk/falk/writingTaskRating/img/news.png" width="75px"/>
-        </div>
-        <span></span>
-      </a>
+      <div style='max-width:80%;' class='pull-left'>
+        <div class='link-wrapper' data-index=2 data-link-index=0></div>
+      </div>
     </div>
 
     <span style="margin-top: 10px; font-size:200%;">

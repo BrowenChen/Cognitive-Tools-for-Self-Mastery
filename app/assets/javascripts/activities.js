@@ -8,17 +8,31 @@ $(document).on('ready page:load', function() {
   $('#completion-code').html('');
 
   var changeLinks = function() {
-    ['youtube', 'reddit', 'news'].forEach(function(site) {
-      var anchor = $('.' + site + '-link');
-      var index = (anchor.data('link-index') + 1) % 10;
-      var link = window.links[site][index];
+    var wrapper = $('.link-wrapper');
+    var linkIndex = wrapper.data('link-index') % 10;
+    var iconIndex = wrapper.data('index') % 4;
+    var icon = window.linkImages[iconIndex];
+    var title, href;
 
-      anchor
-        .attr('href', link[0])
-        .attr('title', link[1])
-        .data('link-index', index)
-        .find('span').text(link[1]);
-    });
+
+    if (iconIndex == 0) {
+      href = 'http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html';
+      title = 'Play Tetris!';
+
+    } else {
+      var link = window.links[icon[0]][linkIndex];
+
+      href = link[0];
+      title = link[1];
+    }
+
+    wrapper
+      .data('index', iconIndex + 1)
+      .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/>' + title + '</a>');
+
+    if (iconIndex == 0) {
+      wrapper.data('link-index', linkIndex + 1)
+    }
   };
 
   setInterval(changeLinks, 60000);

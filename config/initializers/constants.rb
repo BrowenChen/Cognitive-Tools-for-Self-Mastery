@@ -59,7 +59,7 @@ LINKS = {
     ['http://fhands.com/R0VdpLx', 'Persistence is key'],
     ['http://fhands.com/QNyjCiD', 'Favorite Dead YouTube Channels'],
     ['http://fhands.com/mZJqyXR', 'A puppy gets scared of its own reflection'],
-    ['http://fhands.com/tpkFT7F', '"As an introvert, I get more joy from getting an invite to a party than attending it."'],
+    ['http://fhands.com/tpkFT7F', 'As an introvert, I get more joy from getting an invite to a party than attending it.'],
     ['http://fhands.com/0I0cjKW', 'What An Owl Looks Like Without Feathers'],
     ['http://fhands.com/1BneKaj', 'The Divorce Flipbook'],
     ['http://fhands.com/2bB17vu', 'Underneath the Eiffel Tower'],

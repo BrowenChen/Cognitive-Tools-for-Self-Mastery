@@ -71,6 +71,6 @@ $(document).on('ready page:load', function() {
   });
 
   $('.link-wrapper a').on('click', function() {
-    $.post('/start_activity/0?qid=' + $(this).data('qid'));
+    $.post('/start_activity/0', { qid: ($('.link-wrapper').data('index') % 4) + 6 });
   });
 });

@@ -76,30 +76,6 @@ class ActivitiesController < ApplicationController
     @details = [current_user.score, current_user.level]
   end
 
-  def finish_activity
-    @activity_id = params[:activity_id]
-    @user = User.find(params[:user_id])
-    @activity = @user.activities.find_by(a_id: params[:activity_id])
-    @user.update(score: @user.score + @activity.points)
-    @activity.update(activity_time_completed: Time.now);
-    @activity.update(is_completed: true);
-
-    # Update the Quitter class to record the time this activity finished
-    # If activity has been started, hasn't been finished or aborted yet.
-    if Quitter.exists?(activity_id: @activity_id, user_id: params[:user_id], activity_finish_time: nil, activityAbortTime: nil)
-      puts "Activity exists with the user AND THE ACTIVITY IS FINISHED."
-      quitter = Quitter.find_by! activity_id: @activity_id, user_id: params[:user_id], activity_finish_time: nil, activityAbortTime: nil
-      quitter.update(activity_finish_time: Time.new.to_s)
-    else
-      puts "This is called in the case that an activity is finished before it is started"
-      create_quitter(@activity_id, activity_finish_time: Time.now.to_s)
-    end
-
-    respond_to do |format|
-      format.js { render js: "window.location.reload();" }
-    end
-  end
-
   def get_activity_detail
     render json: current_user.activities.find(params[:id])
   end

@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   resources :activities do
     resources :comments
 
+    collection do
+      post :abandon_activity
+    end
+
     member do
       get 'my_activities'
       get 'user_details'

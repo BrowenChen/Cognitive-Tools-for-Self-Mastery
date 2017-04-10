@@ -92,7 +92,7 @@ class ActivitiesController < ApplicationController
       quitter.update(activity_finish_time: Time.new.to_s)
     else
       puts "This is called in the case that an activity is finished before it is started"
-      Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
+      create_quitter(@activity_id, activity_finish_time: Time.now.to_s)
     end
 
     respond_to do |format|
@@ -106,7 +106,12 @@ class ActivitiesController < ApplicationController
 
   def start_activity
     qid = params[:id].to_i == 0 ? params[:qid] : current_user.activities.find(params[:id]).a_id
-    Quitter.create(user_id: current_user.id, activity_id: qid, activity_start_time: Time.new.to_s)
+    create_quitter(qid, activity_start_time: Time.now.to_s)
+    render nothing: true
+  end
+
+  def abandon_activity
+    create_quitter(params[:a_id], activity_start_time: Time.now.to_s)
     render nothing: true
   end
 
@@ -132,7 +137,7 @@ class ActivitiesController < ApplicationController
 
     else
       puts "Create a new Quitter Record for activity abort time.  "
-      Quitter.create(user_id: current_user.id, activity_id: activity.a_id, activityAbortTime: Time.now.to_s)
+      create_quitter(activity.a_id, activityAbortTime: Time.now.to_s)
     end
 
     render text: 'abort activity'
@@ -392,5 +397,9 @@ class ActivitiesController < ApplicationController
   def bad_token
     flash[:warning] = "Session expired"
     redirect_to root_path
+  end
+
+  def create_quitter(question_id, options)
+    Quitter.create(options.merge(user_id: current_user.id, activity_id: question_id))
   end
 end

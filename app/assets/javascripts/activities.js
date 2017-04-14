@@ -28,7 +28,7 @@ $(document).on('ready page:load', function() {
 
     wrapper
       .data('index', iconIndex + 1)
-      .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/>' + title + '</a>');
+      .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/><div>' + title + '</div></a>');
 
     if (iconIndex == 0) {
       wrapper.data('link-index', linkIndex + 1)
@@ -48,10 +48,16 @@ $(document).on('ready page:load', function() {
 
     var activityId = $(this).parent().data('activity-id');
     var questionId = $(this).parent().data('question-id');
+    var formActivityField = $('#answer_activity_id');
+    var currentActivityId = formActivityField.val();
+
+    if (currentActivityId.length && currentActivityId != activityId) {
+      $.post('/activities/abandon_activity', { a_id: $('.activity-number').html() });
+    }
 
     $('.activity-number').html(questionId);
     $('#requiredLength').html(required_lengths[questionId-1])
-    $('#answer_activity_id').val(activityId);
+    formActivityField.val(activityId);
 
     $.getJSON('/activity_detail/' + activityId, function(activity) {
       $('.input-controls').show();
@@ -64,7 +70,7 @@ $(document).on('ready page:load', function() {
     $.post('/start_activity/' + activityId);
   });
 
-  $('.btn-link').on('click', function() {
-    $.post('/start_activity/0?qid=' + $(this).data('qid'));
+  $('.link-wrapper a').on('click', function() {
+    $.post('/start_activity/0', { qid: ($('.link-wrapper').data('index') % 4) + 6 });
   });
 });

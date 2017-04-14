@@ -76,45 +76,25 @@ class ActivitiesController < ApplicationController
     @details = [current_user.score, current_user.level]
   end
 
-  def finish_activity
-    @activity_id = params[:activity_id]
-    @user = User.find(params[:user_id])
-    @activity = @user.activities.find_by(a_id: params[:activity_id])
-    @user.update(score: @user.score + @activity.points)
-    @activity.update(activity_time_completed: Time.now);
-    @activity.update(is_completed: true);
-
-    # Update the Quitter class to record the time this activity finished
-    # If activity has been started, hasn't been finished or aborted yet.
-    if Quitter.exists?(activity_id: @activity_id, user_id: params[:user_id], activity_finish_time: nil, activityAbortTime: nil)
-      puts "Activity exists with the user AND THE ACTIVITY IS FINISHED."
-      quitter = Quitter.find_by! activity_id: @activity_id, user_id: params[:user_id], activity_finish_time: nil, activityAbortTime: nil
-      quitter.update(activity_finish_time: Time.new.to_s)
-    else
-      puts "This is called in the case that an activity is finished before it is started"
-      Quitter.create(user_id: current_user.id, activity_id: @activity_id, activity_finish_time: Time.now.to_s)
-    end
-
-    respond_to do |format|
-      format.js { render js: "window.location.reload();" }
-    end
-  end
-
   def get_activity_detail
     render json: current_user.activities.find(params[:id])
   end
 
   def start_activity
     qid = params[:id].to_i == 0 ? params[:qid] : current_user.activities.find(params[:id]).a_id
-    Quitter.create(user_id: current_user.id, activity_id: qid, activity_start_time: Time.new.to_s)
+    create_quitter(qid, activity_start_time: Time.now.to_s)
+    render nothing: true
+  end
+
+  # called when the user selects another activity without finishing the current activity
+  def abandon_activity
+    create_quitter(params[:a_id], activityAbortTime: Time.now.to_s)
     render nothing: true
   end
 
   def delete_activity
-    @activity_id = params[:id]
-    @current_user_id = current_user.id
-    Activity.where("a_id = ? AND user_id = ?", @activity_id, @current_user_id).destroy_all
-    render :text => "delete activity"
+    current_user.activities.where(a_id: params[:id]).destroy_all
+    render text: 'delete activity'
   end
 
 	# Aborts the current activity and logs data into Quitter class for exporting
@@ -122,18 +102,11 @@ class ActivitiesController < ApplicationController
   def abort_activity
     Time.zone = "America/Los_Angeles"
 
-    @activity = Activity.find_by(a_id: params[:id])
+    @activity = current_user.activities.find_by(a_id: params[:id])
     @activity.update(abort_time: Time.now.to_s);
 
-    if Quitter.exists?(activity_id: params[:id], user_id: current_user.id, activityAbortTime: nil, activity_finish_time: nil)
-      quitter = Quitter.find_by! activity_id: params[:id], user_id: current_user.id, activity_finish_time: nil
-      puts "Activity exists with the user."
-      quitter.update(activityAbortTime: Time.new.to_s)
-
-    else
-      puts "Create a new Quitter Record for activity abort time.  "
-      Quitter.create(user_id: current_user.id, activity_id: activity.a_id, activityAbortTime: Time.now.to_s)
-    end
+    last_quitter_record = current_user.quitters.recent.find_by!(activity_id: @activity.a_id)
+    last_quitter_record.update(activityAbortTime: Time.new.to_s)
 
     render text: 'abort activity'
   end
@@ -392,5 +365,9 @@ class ActivitiesController < ApplicationController
   def bad_token
     flash[:warning] = "Session expired"
     redirect_to root_path
+  end
+
+  def create_quitter(question_id, options)
+    Quitter.create(options.merge(user_id: current_user.id, activity_id: question_id))
   end
 end

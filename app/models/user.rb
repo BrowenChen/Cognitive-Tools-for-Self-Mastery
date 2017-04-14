@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :activities, dependent: :destroy, inverse_of: :user
   has_many :comments, dependent: :destroy
   has_many :answers, dependent: :destroy, inverse_of: :user
+  has_many :quitters, dependent: :destroy, inverse_of: :user
 
   attr_accessor :login
 

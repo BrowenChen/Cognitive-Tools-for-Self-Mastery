@@ -52,7 +52,7 @@ $(document).on('ready page:load', function() {
     var currentActivityId = formActivityField.val();
 
     if (currentActivityId.length && currentActivityId != activityId) {
-      $.post('/activities/abandon_activity', { a_id: questionId });
+      $.post('/activities/abandon_activity', { a_id: $('.activity-number').html() });
     }
 
     $('.activity-number').html(questionId);

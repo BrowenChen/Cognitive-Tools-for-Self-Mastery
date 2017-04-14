@@ -39,12 +39,8 @@ class AnswersController < ApplicationController
 
     # Update the Quitter class to record the time this activity finished
     # If activity has been started, hasn't been finished or aborted yet.
-    if Quitter.exists?(activity_id: @activity.a_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil)
-      quitter = Quitter.find_by! activity_id: @activity.a_id, user_id: current_user.id, activity_finish_time: nil, activityAbortTime: nil
-      quitter.update(activity_finish_time: Time.new.to_s)
-    else
-      Quitter.create(user_id: current_user.id, activity_id: @activity.a_id, activity_finish_time: Time.now.to_s)
-    end
+    last_quitter_record = current_user.quitters.recent.find_by!(activity_id: @activity.a_id)
+    last_quitter_record.update(activity_finish_time: Time.new.to_s)
 
     unless current_user.activities.detect { |activity| !activity.is_completed }
       current_user.update(finished_all_activities: true)

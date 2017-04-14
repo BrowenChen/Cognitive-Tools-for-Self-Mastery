@@ -1,11 +1,13 @@
 <style>
-    .external-link {
-      white-space: nowrap;
-    }
-
     .external-link img {
       height: 50px;
       padding: 0 10px;
+      float: left;
+    }
+
+    .external-link div {
+      white-space: normal;
+      text-align: left;
     }
 
     /*Container for buttons in the activity container*/
@@ -53,17 +55,15 @@
 
 <div class="activity-content-wrap">
   <div class="container activity-functions">
-    <div align="center" style='height:50px; overflow:hidden;'>
-      <div style='max-width:20%;' class='pull-left'>
-        <button class="btn btn-danger" onclick="removeExperiment()"> Abort </button>
+    <div align="center" style='height:50px; overflow:hidden; width:100%;'>
+      <div class='pull-left' style='width:10%;'>
+        <button class="btn btn-danger" onclick="removeExperiment()" style='width:100%; line-height:48px; padding:0;'> Abort </button>
       </div>
 
-      <div style='max-width:80%;' class='pull-left'>
-        <div class='link-wrapper' data-index=2 data-link-index=0></div>
-      </div>
+      <div class='link-wrapper pull-left' style='font-size:1.35em; width:90%;' data-index=0 data-link-index=0></div>
     </div>
 
-    <span style="margin-top: 10px; font-size:200%;">
+    <div class='clearfix' style="padding:20px 0; font-size:200%;">
       <strong>
         Writing Assignment <span class='activity-number'></span>
       </strong>

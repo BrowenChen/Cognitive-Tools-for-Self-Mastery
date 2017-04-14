@@ -28,7 +28,7 @@ $(document).on('ready page:load', function() {
 
     wrapper
       .data('index', iconIndex + 1)
-      .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/>' + title + '</a>');
+      .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/><div>' + title + '</div></a>');
 
     if (iconIndex == 0) {
       wrapper.data('link-index', linkIndex + 1)

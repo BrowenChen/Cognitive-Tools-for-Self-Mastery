@@ -7,6 +7,8 @@ $(document).on('ready page:load', function() {
   $('.input-controls').hide();
   $('#completion-code').html('');
 
+  window.activityResponses = {};
+
   var changeLinks = function() {
     var wrapper = $('.link-wrapper');
     var linkIndex = wrapper.data('link-index') % 10;
@@ -50,9 +52,18 @@ $(document).on('ready page:load', function() {
     var questionId = $(this).parent().data('question-id');
     var formActivityField = $('#answer_activity_id');
     var currentActivityId = formActivityField.val();
+    var formerQuestionId = $('.activity-number').html();
+    var textarea = $('#answer_answer');
 
     if (currentActivityId.length && currentActivityId != activityId) {
-      $.post('/activities/abandon_activity', { a_id: $('.activity-number').html() });
+      window.activityResponses[formerQuestionId] = textarea.val();
+      $.post('/activities/abandon_activity', { a_id: formerQuestionId });
+    }
+
+    if (window.activityResponses[questionId]) {
+      textarea.val(window.activityResponses[questionId]);
+    } else {
+      textarea.val('');
     }
 
     $('.activity-number').html(questionId);

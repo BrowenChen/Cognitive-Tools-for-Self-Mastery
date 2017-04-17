@@ -13,16 +13,21 @@ $(document).on('ready page:load', function() {
     var wrapper = $('.link-wrapper');
     var linkIndex = wrapper.data('link-index') % 10;
     var iconIndex = wrapper.data('index') % 4;
-    var icon = window.linkImages[iconIndex];
-    var title, href;
-
+    var icon, title, href, link;
 
     if (iconIndex == 0) {
-      href = 'http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html';
-      title = 'Play Tetris!';
+      if (linkIndex != 0) {
+        iconIndex++;
+      } else {
+        href = 'http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html';
+        title = 'Play Tetris!';
+      }
+    }
 
-    } else {
-      var link = window.links[icon[0]][linkIndex];
+    icon = window.linkImages[iconIndex];
+
+    if (iconIndex != 0) {
+      link = window.links[icon[0]][linkIndex];
 
       href = link[0];
       title = link[1];
@@ -32,7 +37,7 @@ $(document).on('ready page:load', function() {
       .data('index', iconIndex + 1)
       .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/><div>' + title + '</div></a>');
 
-    if (iconIndex == 0) {
+    if (iconIndex == 3) {
       wrapper.data('link-index', linkIndex + 1)
     }
   };

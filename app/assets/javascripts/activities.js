@@ -7,20 +7,27 @@ $(document).on('ready page:load', function() {
   $('.input-controls').hide();
   $('#completion-code').html('');
 
+  window.activityResponses = {};
+
   var changeLinks = function() {
     var wrapper = $('.link-wrapper');
     var linkIndex = wrapper.data('link-index') % 10;
     var iconIndex = wrapper.data('index') % 4;
-    var icon = window.linkImages[iconIndex];
-    var title, href;
-
+    var icon, title, href, link;
 
     if (iconIndex == 0) {
-      href = 'http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html';
-      title = 'Play Tetris!';
+      if (linkIndex != 0) {
+        iconIndex++;
+      } else {
+        href = 'http://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html';
+        title = 'Play Tetris!';
+      }
+    }
 
-    } else {
-      var link = window.links[icon[0]][linkIndex];
+    icon = window.linkImages[iconIndex];
+
+    if (iconIndex != 0) {
+      link = window.links[icon[0]][linkIndex];
 
       href = link[0];
       title = link[1];
@@ -30,7 +37,7 @@ $(document).on('ready page:load', function() {
       .data('index', iconIndex + 1)
       .html('<a class="external-link" target="_blank" href="' + href + '"><img src="' + icon[1] + '"/><div>' + title + '</div></a>');
 
-    if (iconIndex == 0) {
+    if (iconIndex == 3) {
       wrapper.data('link-index', linkIndex + 1)
     }
   };
@@ -50,9 +57,18 @@ $(document).on('ready page:load', function() {
     var questionId = $(this).parent().data('question-id');
     var formActivityField = $('#answer_activity_id');
     var currentActivityId = formActivityField.val();
+    var formerQuestionId = $('.activity-number').html();
+    var textarea = $('#answer_answer');
 
     if (currentActivityId.length && currentActivityId != activityId) {
-      $.post('/activities/abandon_activity', { a_id: $('.activity-number').html() });
+      window.activityResponses[formerQuestionId] = textarea.val();
+      $.post('/activities/abandon_activity', { a_id: formerQuestionId });
+    }
+
+    if (window.activityResponses[questionId]) {
+      textarea.val(window.activityResponses[questionId]);
+    } else {
+      textarea.val('');
     }
 
     $('.activity-number').html(questionId);

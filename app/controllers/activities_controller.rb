@@ -197,8 +197,8 @@ class ActivitiesController < ApplicationController
     experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
     #experimental_condition = [@control_condition] #only for piloting purposes
 
-    #@random_condition = experimental_condition.shuffle.sample
-    @random_condition = "control condition"
+    @random_condition = experimental_condition.shuffle.sample
+    #@random_condition = "control condition"
 
     User.find(current_user.id).update(:experimental_condition => @random_condition)
 

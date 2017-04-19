@@ -152,7 +152,6 @@ class ActivitiesController < ApplicationController
   	csv = CSV.parse(csv_text, :headers => true)
 
   	csv.each do |row|
-      next if row['activity_id'].to_i > 5
   		Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition").save
       Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i/10, time_left: row["time_step"], condition: "monetary condition").save
   	end

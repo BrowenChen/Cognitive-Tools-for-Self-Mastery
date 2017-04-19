@@ -1,3 +1,5 @@
+require 'csv'
+
 class ActivitiesController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_activity, only: [:show, :edit, :update, :destroy]
@@ -115,49 +117,32 @@ class ActivitiesController < ApplicationController
 	# Uses CSV data to create activities that all experimentees will use into their accounts
 	# When "initialize to-do" button is pressed.
 	#params - :adminUser: ID of admin user to check if Admin user exists.
-  def load_todo_from_csv(adminUser)
-  	require 'csv'
-
-  	puts "Loading to-do from csv"
-  	puts "Checking if previous activities exist, and deleting them"
-
-  	if Activity.where(:user_id => adminUser.id).exists?
-      puts "admin User exists"
-  		Activity.where(:user_id => adminUser.id).destroy_all
-  		puts "destorying all previous activiteis"
-  	end
+  def load_todo_from_csv(admin)
+  	admin.activities.destroy_all
 
   	csv_text = File.read(File.join(Rails.root, 'app/assets/data/todo_list.csv'))
-  	csv = CSV.parse(csv_text, :headers => true)
 
-  	puts "Random code word for CSV to-dos"
-  	csv.each do |row|
-  		code_word = (0...8).map { (65 + rand(26)).chr }.join
-  		puts code_word
-	    puts adminUser.id
-      puts row["Name"]
-      puts row["Points"].to_i
-      puts Float(row["Duration"])
-      puts code_word
-      puts row["Number"]
-  		Activity.new(content: row["Name"], user_id: @adminUser.id, duration: Float(row["Duration"]), code: code_word, a_id: row["Number"]).save
-      puts "created new activity"
+  	CSV.parse(csv_text, headers: true).each do |row|
+  		admin.activities.create!(
+        content: row["Name"],
+        duration: row["Duration"].to_f,
+        code: SecureRandom.urlsafe_base64(8),
+        a_id: row["Number"]
+      )
     end
 
-    create_points_table
+    create_points_table(admin)
     set_current_point_values(current_user)
   end
 
-  #Creates points table from CSV file "points.csv"
-  def create_points_table
-    require 'csv'
+  # Creates points table from CSV file "points.csv"
+  def create_points_table(admin)
     Point.destroy_all
 
-    @@adminUser = User.find_by(user_name: "Admin")
-    @nr_tasks = Activity.where(user_id: @@adminUser.id).count
-    @constant_point_value = @@bonus * 100 / @nr_tasks
+    @constant_point_value = @@bonus * 100 / admin.activities.count
 
     activities = Activity.all
+
   	activities.each do |record|
       Point.new(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points").save
   		Point.new(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition").save
@@ -167,6 +152,7 @@ class ActivitiesController < ApplicationController
   	csv = CSV.parse(csv_text, :headers => true)
 
   	csv.each do |row|
+      next if row['activity_id'].to_i > 5
   		Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition").save
       Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i/10, time_left: row["time_step"], condition: "monetary condition").save
   	end
@@ -215,59 +201,6 @@ class ActivitiesController < ApplicationController
     end
 
     redirect_to root_path
-  end
-
-	# Sets up current point values for current user's activity points.
-	# This is updated with state_id, based off of how many activities a user has completed.
-	# This function is called whenever updates occur, to update point values of current user
-	# params - :current_user: User model of the current logged in user.
-  def set_current_point_values(current_user)
-  	activities = current_user.activities
-  	condition = current_user.experimental_condition
-  	@current_point_values = []
-
-    if condition == "constant points"
-      @nr_tasks = Activity.where(user_id: @@adminUser.id).count
-      @constant_point_value = @@bonus * 100 / @nr_tasks
-      activities.each do |activity|
-        @current_point_values.push(@constant_point_value)
-      end
-      @current_point_values.push(0)
-
-    else
-  	  activities.each do |activity|
-  	    @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
-
-        if @nr_points
-          @nr_points = @nr_points.point_value
-  	    end
-
-        @current_point_values[activity.a_id-1]=@nr_points
-  	  end
-
-      p = Point.where(activity_id: 6, state: 0, condition: 'points condition')
-      @current_point_values.push(p[0]['point_value']) if p.any?
-    end
-
-  	@current_point_values
-  end
-
-	# Gets the state_id for the current user, which is computed based off number of completed
-	# activities this user has done.
-  def get_state_id
-    @nr_activities = current_user.activities.count
-  	@completed_activities = current_user.activities.where(is_completed: true)
-
-  	state_id = 0
-
-    if @completed_activities.length != 0
-    	@completed_activities.each do |activity|
-    		position = activity.a_id
-    		state_id += 2 ** (@nr_activities - position)
-    	end
-    end
-
-  	state_id
   end
 
 	# Function to render all data from activities and users for the experimenter

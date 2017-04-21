@@ -74,11 +74,11 @@
         <p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
         <p><strong>Points: </strong> <span> <%= current_user.score%> </span> </p>
       </div>
+
     <% elsif current_user.experimental_condition == "monetary condition" %>
       <div id="stats">
-
-        <p><strong>Level: </strong> <span> <%= current_user.level %></span></p>
-        <p><strong>Money: </strong> <span> $<%= current_user.score.to_f / 10%>0 </span> </p>
+        <p><strong>Level: </strong> <span class='user-level'> <%= current_user.level %></span></p>
+        <p><strong>Money: </strong> <span class='user-score'> <%= number_to_currency(current_user.score.to_f / 10) %> </span> </p>
       </div>
     <% end %>
   </div>

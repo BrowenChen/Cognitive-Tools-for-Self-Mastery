@@ -6,5 +6,9 @@
   | $('.activity-number').html('');
   | delete window.activityResponses[#{@answer.activity.a_id}];
 
+  - if current_user.experimental_condition == 'monetary condition'
+    | $('span.user-level').html('#{current_user.level}');
+    | $('span.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
+
 - else
   | $('#fail-message').show();

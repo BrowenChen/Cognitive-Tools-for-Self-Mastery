@@ -5,15 +5,6 @@ class ActivitiesController < ApplicationController
 	before_action :set_activity, only: [:show, :edit, :update, :destroy]
 	before_action :owned_activity, only: [:edit, :update, :destroy]
 
-  # Class variables
-  @@bonus = 20 #dollars
-  @@adminUser = User.find_by(user_name: "Admin")
-  @@deadline = DateTime.parse('June 19th 2016 11:59:59 PM')
-
-  #Class variables used in timesteps
-  @@time_step = 8 #minutes
-  @@total_time = 7*24*60/@@time_step #total nr of time steps from beginning of experiment to deadline
-
   rescue_from ActionController::InvalidAuthenticityToken, with: :bad_token
 
 	def index
@@ -40,7 +31,6 @@ class ActivitiesController < ApplicationController
 	end
 
 	def show
-    set_current_point_values(current_user)
 	  @activity = Activity.find(params[:id])
 	end
 
@@ -64,7 +54,7 @@ class ActivitiesController < ApplicationController
 
   # To display all of my activities
   def my_activities
-    set_current_point_values(current_user)
+    get_current_point_values(current_user)
     @activities = current_user.activities
   end
 
@@ -132,14 +122,14 @@ class ActivitiesController < ApplicationController
     end
 
     create_points_table(admin)
-    set_current_point_values(current_user)
+    get_current_point_values(current_user)
   end
 
   # Creates points table from CSV file "points.csv"
   def create_points_table(admin)
     Point.destroy_all
 
-    @constant_point_value = @@bonus * 100 / admin.activities.count
+    @constant_point_value = BONUS * 100 / admin.activities.count
 
     activities = Activity.all
 
@@ -161,42 +151,23 @@ class ActivitiesController < ApplicationController
 	# Pulls admin's todo list and initializes experimentee's account with Admin's to-do list
 	# params - :current_user: The user id of the current user initializing their to-do list.
   def set_default_activities
-    @time_step = 8 #minutes
-    @total_time = 7*24*60/@time_step #total nr of time steps from beginning of experiment to deadline
+    current_user.activities.destroy_all
 
+    random_condition = ['control condition', 'monetary condition', 'points condition', 'constant points'].sample
+    random_condition = 'points condition'
+    current_user.update(experimental_condition: random_condition)
 
-    @admin_id = User.where(:user_name => "Admin")
-    if Activity.where(:user_id => params[:current_user]).exists?
+    if current_user.user_name != 'Admin'
+      User.find_by!(user_name: 'Admin').activities.each do |record|
+        current_user.activities.create(
+          content: record.content,
+          duration: record.duration,
+          code: SecureRandom.urlsafe_base64(8),
+          a_id: record.a_id
+        )
 
-      # Quick FIX. user id is
-      if params[:current_user] != '1'
-        Activity.where(:user_id => params[:current_user]).destroy_all
+        get_current_point_values(current_user)
       end
-    end
-
-    @control_condition = "control condition"
-    @monetary_condition = "monetary condition"
-    @points_condition = "points condition"
-    @control_condition2 = "constant points"
-
-    experimental_condition = [@control_condition, @control_condition2, @points_condition, @monetary_condition]
-    #experimental_condition = [@control_condition] #only for piloting purposes
-
-    @random_condition = experimental_condition.shuffle.sample
-    #@random_condition = "control condition"
-
-    User.find(current_user.id).update(:experimental_condition => @random_condition)
-
-    @admin_id = User.where(:user_name => "Admin")
-    @activities = Activity.where(:user_id => @admin_id)
-
-    #Add if user is not Admin.
-    if params[:current_user] != '1'
-        @activities.each do |record|
-          @unique_code = current_user.user_name.chars.first + record.code + current_user.user_name.chars.last
-          Activity.new(content: record.content, user_id: params[:current_user], duration: record.duration, code: @unique_code, a_id: record.a_id).save
-          set_current_point_values(current_user)
-        end
     end
 
     redirect_to root_path

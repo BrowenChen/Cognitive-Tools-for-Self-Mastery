@@ -30,4 +30,22 @@ class User < ActiveRecord::Base
   def email_changed?
     false
   end
+
+  def level_description
+    case level
+    when 1 then 'Columnist'
+    when 2 then 'Published Author'
+    when 3 then 'National Book Award'
+    when 4 then 'Published Prize'
+    else 'Nobel Prize in Literature'
+    end
+  end
+
+  def control?
+    experimental_condition == 'control condition'
+  end
+
+  def monetary?
+    experimental_condition == 'monetary condition'
+  end
 end

@@ -1,3 +1,4 @@
+BONUS = 20 #dollars
 QUESTIONS = {
   # Easy
   5 => ['What is your favorite TV show and why?', 50],

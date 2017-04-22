@@ -19,7 +19,7 @@ class AnswersController < ApplicationController
     @user = current_user
 
     if current_user.experimental_condition != "control condition"
-      @current_point_values = set_current_point_values(current_user)
+      @current_point_values = get_current_point_values(current_user)
 
       @new_score = current_user.score + @current_point_values[@activity.a_id-1]
       current_user.update(score: @new_score)
@@ -45,8 +45,5 @@ class AnswersController < ApplicationController
     unless current_user.activities.detect { |activity| !activity.is_completed }
       current_user.update(finished_all_activities: true)
     end
-
-		# Updates all points for this user
-    # set_current_point_values(current_user)
   end
 end

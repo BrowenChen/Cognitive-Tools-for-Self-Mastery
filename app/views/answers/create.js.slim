@@ -6,9 +6,14 @@
   | $('.activity-number').html('');
   | delete window.activityResponses[#{@answer.activity.a_id}];
 
-  - if current_user.experimental_condition == 'monetary condition'
-    | $('span.user-level').html('#{current_user.level}');
-    | $('span.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
+  - unless current_user.control?
+    | $('.user-level').html('#{current_user.level}');
+    | $('.user-description').html('#{current_user.level_description}');
+
+    - if current_user.monetary?
+      | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
+    - else
+      | $('.user-score').html('#{current_user.score}');
 
 - else
   | $('#fail-message').show();

@@ -1,0 +1,109 @@
+nav.navbar.nav-left
+  .navbar-header
+    .navbar-brand
+      = link_to "ToDo List Experiment", root_path
+
+  .nav-body
+    .user-section
+      .user-panel
+        .pull-left.image
+          img.img-circle#avatar src="#{asset_path('avatar.png')}" alt='User Image'
+
+        .pull-left.info#user-description
+          - if user_signed_in?
+            h4#user_name = current_user.user_name
+
+            - if current_user.experimental_condition == "Initial condition"
+              i.fa.fa-circle.text-success
+              br
+              i.fa.fa-circle.text-info
+
+            - elsif current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points"
+              i.fa.fa-circle.text-success
+              span style="font-size:150%"
+                strong  Level: #{current_user.level}
+
+              br
+
+              i.fa.fa-circle.text-info
+              span style="font-size:150%"
+                strong  Score: #{current_user.score}
+
+            - elsif current_user.experimental_condition == "monetary condition"
+              i.fa.fa-circle.text-success
+              span style="font-size:150%"
+                strong
+                  |  Level: 
+                  span.user-level = current_user.level
+
+              br
+
+              i.fa.fa-circle.text-info
+              span style="font-size:125%"
+                strong
+                  |  Money: 
+                  span.user-score = number_to_currency(current_user.score.to_f / 10)
+
+            - else
+              br
+              br
+              br
+
+            - if current_user.experimental_condition == "Initial condition"
+              span
+
+            - elsif current_user.experimental_condition == "control condition"
+              span
+
+            - else
+              br
+              i.fa.fa-circle-o
+              span.level-description style="font-size:125%"
+                |  #{current_user.level_description}
+
+          - else
+            h5 Please log in
+
+    br
+    br
+
+    div
+      ul.nav.nav-custom-list
+        - if user_signed_in?
+          - if current_user.is_admin?
+            li
+              = link_to new_activity_path do
+                i.fa.fa-dashboard
+                span  New Activity
+
+          li
+            = link_to my_activities_activity_path(current_user) do
+              i.fa.fa-gavel
+              span  My Tasks
+
+          li
+            = link_to user_details_activity_path(current_user) do
+              i.fa.fa-globe
+              span  Account
+
+          li
+            = link_to destroy_user_session_path, method: :delete do
+              i.fa.fa-glass
+              span  Logout
+
+        - else
+          li.active
+            = link_to new_user_session_path do
+              i.fa.fa-globe
+              span  Log in
+
+          li
+            = link_to new_user_registration_path do
+              i.fa.fa-glass
+              span  Register
+
+javascript:
+  $("ul.nav li").click(function(){
+    $("ul.nav li").removeClass("active");
+    $(this).addClass("active");
+  });

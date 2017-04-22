@@ -19,32 +19,26 @@ class ApplicationController < ActionController::Base
 	# This is updated with state_id, based off of how many activities a user has completed.
 	# This function is called whenever updates occur, to update point values of current user
 	# params - :current_user: User model of the current logged in user.
-  def set_current_point_values(current_user)
-  	activities = current_user.activities
-  	condition = current_user.experimental_condition
+  def get_current_point_values(user)
+    admin = User.find_by!(user_name: 'Admin')
+  	activities = user.activities.order('a_id ASC')
   	@current_point_values = []
 
-    if condition == "constant points"
-      @nr_tasks = Activity.where(user_id: @@adminUser.id).count
-      @constant_point_value = @@bonus * 100 / @nr_tasks
-      activities.each do |activity|
-        @current_point_values.push(@constant_point_value)
-      end
+    if user.experimental_condition == "constant points"
+      constant_point_value = BONUS * 100 / admin.activities.count
+      @current_point_values = activities.map { |activity| constant_point_value }
       @current_point_values.push(0)
 
     else
-  	  activities.each do |activity|
-  	    @nr_points = Point.where(activity_id: activity.a_id, state: get_state_id, condition: condition)[0]
-
-        if @nr_points
-          @nr_points = @nr_points.point_value
-  	    end
-
-        @current_point_values[activity.a_id-1]=@nr_points
+  	  @current_point_values = activities.map do |activity|
+  	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: user.experimental_condition)
+          point.point_value
+        end
   	  end
 
-      p = Point.where(activity_id: 6, state: 0, condition: 'points condition')
-      @current_point_values.push(p[0]['point_value']) if p.any?
+      if point = Point.find_by(activity_id: 6, state: 0, condition: 'points condition')
+        @current_point_values.push(point.point_value)
+      end
     end
 
   	@current_point_values

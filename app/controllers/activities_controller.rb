@@ -143,7 +143,7 @@ class ActivitiesController < ApplicationController
 
   	csv.each do |row|
   		Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition").save
-      Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i/10, time_left: row["time_step"], condition: "monetary condition").save
+      Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i, time_left: row["time_step"], condition: "monetary condition").save
   	end
   end
 

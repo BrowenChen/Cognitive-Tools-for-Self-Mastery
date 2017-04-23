@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20170419222244) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "activities", force: :cascade do |t|
     t.string   "title"
     t.string   "content"
@@ -32,7 +29,7 @@ ActiveRecord::Schema.define(version: 20170419222244) do
     t.datetime "abort_time"
   end
 
-  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
+  add_index "activities", ["user_id"], name: "index_activities_on_user_id"
 
   create_table "answers", force: :cascade do |t|
     t.integer  "activity_id"
@@ -42,8 +39,8 @@ ActiveRecord::Schema.define(version: 20170419222244) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "answers", ["activity_id"], name: "index_answers_on_activity_id", using: :btree
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
+  add_index "answers", ["activity_id"], name: "index_answers_on_activity_id"
+  add_index "answers", ["user_id"], name: "index_answers_on_user_id"
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -53,8 +50,8 @@ ActiveRecord::Schema.define(version: 20170419222244) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "comments", ["activity_id"], name: "index_comments_on_activity_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "comments", ["activity_id"], name: "index_comments_on_activity_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "points", force: :cascade do |t|
     t.integer  "activity_id"
@@ -67,7 +64,7 @@ ActiveRecord::Schema.define(version: 20170419222244) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "points", ["activity_id"], name: "index_points_on_activity_id", using: :btree
+  add_index "points", ["activity_id"], name: "index_points_on_activity_id"
 
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -75,7 +72,7 @@ ActiveRecord::Schema.define(version: 20170419222244) do
     t.integer  "user_id"
   end
 
-  add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+  add_index "posts", ["user_id"], name: "index_posts_on_user_id"
 
   create_table "quitters", force: :cascade do |t|
     t.datetime "created_at",           null: false
@@ -116,13 +113,7 @@ ActiveRecord::Schema.define(version: 20170419222244) do
     t.boolean  "finished_all_activities", default: false
   end
 
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["user_name"], name: "index_users_on_user_name", unique: true
 
-  add_foreign_key "activities", "users"
-  add_foreign_key "answers", "activities"
-  add_foreign_key "answers", "users"
-  add_foreign_key "comments", "activities"
-  add_foreign_key "comments", "users"
-  add_foreign_key "posts", "users"
 end

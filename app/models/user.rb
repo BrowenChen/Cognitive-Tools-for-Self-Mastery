@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
     when 1 then 'Columnist'
     when 2 then 'Published Author'
     when 3 then 'National Book Award'
-    when 4 then 'Published Prize'
+    when 4 then 'Pulitzer Prize'
     else 'Nobel Prize in Literature'
     end
   end

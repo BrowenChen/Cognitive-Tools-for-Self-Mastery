@@ -154,7 +154,6 @@ class ActivitiesController < ApplicationController
     current_user.activities.destroy_all
 
     random_condition = ['control condition', 'monetary condition', 'points condition', 'constant points'].sample
-    random_condition = 'points condition'
     current_user.update(experimental_condition: random_condition)
 
     if current_user.user_name != 'Admin'

@@ -9,8 +9,15 @@ $(document).on('ready page:load', function() {
 
   window.activityResponses = {};
 
+  if (window.linkTimer) { clearInterval(window.linkTimer); }
+
   var changeLinks = function() {
     var wrapper = $('.link-wrapper');
+
+    if (!wrapper.length) {
+      return;
+    }
+
     var linkIndex = wrapper.data('link-index') % 10;
     var iconIndex = wrapper.data('index') % 4;
     var icon, title, href, link;
@@ -42,7 +49,7 @@ $(document).on('ready page:load', function() {
     }
   };
 
-  setInterval(changeLinks, 60000);
+  window.linkTimer = setInterval(changeLinks, 60000);
   changeLinks();
 
   $('.retry-button').on('click', function() {

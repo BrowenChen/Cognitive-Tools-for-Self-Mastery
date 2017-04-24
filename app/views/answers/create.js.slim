@@ -8,7 +8,7 @@
 
   - unless current_user.control?
     | $('.user-level').html('#{current_user.level}');
-    | $('.user-description').html('#{current_user.level_description}');
+    | $('.level-description').html('#{current_user.level_description}');
 
     - if current_user.monetary?
       | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');

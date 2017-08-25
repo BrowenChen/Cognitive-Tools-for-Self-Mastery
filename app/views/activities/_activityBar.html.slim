@@ -26,7 +26,7 @@ css:
     overflow: hidden;
   }
 
-  .activity-bar:hover {
+  .activity-bar.alert-danger:hover {
     cursor: pointer;
     opacity: .7;
   }
@@ -47,7 +47,7 @@ css:
         i.fa.fa-check
 
 - else
-  div.activity-bar.alert.alert-block.alert-danger
+  div.activity-bar.alert.alert-block class='#{disabled ? 'alert-warning' : 'alert-danger'}'
     /  <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
     /  <!-- <i class="fa fa-times"></i> -->
     /  <!-- </button> -->

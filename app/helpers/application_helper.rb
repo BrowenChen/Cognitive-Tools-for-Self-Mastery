@@ -7,11 +7,7 @@ module ApplicationHelper
     }[flash_type.to_sym] || flash_type.to_s
   end
 
-  def has_pending_activities?(list)
-    list.detect { |activity| !activity.is_completed? }
-  end
-
-  def next_activity_by_points(list, points)
-    list.max_by { |activity| activity.is_completed? ? -Float::INFINITY : points[activity.a_id-1] }
+  def can_work_on_activity?(condition, activity, next_activity)
+    condition != 'forced' || activity == next_activity
   end
 end

@@ -175,17 +175,26 @@ section.content
         header.panel-heading My To-Do List
 
         .panel-body#noti-box
-          - if current_user.experimental_condition == 'advice' && has_pending_activities?(@activities)
-            .row.text-center style='padding-top:10px;'
-              | You should complete #{next_activity_by_points(@activities, @current_point_values).content}.
+          - if @next_activity_by_points
+            - if current_user.experimental_condition == 'advice'
+              .row.text-center style='padding-top:10px;'
+                | You should complete #{@next_activity_by_points.content}.
+
+            - elsif current_user.experimental_condition == 'forced'
+              .row.text-center style='padding-top:10px;'
+                | You have to complete #{@next_activity_by_points.content}.
 
           .row.activities-wrapper style='padding-top:10px;'
             - @activities.each do |activity|
               // Insert Activity partial only if activity id matches with current logged in user
               - if current_user.id == activity.user_id
                 span data-activity-id="#{activity.id}" data-question-id="#{activity.a_id}" id="activity_#{activity.id}"
-                  a.activity-item#activity_select data-toggle="tab" href="##{activity.a_id}"
-                    = render 'activityBar', activity: activity
+                  - if can_work_on_activity?(current_user.experimental_condition, activity, @next_activity_by_points)
+                    a.activity-item#activity_select data-toggle="tab" href="##{activity.a_id}"
+                      = render 'activityBar', activity: activity, disabled: false
+
+                  - else
+                    = render 'activityBar', activity: activity, disabled: true
 
   .row.activities-wrapper
     - @activities.each do |activity|

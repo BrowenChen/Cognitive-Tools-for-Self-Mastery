@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     else
   	  @current_point_values = activities.map do |activity|
         condition = user.experimental_condition
-        condition = 'points condition' if condition == 'advice'
+        condition = 'points condition' if %w[advice forced].include?(condition)
 
   	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
           point.point_value

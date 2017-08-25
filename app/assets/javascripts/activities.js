@@ -93,7 +93,7 @@ $(document).on('ready page:load', function() {
     $.post('/start_activity/' + activityId);
   });
 
-  $('.link-wrapper a').on('click', function() {
+  $('.link-wrapper').on('click', 'a', function() {
     $.post('/start_activity/0', { qid: ($('.link-wrapper').data('index') % 4) + 6 });
   });
 });

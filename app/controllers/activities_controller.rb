@@ -153,9 +153,9 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     current_user.activities.destroy_all
 
-    condition_names = ['control condition', 'monetary condition', 'points condition', 'constant points']
-    condition_nr = current_user.id % 4
-      
+    condition_names = ['control condition', 'monetary condition', 'points condition', 'constant points', 'advice']
+    condition_nr = current_user.id % 5
+
     current_user.update(experimental_condition: condition_names[condition_nr])
 
     if current_user.user_name != 'Admin'

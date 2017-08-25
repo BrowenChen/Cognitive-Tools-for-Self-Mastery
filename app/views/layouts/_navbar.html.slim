@@ -56,7 +56,7 @@ nav.navbar.nav-left
             - if current_user.experimental_condition == "Initial condition"
               span
 
-            - elsif current_user.experimental_condition == "control condition"
+            - elsif ['control condition', 'advice'].include?(current_user.experimental_condition)
               span
 
             - else

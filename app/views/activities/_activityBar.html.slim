@@ -68,12 +68,12 @@ css:
           = @current_point_values[activity.a_id-1]
           i.fa.fa-star-o
 
-      - if ['points condition', 'constant points'].include?(current_user.experimental_condition)
+      - elsif ['points condition', 'constant points'].include?(current_user.experimental_condition)
         span style="float: right; font-size: 130%;"
           = @current_point_values[activity.a_id-1]
           i.fa.fa-star-o
 
-      - if current_user.experimental_condition == "monetary condition"
+      - elsif current_user.experimental_condition == "monetary condition"
         span style="float: right; font-size: 130%;"
           i.fa.fa-usd
           = '%.2f' % (@current_point_values[activity.a_id-1]/ 100.0)

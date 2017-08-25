@@ -31,7 +31,10 @@ class ApplicationController < ActionController::Base
 
     else
   	  @current_point_values = activities.map do |activity|
-  	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: user.experimental_condition)
+        condition = user.experimental_condition
+        condition = 'points condition' if condition == 'advice'
+
+  	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
           point.point_value
         end
   	  end

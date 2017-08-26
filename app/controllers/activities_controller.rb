@@ -56,6 +56,10 @@ class ActivitiesController < ApplicationController
   def my_activities
     get_current_point_values(current_user)
     @activities = current_user.activities
+
+    @next_activity_by_points = @activities.max_by do |activity|
+      activity.is_completed? ? -Float::INFINITY : @current_point_values[activity.a_id-1]
+    end if @activities.detect { |activity| !activity.is_completed? }
   end
 
   # To display all of my completed activities
@@ -153,9 +157,9 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     current_user.activities.destroy_all
 
-    condition_names = ['control condition', 'monetary condition', 'points condition', 'constant points']
-    condition_nr = current_user.id % 4
-      
+    condition_names = ['control condition', 'monetary condition', 'points condition', 'constant points', 'advice', 'forced']
+    condition_nr = current_user.id % 6
+
     current_user.update(experimental_condition: condition_names[condition_nr])
 
     if current_user.user_name != 'Admin'

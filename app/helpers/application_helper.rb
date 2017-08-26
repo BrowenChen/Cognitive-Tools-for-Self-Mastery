@@ -6,4 +6,8 @@ module ApplicationHelper
       notice: 'alert-info'
     }[flash_type.to_sym] || flash_type.to_s
   end
+
+  def can_work_on_activity?(condition, activity, next_activity)
+    condition != 'forced' || activity == next_activity
+  end
 end

@@ -57,8 +57,8 @@ class ActivitiesController < ApplicationController
     get_current_point_values(current_user)
     @activities = current_user.activities
 
-    @next_activity_by_points = @activities.max_by do |activity|
-      activity.is_completed? ? -Float::INFINITY : @current_point_values[activity.a_id-1]
+    @next_activity_by_points = @activities.min_by do |activity|
+      activity.is_completed? ? Float::INFINITY : @current_point_values[activity.a_id-1]
     end if @activities.detect { |activity| !activity.is_completed? }
   end
 

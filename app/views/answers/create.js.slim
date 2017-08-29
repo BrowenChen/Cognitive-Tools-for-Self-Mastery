@@ -15,5 +15,12 @@
     - else
       | $('.user-score').html('#{current_user.score}');
 
+  - if next_activity_by_points
+    - if current_user.forced?
+      | $('#next-activity-id').html('#{escape_javascript next_activity_by_points.content}');
+      | $('span[data-activity-id=#{next_activity_by_points.id}] > div').wrap('<a class="activity-item" id="activity_select" data-toggle="tab" href="##{next_activity_by_points.a_id}"></a>').removeClass('alert-warning').addClass('alert-danger');
+    - elsif current_user.advice?
+      | $('#next-activity-id').html('#{escape_javascript next_activity_by_points.content}');
+
 - else
   | $('#fail-message').show();

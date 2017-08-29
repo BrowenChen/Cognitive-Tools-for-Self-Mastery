@@ -48,4 +48,12 @@ class User < ActiveRecord::Base
   def monetary?
     experimental_condition == 'monetary condition'
   end
+
+  def forced?
+    experimental_condition == 'forced'
+  end
+
+  def advice?
+    experimental_condition == 'advice'
+  end
 end

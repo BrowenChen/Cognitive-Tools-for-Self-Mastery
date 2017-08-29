@@ -57,7 +57,7 @@ $(document).on('ready page:load', function() {
     $('.input-controls').show();
   });
 
-  $('.activity-item').on('click', function() {
+  $('#noti-box').on('click', '.activity-item', function() {
     $('#update_score_btn').hide();
 
     var activityId = $(this).parent().data('activity-id');

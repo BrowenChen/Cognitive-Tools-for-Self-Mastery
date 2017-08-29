@@ -5,7 +5,10 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(answer_params)
     raise if !current_user.is_admin? && @answer.activity.user_id != current_user.id # handle later
 
-    finish_current_activity if @answer.save
+    if @answer.save
+      finish_current_activity
+      @activities = current_user.activities
+    end
   end
 
   private

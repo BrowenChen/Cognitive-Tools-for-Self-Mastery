@@ -22,5 +22,9 @@
     - elsif current_user.advice?
       | $('#next-activity-id').html('#{escape_javascript next_activity_by_points.content}');
 
+  - elsif current_user.finished_all_activities?
+    | $('.activities-message').html('#{escape_javascript render('activities/success_message')}');
+    | $('#noti-box > .alert').remove();
+
 - else
   | $('#fail-message').show();

@@ -41,6 +41,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def points?
+    experimental_condition == 'points condition'
+  end
+
+  def constant_points?
+    experimental_condition == 'constant points'
+  end
+
   def control?
     experimental_condition == 'control condition'
   end

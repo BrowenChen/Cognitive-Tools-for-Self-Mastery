@@ -21,7 +21,6 @@ module ApplicationHelper
   end
 
   def allow_generate_bonus_code?
-    current_user.monetary? ||
-    ((current_user.points? || current_user.constant_points? || current_user.control? || current_user.advice? || current_user.forced?) && current_user.finished_all_activities)
+    current_user.finished_all_activities
   end
 end

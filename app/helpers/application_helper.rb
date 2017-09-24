@@ -19,4 +19,8 @@ module ApplicationHelper
       activity.is_completed? ? Float::INFINITY : @current_point_values[activity.a_id-1]
     end if @activities.detect { |activity| !activity.is_completed? }
   end
+
+  def allow_generate_bonus_code?
+    current_user.finished_all_activities
+  end
 end

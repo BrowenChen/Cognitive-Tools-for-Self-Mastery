@@ -142,6 +142,9 @@ section.content
 
             - if current_user.experimental_condition == "monetary condition"
               p For each task you can earn a certain amount of money. By making smart decisions about which tasks to do and when to do them you can earn a larger amount of money and level up quickly. Your money earned and level are shown below your username on the right.  Every time you complete a task your money increases by the money assigned to the task. The money reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus.
+              
+            - elsif current_user.experimental_condition == "monetary condition x 10"
+              p For each task you can earn a certain amount of money. By making smart decisions about which tasks to do and when to do them you can earn a larger amount of money and level up quickly. Your money earned and level are shown below your username on the right.  Every time you complete a task your money increases by the money assigned to the task. The money reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus.
 
             - elsif current_user.experimental_condition == "points condition"
               p For each task you can earn a certain number of points. By making smart decisions about which tasks to do and when to do them you can earn a large number of points and level up quickly. Your current score and level are shown below your username on the right.  Every time you complete a task your score increases by the number of points assigned to the task. The points reflect how much progress you have made towards your goal of completing the experiment and earning your $20 bonus.

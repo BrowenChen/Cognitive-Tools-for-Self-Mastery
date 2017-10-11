@@ -77,6 +77,11 @@ css:
         span style="float: right; font-size: 130%;"
           i.fa.fa-usd
           = '%.2f' % (@current_point_values[activity.a_id-1]/ 100.0)
+    
+    - elsif current_user.experimental_condition == "monetary condition x 10"
+        span style="float: right; font-size: 130%;"
+          i.fa.fa-usd
+          = '%.2f' % (@current_point_values[activity.a_id-1]/ 10.0)
 
 javascript:
   var removeActivity = function(activity_id){

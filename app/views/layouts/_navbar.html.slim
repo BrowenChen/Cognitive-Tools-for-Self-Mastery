@@ -40,6 +40,13 @@ nav.navbar.nav-left
                   |  Level: 
                   span.user-level = current_user.level
 
+            - elsif current_user.experimental_condition == "monetary condition x 10"
+              i.fa.fa-circle.text-success
+              span style="font-size:150%"
+                strong
+                  |  Level: 
+                  span.user-level = current_user.level
+                  
               br
 
               i.fa.fa-circle.text-info

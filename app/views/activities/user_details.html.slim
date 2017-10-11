@@ -68,6 +68,14 @@ css:
           = current_user.score.to_f / 100
           | 0
 
+      - elsif current_user.monetaryX10?
+        .text-center
+          strong
+            | Money Earned: 
+            i.fa.fa-usd
+          = current_user.score.to_f / 10
+          | 0
+
         .text-center
           strong Level: 
           = current_user.level
@@ -151,7 +159,10 @@ css:
               | Congratulations! You have earned a $20 bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley", and input the code there.
 
             - elsif current_user.monetary?
-              | The amount you have earned so far is displayed on the upper left corner. If this is the first time you have collected your bonus, you will be paid the current amount you have earned. If you have collected before, you will receive and additional bonus that you have earned since then. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there.
+              | The amount you have earned so far is displayed in the upper left corner. If this is the first time you have collected your bonus, you will be paid the current amount you have earned. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there.
+              
+            - elsif current_user.monetaryX10?
+              | The amount displayed in the upper left corner is the bonus you have earned so far times 10. If this is the first time you have collected your bonus, you will be paid the current amount you have earned.  To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there.  
 
             br
             br

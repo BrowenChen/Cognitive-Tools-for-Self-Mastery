@@ -53,7 +53,7 @@ nav.navbar.nav-left
               span style="font-size:125%"
                 strong
                   |  Money: 
-                  span.user-score = number_to_currency(current_user.score.to_f / 100)
+                  span.user-score = number_to_currency(current_user.score.to_f / 10)
 
             - else
               br

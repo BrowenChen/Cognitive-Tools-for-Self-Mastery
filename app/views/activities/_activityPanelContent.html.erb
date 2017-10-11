@@ -83,7 +83,7 @@
     <% elsif current_user.experimental_condition == "monetary condition x 10" %>
       <div id="stats">
         <p><strong>Level: </strong> <span class='user-level'> <%= current_user.level %></span></p>
-        <p><strong>Money: </strong> <span class='user-score'> <%= number_to_currency(current_user.score.to_f / 10) %> </span> </p>
+        <p><strong>Money: </strong> <span class='user-score'> <%= number_to_currency(current_user.score.to_f / 100) %> </span> </p>
       </div>
   
     <% end %>

@@ -33,7 +33,9 @@ class ApplicationController < ActionController::Base
   	  @current_point_values = activities.map do |activity|
         condition = user.experimental_condition
         condition = 'points condition' if %w[advice forced].include?(condition)
-        condition = 'monetary condition' if %w[x 10].include?(condition)
+        
+        if  user.experimental_condition == "monetary condition x 10" 
+          condition = 'monetary condition' 
 
   	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
           point.point_value

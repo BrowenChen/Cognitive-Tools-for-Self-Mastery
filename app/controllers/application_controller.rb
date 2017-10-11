@@ -34,8 +34,8 @@ class ApplicationController < ActionController::Base
         condition = user.experimental_condition
         condition = 'points condition' if %w[advice forced].include?(condition)
         
-        if  user.experimental_condition == "monetary condition x 10" 
-          condition = 'monetary condition' 
+        #if  user.experimental_condition == "monetary condition x 10" 
+        #  condition = 'monetary condition' 
 
   	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
           point.point_value

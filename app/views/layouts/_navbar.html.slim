@@ -55,14 +55,14 @@ nav.navbar.nav-left
                 strong
                   |  Level: 
                   span.user-level = current_user.level
-                  
+
               br
 
               i.fa.fa-circle.text-info
               span style="font-size:125%"
                 strong
                   |  Money: 
-                  span.user-score = number_to_currency(current_user.score.to_f / 10.0)
+                  span.user-score = number_to_currency(current_user.score.to_f / 10)
 
             - else
               br

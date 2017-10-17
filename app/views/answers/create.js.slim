@@ -13,7 +13,7 @@
     - if current_user.monetary?
       | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
     - elsif current_user.monetaryX10?
-      | $('.user-score').html('#{number_to_currency(current_user.score.to_f)}'); 
+      | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
     - else
       | $('.user-score').html('#{current_user.score}');
 

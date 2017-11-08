@@ -190,13 +190,13 @@ section.content
               .row.text-center.alert
                 | Hint: It would be best to do 
                 span#next-activity-id = next_activity_by_points.content
-                |  now.
+                |  next.
 
             - elsif current_user.experimental_condition == 'forced'
               .row.text-center.alert
-                | Hint: You have to complete 
+                | You have to complete 
                 span#next-activity-id = next_activity_by_points.content
-                |  now.
+                | next.
 
           .row.activities-wrapper style='padding-top:10px;'
             - @activities.each do |activity|

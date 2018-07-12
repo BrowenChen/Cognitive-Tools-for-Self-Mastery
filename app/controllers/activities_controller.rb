@@ -153,10 +153,11 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     current_user.activities.destroy_all
 
+    condition_names = ['control condition', 'monetary condition', 'constant points']
     #condition_names = ['control condition', 'monetary condition', 'points condition', 'constant points', 'advice', 'forced']
     #condition_nr = current_user.id % 6
     #condition_names = ['monetary condition', 'advice', 'forced']
-    condition_names = ['monetary condition x 10','advice','forced']  
+    #condition_names = ['monetary condition x 10','advice','forced']  
     condition_nr = current_user.id % condition_names.length
       
     current_user.update(experimental_condition: condition_names[condition_nr])

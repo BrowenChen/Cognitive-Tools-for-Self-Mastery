@@ -131,19 +131,24 @@ class ActivitiesController < ApplicationController
 
     @constant_point_value = BONUS * 100 / admin.activities.count
 
-    activities = Activity.all
-
-  	activities.each do |record|
-      Point.new(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points").save
-  		Point.new(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition").save
+  	admin.activities.each do |record|
+      Point.create(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points")
+  		Point.create(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition")
   	end
 
-  	csv_text = File.read(File.join(Rails.root, 'app/assets/data/points.csv'))
+  	csv_text = File.read(Rails.root.join('app', 'assets', 'data', 'points.csv'))
   	csv = CSV.parse(csv_text, :headers => true)
 
   	csv.each do |row|
-  		Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"], time_left: row["time_step"], condition: "points condition").save
-      Point.new(activity_id: row["activity_id"], state: row["state_id"], point_value: row["point_value"].to_i, time_left: row["time_step"], condition: "monetary condition").save
+      ['points condition', 'monetary condition'].each do |condition|
+        Point.create(
+          activity_id: row['activity_id'],
+          state: row['state_id'],
+          point_value: row['point_value'].to_i,
+          time_left: row['time_step'],
+          condition: condition
+        )
+      end
   	end
   end
 
@@ -153,13 +158,13 @@ class ActivitiesController < ApplicationController
   def set_default_activities
     current_user.activities.destroy_all
 
-    condition_names = ['control condition', 'monetary condition', 'constant points']
+    condition_names = ['control condition', 'monetary condition', 'constant points', 'length heuristic']
     #condition_names = ['control condition', 'monetary condition', 'points condition', 'constant points', 'advice', 'forced']
     #condition_nr = current_user.id % 6
     #condition_names = ['monetary condition', 'advice', 'forced']
-    #condition_names = ['monetary condition x 10','advice','forced']  
+    #condition_names = ['monetary condition x 10','advice','forced']
     condition_nr = current_user.id % condition_names.length
-      
+
     current_user.update(experimental_condition: condition_names[condition_nr])
 
     if current_user.user_name != 'Admin'

@@ -10,10 +10,12 @@
     | $('.user-level').html('#{current_user.level}');
     | $('.level-description').html('#{current_user.level_description}');
 
-    - if current_user.monetary?
-      | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
+    - if current_user.monetary? || current_user.length_heuristic?
+      | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 100)}');
+
     - elsif current_user.monetaryX10?
       | $('.user-score').html('#{number_to_currency(current_user.score.to_f / 10)}');
+
     - else
       | $('.user-score').html('#{current_user.score}');
 

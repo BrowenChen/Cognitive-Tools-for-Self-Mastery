@@ -69,23 +69,23 @@
       </strong>
     </span>
 
-    <% if current_user.experimental_condition == "points condition" || current_user.experimental_condition == "constant points" %>
+    <% if current_user.points? || current_user.constant_points? %>
       <div id="stats">
         <p><strong>Level: </strong> <span class='user-level'> <%= current_user.level %></span></p>
-        <p><strong>Points: </strong> <span class='user-score'> <%= current_user.score%> </span> </p>
+        <p><strong>Points: </strong> <span class='user-score'> <%= current_user.score %> </span> </p>
       </div>
 
-    <% elsif current_user.experimental_condition == "monetary condition" %>
+    <% elsif current_user.monetary? || current_user.length_heuristic? %>
       <div id="stats">
         <p><strong>Level: </strong> <span class='user-level'> <%= current_user.level %></span></p>
         <p><strong>Money: </strong> <span class='user-score'> <%= number_to_currency(current_user.score.to_f / 100) %> </span> </p>
       </div>
-    <% elsif current_user.experimental_condition == "monetary condition x 10" %>
+
+    <% elsif current_user.monetaryX10? %>
       <div id="stats">
         <p><strong>Level: </strong> <span class='user-level'> <%= current_user.level %></span></p>
         <p><strong>Money: </strong> <span class='user-score'> <%= number_to_currency(current_user.score.to_f / 10) %> </span> </p>
       </div>
-  
     <% end %>
   </div>
 

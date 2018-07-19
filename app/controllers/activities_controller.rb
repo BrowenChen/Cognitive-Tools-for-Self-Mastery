@@ -55,7 +55,7 @@ class ActivitiesController < ApplicationController
   # To display all of my activities
   def my_activities
     get_current_point_values(current_user)
-    @activities = current_user.activities
+    @activities = current_user.activities.order('id ASC')
   end
 
   # To display all of my completed activities

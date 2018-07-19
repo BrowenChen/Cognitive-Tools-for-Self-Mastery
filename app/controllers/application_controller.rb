@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   	@current_point_values = []
 
     if user.constant_points?
-      constant_point_value = BONUS * 100 / admin.activities.count
+      constant_point_value = BONUS * 100 / ACTIVITIES.count
       @current_point_values = activities.map { |activity| constant_point_value }
       @current_point_values.push(0)
 
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
         end
   	  end
 
-      if point = Point.find_by(activity_id: 6, state: 0, condition: 'points condition')
+      if point = Point.find_by(activity_id: 11, state: 0, condition: 'points condition')
         @current_point_values.push(point.point_value)
       end
     end

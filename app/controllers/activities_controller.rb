@@ -103,43 +103,21 @@ class ActivitiesController < ApplicationController
     render text: 'abort activity'
   end
 
-  #Loading function to load in csv to-do list only when Admin account is enabled.
-	# Uses CSV data to create activities that all experimentees will use into their accounts
-	# When "initialize to-do" button is pressed.
-	#params - :adminUser: ID of admin user to check if Admin user exists.
-  def load_todo_from_csv(admin)
-  	admin.activities.destroy_all
-
-  	csv_text = File.read(File.join(Rails.root, 'app/assets/data/todo_list.csv'))
-
-  	CSV.parse(csv_text, headers: true).each do |row|
-  		admin.activities.create!(
-        content: row["Name"],
-        duration: row["Duration"].to_f,
-        code: SecureRandom.urlsafe_base64(8),
-        a_id: row["Number"]
-      )
-    end
-
-    create_points_table(admin)
-    get_current_point_values(current_user)
-  end
-
   # Creates points table from CSV file "points.csv"
   def create_points_table(admin)
     Point.destroy_all
 
-    @constant_point_value = BONUS * 100 / admin.activities.count
+    @constant_point_value = BONUS * 100 / ACTIVITIES.count
 
-  	admin.activities.each do |record|
-      Point.create(activity_id: record.a_id, state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points")
-  		Point.create(activity_id: record.a_id, state: 0, point_value: 0, time_left: 0, condition: "control condition")
-  	end
+    ACTIVITIES.each do |activity|
+      Point.create(activity_id: activity['Number'], state: 0, point_value: @constant_point_value, time_left: 0, condition: "constant points")
+      Point.create(activity_id: activity['Number'], state: 0, point_value: 0, time_left: 0, condition: "control condition")
+    end
 
-  	csv_text = File.read(Rails.root.join('app', 'assets', 'data', 'points.csv'))
-  	csv = CSV.parse(csv_text, :headers => true)
+    csv_text = File.read(Rails.root.join('app', 'assets', 'data', 'points.csv'))
+    csv = CSV.parse(csv_text, :headers => true)
 
-  	csv.each do |row|
+    csv.each do |row|
       ['points condition', 'monetary condition'].each do |condition|
         Point.create(
           activity_id: row['activity_id'],
@@ -149,7 +127,7 @@ class ActivitiesController < ApplicationController
           condition: condition
         )
       end
-  	end
+    end
   end
 
 	# Sets default activities for an experimentee.
@@ -167,20 +145,16 @@ class ActivitiesController < ApplicationController
 
     current_user.update(experimental_condition: condition_names[condition_nr])
 
-    if current_user.user_name != 'Admin'
-      User.find_by!(user_name: 'Admin').activities.each do |record|
-        current_user.activities.create(
-          content: record.content,
-          duration: record.duration,
-          code: SecureRandom.urlsafe_base64(8),
-          a_id: record.a_id
-        )
-
-        get_current_point_values(current_user)
-      end
+    ACTIVITIES.each do |activity|
+      current_user.activities.create(
+        content: activity['Name'],
+        duration: activity['Duration'].to_f,
+        code: SecureRandom.urlsafe_base64(8),
+        a_id: activity['Number']
+      )
     end
 
-    redirect_to root_path
+    redirect_to my_activities_activity_path(current_user)
   end
 
 	# Function to render all data from activities and users for the experimenter
@@ -248,9 +222,9 @@ class ActivitiesController < ApplicationController
   def enable_admin
     return render(text: 'Wrong Code') if params[:code] != '9128'
 
-    if @adminUser = User.find_by(user_name: "Admin")
-      @adminUser.update(is_admin: true)
-      load_todo_from_csv(@adminUser)
+    if admin = User.find_by(user_name: "Admin")
+      admin.update(is_admin: true)
+      create_points_table(admin)
     end
 
     render text: 'admin enabled'
@@ -264,8 +238,6 @@ class ActivitiesController < ApplicationController
 
   def set_activity
     @activity = Activity.find(params[:id])
-    puts @activity[:duration]
-    puts "The activities of this user"
   end
 
   def owned_activity

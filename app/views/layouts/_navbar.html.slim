@@ -33,7 +33,7 @@ nav.navbar.nav-left
                   |  Score: 
                   span.user-score = current_user.score
 
-            - elsif current_user.experimental_condition == "monetary condition"
+            - elsif current_user.monetary? || current_user.length_heuristic?
               i.fa.fa-circle.text-success
               span style="font-size:150%"
                 strong

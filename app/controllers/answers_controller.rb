@@ -24,7 +24,7 @@ class AnswersController < ApplicationController
     if current_user.experimental_condition != "control condition"
       @current_point_values = get_current_point_values(current_user)
 
-      @new_score = current_user.score + @current_point_values[@activity.a_id-1]
+      @new_score = current_user.score + @current_point_values[@activity.a_id - 1]
       current_user.update(score: @new_score)
 
       if current_user.level < 2 && @new_score >= 150 && @new_score < 500

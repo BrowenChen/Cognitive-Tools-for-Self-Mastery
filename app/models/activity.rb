@@ -9,4 +9,8 @@ class Activity < ActiveRecord::Base
   def question
     QUESTIONS[a_id][0]
   end
+
+  def project
+    ACTIVITIES.detect { |activity| activity['Number'] == a_id.to_s }['Goal']
+  end
 end

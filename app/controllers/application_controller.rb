@@ -24,25 +24,31 @@ class ApplicationController < ActionController::Base
   	activities = user.activities.order('a_id ASC')
   	@current_point_values = []
 
-    if user.experimental_condition == "constant points"
-      constant_point_value = BONUS * 100 / admin.activities.count
+    if user.constant_points?
+      constant_point_value = BONUS * 100 / ACTIVITIES.count
       @current_point_values = activities.map { |activity| constant_point_value }
+      @current_point_values.push(0)
+
+    elsif user.length_heuristic?
+      total_duration = activities.sum(:duration)
+      per_unit_duration = (BONUS * 100) / activities.sum(:duration)
+      @current_point_values = activities.map { |activity| (per_unit_duration * activity.duration).floor }
+      @current_point_values.pop
+      @current_point_values.push(BONUS * 100 - @current_point_values.sum)
       @current_point_values.push(0)
 
     else
   	  @current_point_values = activities.map do |activity|
         condition = user.experimental_condition
         condition = 'points condition' if %w[advice forced].include?(condition)
-        
-        condition = 'monetary condition' if  condition == 'monetary condition x 10' 
-        #  condition = 'monetary condition' 
+        condition = 'monetary condition' if condition == 'monetary condition x 10'
 
   	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
           point.point_value
         end
   	  end
 
-      if point = Point.find_by(activity_id: 6, state: 0, condition: 'points condition')
+      if point = Point.find_by(activity_id: 11, state: 0, condition: 'points condition')
         @current_point_values.push(point.point_value)
       end
     end

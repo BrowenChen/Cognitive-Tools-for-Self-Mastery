@@ -41,7 +41,7 @@ css:
     span.activity-bar-id = activity.a_id
     span.activity-bar-content
       strong style="font-size: 90%;"
-        strike = "P#{activity.project} - #{activity.content}"
+        strike = "#{activity.content} (Project #{activity.project})"
 
       span style="float: right; font-size: 80%;"
         i.fa.fa-check
@@ -60,7 +60,7 @@ css:
 
     span.activity-bar-content
       strong style="font-size: 90%;"
-        = "P#{activity.project} - #{activity.content}"
+        = "#{activity.content} (Project #{activity.project})"
 
       / <!-- Psuedo Rewards with points condition -->
       - if current_user.experimental_condition == "Initial condition"

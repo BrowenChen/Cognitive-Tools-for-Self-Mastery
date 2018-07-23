@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
 	# This function is called whenever updates occur, to update point values of current user
 	# params - :current_user: User model of the current logged in user.
   def get_current_point_values(user)
-    admin = User.find_by!(user_name: 'Admin')
   	activities = user.activities.order('a_id ASC')
   	@current_point_values = []
 

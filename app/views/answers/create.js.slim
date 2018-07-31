@@ -1,7 +1,7 @@
 | $('.input-controls').hide();
 
 - if @answer.persisted?
-  | $('span[data-activity-id=#{@answer.activity_id}] a').html('#{escape_javascript render('activities/activityBar', activity: @answer.activity)}');
+  | $('span[data-activity-id=#{@answer.activity_id}] a').html('#{escape_javascript render('activities/activityBar', activity: @answer.activity, disabled: false)}');
   | $('.game-content').html('<h4 style="text-align:center; line-height: 150px;">Please select a task to work on!</h4>');
   | $('.activity-number').html('');
   | delete window.activityResponses[#{@answer.activity.a_id}];

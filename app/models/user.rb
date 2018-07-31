@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def initial?
+    experimental_condition == 'Initial condition'
+  end
+
   def points?
     experimental_condition == 'points condition'
   end

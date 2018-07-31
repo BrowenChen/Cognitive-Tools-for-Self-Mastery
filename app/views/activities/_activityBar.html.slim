@@ -46,9 +46,7 @@ css:
     opacity: .7;
   }
 
-- points = @current_point_values[activity.a_id - 1]
-
-.activity-bar.alert.alert-block class=[disabled && 'alert-warning', activity.is_completed? && 'activity-completed', points >= 0 ? 'alert-success' : 'alert-danger']
+.activity-bar.alert.alert-block class=[disabled && 'alert-warning', activity.is_completed? && 'activity-completed', activity.points >= 0 ? 'alert-success' : 'alert-danger']
   - if current_user.is_admin?
     button.close.close-sm data-dismiss="alert" type="button" onclick='removeActivity(#{activity.a_id})'
       i.fa.fa-times
@@ -61,18 +59,18 @@ css:
 
     - if current_user.initial? || current_user.points? || current_user.constant_points?
       span style="float:right; font-size: 130%;"
-        = points
+        = activity.points
         i.fa.fa-star-o
 
     - elsif current_user.monetary? || current_user.length_heuristic?
       span style="float: right; font-size: 130%;"
         i.fa.fa-usd
-        = '%.2f' % (points / 100.0)
+        = '%.2f' % (activity.points / 100.0)
 
     - elsif current_user.monetaryX10?
       span style="float: right; font-size: 130%;"
         i.fa.fa-usd
-        = '%.2f' % (points / 10.0)
+        = '%.2f' % (activity.points / 10.0)
 
 javascript:
   var removeActivity = function(activity_id){

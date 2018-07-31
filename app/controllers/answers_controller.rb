@@ -48,5 +48,13 @@ class AnswersController < ApplicationController
     unless current_user.activities.detect { |activity| !activity.is_completed }
       current_user.update(finished_all_activities: true)
     end
+
+    # after the user's level is updated, the points table changes so adjust the scores
+    @current_point_values = get_current_point_values(current_user)
+
+    current_user.activities.each do |activity|
+      next if activity.is_completed
+      activity.update_column(:points, @current_point_values[activity.a_id - 1])
+    end
   end
 end

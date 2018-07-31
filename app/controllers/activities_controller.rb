@@ -104,8 +104,8 @@ class ActivitiesController < ApplicationController
   end
 
   # Creates points table from CSV file "points.csv"
-  def create_points_table(admin)
-    Point.destroy_all
+  def create_points_table
+    Point.delete_all
 
     @constant_point_value = BONUS * 100 / ACTIVITIES.count
 
@@ -152,6 +152,12 @@ class ActivitiesController < ApplicationController
         code: SecureRandom.urlsafe_base64(8),
         a_id: activity['Number']
       )
+    end
+
+    points = get_current_point_values(current_user)
+
+    current_user.activities.each do |activity|
+      activity.update_column(:points, points[activity.a_id - 1])
     end
 
     redirect_to my_activities_activity_path(current_user)
@@ -224,7 +230,7 @@ class ActivitiesController < ApplicationController
 
     if admin = User.find_by(user_name: "Admin")
       admin.update(is_admin: true)
-      create_points_table(admin)
+      create_points_table
     end
 
     render text: 'admin enabled'

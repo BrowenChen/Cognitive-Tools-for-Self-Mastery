@@ -178,7 +178,7 @@ section.content
             section.panel.general.activity-display
               .panel-body#game-panel
                 .tab-content
-                  .tab-pane.active = render 'activityPanelContent'
+                  .tab-pane.active = render 'activities/activityPanelContent'
 
     .col-md-4
       section.panel.activityPanel
@@ -198,22 +198,13 @@ section.content
                 span#next-activity-id = next_activity_by_points.content
                 | next.
 
-          .row.activities-wrapper style='padding-top:10px;'
-            - @activities.each do |activity|
-              // Insert Activity partial only if activity id matches with current logged in user
-              - if current_user.id == activity.user_id
-                span data-activity-id="#{activity.id}" data-question-id="#{activity.a_id}" id="activity_#{activity.id}"
-                  - if can_work_on_activity?(current_user.experimental_condition, activity, next_activity_by_points)
-                    a.activity-item#activity_select data-toggle="tab" href="##{activity.a_id}"
-                      = render 'activityBar', activity: activity, disabled: false
-
-                  - else
-                    = render 'activityBar', activity: activity, disabled: true
+          .row.activities-wrapper.panel style='padding-top:10px;'
+            = render 'activities/activities', activities: @activities
 
   .row.activities-wrapper
     - @activities.each do |activity|
       // Insert Activity partial only if activity id matches with current logged in user
       - if current_user.id == activity.user_id
-      	= render 'activity', activity: activity
+      	= render 'activities/activity', activity: activity
 
 .experiment-display

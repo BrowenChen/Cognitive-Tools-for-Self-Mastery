@@ -1,0 +1,10 @@
+- activities.each do |activity|
+  // Insert Activity partial only if activity id matches with current logged in user
+  - if current_user.id == activity.user_id
+    span data-activity-id="#{activity.id}" data-question-id="#{activity.a_id}" id="activity_#{activity.id}"
+      - if can_work_on_activity?(current_user.experimental_condition, activity, next_activity_by_points)
+        a.activity-item#activity_select data-toggle="tab" href="##{activity.a_id}"
+          = render 'activities/activityBar', activity: activity, disabled: false
+
+      - else
+        = render 'activities/activityBar', activity: activity, disabled: true

@@ -1,5 +1,16 @@
-<!-- Partial for the activity tasks -->
 css:
+  .activity-completed.alert-success {
+    background-color: rgb(223, 240, 216, 0.5);
+    border-color: rgb(214, 233, 198, 0.5);
+    color: rgb(60, 118, 61, 0.5);
+  }
+
+  .activity-completed.alert-danger {
+    background-color: rgb(242, 222, 222);
+    border-color: rgb(235, 204, 209);
+    color: rgb(169, 68, 66);
+  }
+
   .activity-bar {
     margin: 5px;
     position: relative;
@@ -31,57 +42,33 @@ css:
     opacity: .7;
   }
 
-- if activity.is_completed?
-  .activity-bar.alert.alert-block.alert-success
+- points = @current_point_values[activity.a_id - 1]
 
-    - if current_user.is_admin?
-      button.close.close-sm data-dismiss="alert" type="button" onclick='removeActivity(#{activity.a_id})'
-        i.fa.fa-times
+.activity-bar.alert.alert-block class=[disabled && 'alert-warning', activity.is_completed? && 'activity-completed', points >= 0 ? 'alert-success' : 'alert-danger']
+  - if current_user.is_admin?
+    button.close.close-sm data-dismiss="alert" type="button" onclick='removeActivity(#{activity.a_id})'
+      i.fa.fa-times
 
-    span.activity-bar-id = activity.a_id
-    span.activity-bar-content
-      strong style="font-size: 90%;"
-        strike = "#{activity.content} (Project #{activity.project})"
+  span.activity-bar-id = activity.a_id
 
-      span style="float: right; font-size: 80%;"
-        i.fa.fa-check
+  span.activity-bar-content
+    strong style="font-size: 90%;"
+      = "#{activity.content} (Project #{activity.project})"
 
-- else
-  div.activity-bar.alert.alert-block class='#{disabled ? 'alert-warning' : 'alert-danger'}'
-    /  <!-- <button data-dismiss="alert" class="close close-sm" type="button"> -->
-    /  <!-- <i class="fa fa-times"></i> -->
-    /  <!-- </button> -->
+    - if current_user.initial? || current_user.points? || current_user.constant_points?
+      span style="float:right; font-size: 130%;"
+        = points
+        i.fa.fa-star-o
 
-    - if current_user.is_admin?
-      button.close.close-sm data-dismiss="alert" type="button" onclick='removeActivity(#{activity.a_id})'
-        i.fa.fa-times
+    - elsif current_user.monetary? || current_user.length_heuristic?
+      span style="float: right; font-size: 130%;"
+        i.fa.fa-usd
+        = '%.2f' % (points / 100.0)
 
-    span.activity-bar-id = activity.a_id
-
-    span.activity-bar-content
-      strong style="font-size: 90%;"
-        = "#{activity.content} (Project #{activity.project})"
-
-      / <!-- Psuedo Rewards with points condition -->
-      - if current_user.experimental_condition == "Initial condition"
-        span style="float: right; font-size: 130%;"
-          = @current_point_values[activity.a_id-1]
-          i.fa.fa-star-o
-
-      - elsif current_user.points? || current_user.constant_points?
-        span style="float: right; font-size: 130%;"
-          = @current_point_values[activity.a_id-1]
-          i.fa.fa-star-o
-
-      - elsif current_user.monetary? || current_user.length_heuristic?
-        span style="float: right; font-size: 130%;"
-          i.fa.fa-usd
-          = '%.2f' % (@current_point_values[activity.a_id-1]/ 100.0)
-
-      - elsif current_user.experimental_condition == "monetary condition x 10"
-        span style="float: right; font-size: 130%;"
-          i.fa.fa-usd
-          = '%.2f' % (@current_point_values[activity.a_id-1]/ 10.0)
+    - elsif current_user.monetaryX10?
+      span style="float: right; font-size: 130%;"
+        i.fa.fa-usd
+        = '%.2f' % (points / 10.0)
 
 javascript:
   var removeActivity = function(activity_id){

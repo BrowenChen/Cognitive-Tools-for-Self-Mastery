@@ -114,19 +114,9 @@ class ActivitiesController < ApplicationController
       Point.create(activity_id: activity['Number'], state: 0, point_value: 0, time_left: 0, condition: "control condition")
     end
 
-    csv_text = File.read(Rails.root.join('app', 'assets', 'data', 'points.csv'))
-    csv = CSV.parse(csv_text, :headers => true)
-
-    csv.each do |row|
-      ['points condition', 'monetary condition'].each do |condition|
-        Point.create(
-          activity_id: row['activity_id'],
-          state: row['state_id'],
-          point_value: row['point_value'].to_i,
-          time_left: row['time_step'],
-          condition: condition
-        )
-      end
+    ['points condition', 'monetary condition'].each do |condition|
+      ActiveRecord::Base.connection.execute(%Q{COPY points (state, activity_id, point_value) FROM '#{Rails.root}/app/assets/data/points.csv' DELIMITER ',' CSV HEADER})
+      Point.where(condition: nil).update_all(condition: condition)
     end
   end
 

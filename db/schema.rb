@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181018105850) do
+ActiveRecord::Schema.define(version: 20170419222244) do
 
   create_table "activities", force: :cascade do |t|
     t.string   "title"
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(version: 20181018105850) do
     t.integer  "point_value"
     t.float    "time_left"
     t.string   "condition"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "points", ["activity_id"], name: "index_points_on_activity_id"

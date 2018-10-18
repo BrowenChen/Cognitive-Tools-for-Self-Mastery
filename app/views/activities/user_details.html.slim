@@ -49,7 +49,7 @@ css:
         strong Username: 
         = current_user.user_name
 
-      div If you have completed all of the tasks, then this page lets you generate the Bonus Code that will get you paid via Amazon Mechanical Turk. If you would like to contact the experimenter then please click the Contact button. If you want to learn more about the purpose of the experiment, then you can click the About button. Finally, if you want to quit the experiment for good, then you can click the Quit Experiment button.
+      div If you have already completed all the task your want to complete and have time to complete, then you can now generate the Bonus Code that you can paste into our exit survey HIT on Amazon Mechanical Turk. If you would like to contact the experimenter then please click the Contact button. If you want to learn more about the purpose of the experiment, then you can click the About button. Finally, if you want to quit the experiment for good, then you can click the Quit Experiment button.
 
       - if current_user.points?
         .text-center
@@ -89,10 +89,7 @@ css:
       a.btn.btn-success data-toggle='modal' href='#myModal' style='font-size:80%;' About this Experiment
 
     - else
-      - if allow_generate_bonus_code?
         a.btn.btn-warning.btn-md.generate-bonus-code-btn data-toggle='modal' href='#myModal2' style='font-size:80%;' Generate Bonus Code
-      - else
-        a.btn.btn-warning.btn-md data-toggle='modal' disabled=true style='font-size:80%;' Generate Bonus Code
 
       |  
       a.btn.btn-success data-toggle='modal' href='#myModal' style='font-size:80%;' About this Experiment

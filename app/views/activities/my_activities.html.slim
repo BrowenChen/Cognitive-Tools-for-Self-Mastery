@@ -128,7 +128,7 @@ section.content
     .col-md-12
     	.description-heading.my-tasks-heading
     		h4 My Activities
-        p Welcome, #{current_user.user_name}! <p> There are 10 tasks in total and you may complete as many or as few as them as you like. Five of these tasks belong to Project 1 and the other five belong to Project 2. If you complete all tasks of <b>Project 1</b> you earn <b>$20</b>. If you complete all tasks of <b>Project 2</b> you earn <b>$1</b>. If you complete both projects, you earn $21. Both projects have their deadline on <strong> October 31 2018 </strong> at 12am Pacific Time (midnight).</p>
+        p Welcome, #{current_user.user_name}! <p> There are 10 tasks in total and you may complete as many or as few as them as you like. Five of these tasks belong to Project 1 and the other five belong to Project 2. If you complete all tasks of <b>Project 1</b> by the deadline you earn <b>$20</b>. If you complete all tasks of <b>Project 2</b> by the deadline you earn <b>$1</b>. If you complete both projects by the deadline, you earn $21. The deadline is on <strong> October 31 2018 </strong> at 12am Pacific Time (midnight).</p>
 
         .activities-message
           - if current_user.finished_all_activities

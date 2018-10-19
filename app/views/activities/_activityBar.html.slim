@@ -55,7 +55,7 @@ css:
 
   span.activity-bar-content
     strong style="font-size: 90%;"
-      = "#{activity.content} (Project #{activity.project})"
+      = "#{activity.content}" 
 
     - if current_user.initial? || current_user.points? || current_user.constant_points?
       span style="float:right; font-size: 130%;"

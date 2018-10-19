@@ -128,7 +128,7 @@ section.content
     .col-md-12
     	.description-heading.my-tasks-heading
     		h4 My Activities
-        p Welcome, #{current_user.user_name}! <p> There are 10 tasks in total and you may complete as many or as few as them as you like. Five of these tasks belong to Project 1 and the other five belong to Project 2. If you complete all tasks of <b>Project 1</b> by the deadline you earn <b>$20</b>. If you complete all tasks of <b>Project 2</b> by the deadline you earn <b>$1</b>. If you complete both projects by the deadline, you earn $21. The deadline is on <strong> October 31 2018 </strong> at 12am Pacific Time (midnight).</p>
+        p Welcome, #{current_user.user_name}! <p> There are 10 tasks in total and you may complete as many or as few as them as you like. Writing Assignments 2,3,6,8, and 10 belong to Project 1 and Writing Assignments 1,4,5,7, and 9 belong to Project 2. If you complete both projects by the deadline, you earn $21. If you complete Project 1 but not Project 2 you earn a bonus of $20. If you complete Project 2 but not Project 1 you earn a bonus of $1. For completed tasks of incomplete projects you will only receive a small compensation of $3 per hour worth of completed tasks. The deadline is on <strong> October 31 2018 </strong> at 12am Pacific Time (midnight).</p>
 
         .activities-message
           - if current_user.finished_all_activities

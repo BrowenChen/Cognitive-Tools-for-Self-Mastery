@@ -4,7 +4,7 @@ BONUS = 20 #dollars
 
 QUESTIONS = {
   # Easy
-  5 => ['What is your favorite TV show and why?', 50],
+  4 => ['What is your favorite TV show and why?', 50],
   # 'What were the 5 most popular TV shows in the US in 2016?',
   # 'What are you looking forward to this year?',
   # 'Please write a review for one of your favorite movies.',
@@ -28,7 +28,7 @@ QUESTIONS = {
   # 'Analyze the disadvantages of adding emulsifiers to food.',
   # 'Discuss the advantages and disadvantages of future space tourism.',
   3 => ['Describe with examples the importance of recognizing and responding to concerns about children and young people\'s development.', 100],
-  4 => ['Write an essay about how society should assign value to human life.', 100]
+  5 => ['Write an essay about how society should assign value to human life.', 100]
 }
 
 LINKS = {

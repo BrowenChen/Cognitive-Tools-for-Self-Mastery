@@ -94,6 +94,6 @@ $(document).on('ready page:load', function() {
   });
 
   $('.link-wrapper').on('click', 'a', function() {
-    $.post('/start_activity/0', { qid: ($('.link-wrapper').data('index') % 4) + 6 });
+    $.post('/start_activity/0', { qid: ($('.link-wrapper').data('index') % 4) + <%= QUESTIONS.keys.max + 1 %> });
   });
 });

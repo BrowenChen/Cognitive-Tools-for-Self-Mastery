@@ -171,7 +171,9 @@ class ActivitiesController < ApplicationController
   # FORMAT: [activities completed] 9 [User Id] 9 [User quit] 9 [user Experimental condition]
   def generate_code
     @user_id = current_user.id
-    @activities = Activity.where(:user_id => @user_id)
+    #@activities = Activity.where(:user_id => @user_id)
+    @activities = current_user.activities.order('a_id ASC')      
+      
     @user_experimental_condition = current_user.experimental_condition
     @user_score = current_user.score
     @user_quit = current_user.is_active

@@ -16,7 +16,7 @@ module ApplicationHelper
     return @next_activity_by_points if defined?(@next_activity_by_points)
 
     @next_activity_by_points = @activities.min_by do |activity|
-      activity.is_completed? ? Float::INFINITY : @current_point_values[activity.a_id-1]
+      activity.is_completed? ? Float::INFINITY : @current_point_values[activity.a_id-1] || 0
     end if @activities.detect { |activity| !activity.is_completed? }
   end
 

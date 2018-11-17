@@ -42,9 +42,9 @@ class ApplicationController < ActionController::Base
         condition = 'points condition' if %w[advice forced].include?(condition)
         condition = 'monetary condition' if condition == 'monetary condition x 10'
 
-  	    if point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
-          point.point_value
-        end
+  	    point = Point.find_by(activity_id: activity.a_id, state: get_state_id, condition: condition)
+
+        point.try(:point_value) || 0
   	  end
 
       if point = Point.find_by(activity_id: 11, state: 0, condition: 'points condition')

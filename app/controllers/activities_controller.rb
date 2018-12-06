@@ -168,7 +168,7 @@ class ActivitiesController < ApplicationController
   end
 
   # Code generation for when users claim their payment
-  # FORMAT: [activities completed] 9 [User Id] 9 [User quit] 9 [user Experimental condition]
+    # FORMAT: [activities completed] i [User Id] d [User quit] q [user Experimental condition]
   def generate_code
     @user_id = current_user.id
     #@activities = Activity.where(:user_id => @user_id)

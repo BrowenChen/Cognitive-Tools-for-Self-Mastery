@@ -1,9 +1,0 @@
-[AWS Access]
-aws_access_key_id = AKIAJJINU3AXOT5IVHDQ
-aws_secret_access_key = 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
-
-aws_region = us-east-1
-
-[psiTurk Access]
-psiturk_access_key_id = qLJRiAcyrprvQB9ZjXjjrf
-psiturk_secret_access_id = vXR2oippRfHBm5KwxPNQnf

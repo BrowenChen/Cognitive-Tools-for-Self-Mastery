@@ -152,14 +152,13 @@ css:
 
           .modal-body
             - if current_user.points?
-              | Congratulations! You have earned a bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley", and input the code there.
-
+              | Congratulations!
             - elsif current_user.monetary?
-              | The amount you have earned so far is displayed in the upper left corner. If this is the first time you have collected your bonus, you will be paid the current amount you have earned. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there.
+              | Congratulations! 
               
             - elsif current_user.monetaryX10?
-              | The amount displayed in the upper left corner is the bonus you have earned so far times 10. If this is the first time you have collected your bonus, you will be paid the current amount you have earned.  To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there.  
-
+              | Congratulations!
+              
             br
             br
             | Your bonus code is:

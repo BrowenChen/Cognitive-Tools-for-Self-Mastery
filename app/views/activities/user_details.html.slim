@@ -152,7 +152,7 @@ css:
 
           .modal-body
             - if current_user.points?
-              | Congratulations! You have earned a $20 bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley", and input the code there.
+              | Congratulations! You have earned a bonus. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley", and input the code there.
 
             - elsif current_user.monetary?
               | The amount you have earned so far is displayed in the upper left corner. If this is the first time you have collected your bonus, you will be paid the current amount you have earned. To collect your bonus, please log into Amazon Mechanical Turk, find the HIT called "Todo List Study Post-Survey", by the requester "CoCoSci Lab at UC Berkeley" and paste the code there.
@@ -166,7 +166,7 @@ css:
             br
             strong#export_code
             br
-            p Please go to MTurk, find the HIT called "Reimbursement for Todo List Experiment" by the requester MPRG for Rationality Enhancement, and enter your bonus code there. Thank you for participating in our study! We hope you had a good time.
+            p Please go to MTurk, find the HIT called "Reimbursement for Todo List Experiment" by the requester "MPRG for Rationality Enhancement". If you cannot find the HIT right away, then please remove all search filters and then try again. If you still cannot find the HIT, then send us an email at re-mturk@tuebingen.mpg.de and we will look into it. Once you have found the HIT, fill out its exit survey and enter your bonus code there. Thank you for participating in our study! We hope you had a good time.
 
           .modal-footer
             button.btn.btn-default data-dismiss='modal' type='button' Close
